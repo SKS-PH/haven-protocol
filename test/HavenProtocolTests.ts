@@ -13,12 +13,12 @@ describe('HavenProtocol', function () {
 			const createHavenTx = await havenProtocol.createHaven(10)
 			await createHavenTx.wait()
 
-			const newHavenAddr = await havenProtocol.ownerToHaven(signer.address)
+			const newHavenAddr = await havenProtocol.ownerToHavens(signer.address, 0)
 			expect(newHavenAddr).is.not.equals(0)
 
 			await expect(createHavenTx)
 				.to.emit(havenProtocol, 'HavenCreated')
-				.withArgs(0, newHavenAddr, signer.address)
+				.withArgs(signer.address, newHavenAddr)
 
 			const newHaven = Haven.attach(newHavenAddr)
 			expect(await newHaven.owner()).to.equal(signer.address)
