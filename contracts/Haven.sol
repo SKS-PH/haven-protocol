@@ -1,47 +1,38 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-contract Haven {
+import "@openzeppelin/contracts/access/Ownable.sol";
+
+contract Haven is Ownable{
     struct Post {
         uint256 id;
         string post_uri;
-        string title;
-        string body;
         uint256 timestamp;
     }
 
-    struct Comment {
-        uint256 id;
-        string text;
-        uint256 timestamp;
+    event PostCreated(uint256 indexed postId, string post_uri, uint256 timestamp);
+
+    uint256 public subscriptionFee;
+
+    Post[] public posts;
+
+    constructor(uint256 _subscriptionFee) {
+        subscriptionFee = _subscriptionFee;
     }
-
-    Post[] posts;
-
-    mapping(uint256 => Comment[]) postComments;
-
-    constructor() {}
 
     function post(
-        string memory _post_uri,
-        string memory _title,
-        string memory _body
-    ) public returns (uint256) {
+        string memory _post_uri
+    ) public onlyOwner returns(uint256) {
         uint256 postId = posts.length;
-        posts.push(Post(postId, _post_uri, _title, _body, block.timestamp));
+        uint256 timeStamp = block.timestamp;
+        posts.push(Post(postId, _post_uri, timeStamp));
+        emit PostCreated(postId, _post_uri, timeStamp);
         return postId;
-    }
-
-    function comment(uint256 _post_id, string memory _message) public {
-        uint256 commentId = postComments[_post_id].length;
-        postComments[_post_id].push(
-            Comment(commentId, _message, block.timestamp)
-        );
     }
 
     function setConfig(string memory _config_uri) public {}
 
-    function setSubscriptionFee(uint256 _fee) public {}
+    function setSubscriptionFee(uint256 _fee) public onlyOwner {}
 
     function subscribe() public {}
 
