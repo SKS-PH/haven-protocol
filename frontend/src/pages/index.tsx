@@ -178,7 +178,7 @@ const IndexPage = () => {
             className="md:w-0 flex-auto"
           >
             <h3 className="font-light text-5xl">
-              <abbr>DAO</abbr> governance
+              <abbr title="Decentralised autonomous organization">DAO</abbr> governance
             </h3>
             <p className="text-2xl">
               Hello. Well, Marty, I'm almost eighteen-years-old, it's not like I've never parked before.
