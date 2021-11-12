@@ -82,8 +82,8 @@ const IndexPage = () => {
             <div className="border opacity-25 border-dotted w-16 h-16 absolute top-16 -right-16 box-border" />
             <div className="border opacity-25 border-dotted w-16 h-16 absolute top-64 -right-16 box-border" />
 
-            <div className="p-12 h-96 w-full max-w-160 border border-dotted flex flex-col justify-center relative box-border">
-              <div className="flex items-center space-x-12">
+            <div className="p-8 sm:p-12 h-96 w-full max-w-160 border border-dotted flex flex-col justify-center relative box-border">
+              <div className="flex items-center space-x-8 sm:space-x-12">
                 <div>
                   <Logo
                     size={LogoSize.LARGE}
@@ -102,8 +102,8 @@ const IndexPage = () => {
                   </p>
                 </div>
               </div>
-              <div className="flex space-x-4 mt-12">
-                <div className="w-0 flex-auto">
+              <div className="sm:flex space-y-4 sm:space-y-0 w-full sm:space-x-4 mt-8 sm:mt-12">
+                <div className="sm:w-0 flex-auto">
                   <LinkButton
                     block
                     component={Link}
@@ -113,7 +113,7 @@ const IndexPage = () => {
                     Learn More
                   </LinkButton>
                 </div>
-                <div className="w-0 flex-auto">
+                <div className="sm:w-0 flex-auto">
                   <form>
                     <Button
                       block
