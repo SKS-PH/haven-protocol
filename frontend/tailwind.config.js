@@ -2,11 +2,17 @@ module.exports = {
   purge: [],
   darkMode: false, // or 'media' or 'class'
   theme: {
+    maxWidth: {
+      160: '40rem',
+    },
     extend: {
       spacing: {
-        128: '32rem',
+        112: '28rem',
         120: '30rem',
+        128: '32rem',
+        160: '40rem',
       },
+
       colors: {
         bg: 'var(--color-bg)',
         fg: 'var(--color-fg)',

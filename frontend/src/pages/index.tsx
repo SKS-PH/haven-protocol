@@ -2,7 +2,7 @@ import {Button} from '../components/Button';
 import {ButtonVariant, LinkButton} from '../components/LinkButton';
 import {Link} from 'solid-app-router';
 import {SearchInput} from '../components/SearchInput';
-import {Logo} from '../components/Logo';
+import {Logo, LogoSize} from '../components/Logo';
 import {Icon} from '../components/Icon';
 
 const IndexPage = () => {
@@ -16,15 +16,15 @@ const IndexPage = () => {
           }}
         >
           <div className="px-4 h-full box-border">
-            <div className="flex justify-between items-center h-full">
-              <div>
+            <div className="flex justify-end sm:justify-between items-center h-full">
+              <div className="hidden sm:block mr-4">
                 <h1 className="sr-only">
                   Haven
                 </h1>
                 <Logo />
               </div>
-              <div>
-                <form className="md:w-120">
+              <div className="hidden sm:block mr-4">
+                <form className="lg:w-120">
                   <SearchInput
                     name="q"
                     placeholder="Search for havens, users..."
@@ -53,7 +53,10 @@ const IndexPage = () => {
                       <Button
                         variant={ButtonVariant.FILLED}
                       >
-                        Connect
+                        <Icon name="metamask" className="h-8" />
+                        <span>
+                          Connect
+                        </span>
                       </Button>
                     </form>
                   </div>
@@ -62,46 +65,67 @@ const IndexPage = () => {
             </div>
           </div>
         </header>
-        <div className="flex-auto min-h-0 flex justify-center items-center relative">
+        <div className="flex-auto min-h-0 flex justify-center items-center relative text-fg-inverse overflow-hidden">
+          <div className="absolute bg-fg opacity-50 w-full h-full top-0 left-0" />
+          <div className="absolute bg-primary opacity-50 w-full h-full top-0 left-0" />
+          <div className="relative">
+            <div className="border opacity-25 border-dotted w-16 h-16 absolute -top-16 left-16 box-border" />
+            <div className="border opacity-25 border-dotted w-32 h-32 absolute -top-32 left-48 box-border" />
+            <div className="border opacity-25 border-dotted w-16 h-16 absolute -top-16 left-80 box-border" />
+            <div className="border opacity-25 border-dotted w-16 h-16 absolute -top-16 left-112 box-border" />
+            <div className="border opacity-25 border-dotted w-16 h-16 absolute top-16 -left-16 box-border" />
+            <div className="border opacity-25 border-dotted w-32 h-32 absolute top-32 -left-32 box-border" />
+            <div className="border opacity-25 border-dotted w-16 h-16 absolute top-80 -left-16 box-border" />
+            <div className="border opacity-25 border-dotted w-16 h-16 absolute -bottom-16 left-16 box-border" />
+            <div className="border opacity-25 border-dotted w-32 h-32 absolute -bottom-32 left-64 box-border" />
+            <div className="border opacity-25 border-dotted w-16 h-16 absolute -bottom-16 left-96 box-border" />
+            <div className="border opacity-25 border-dotted w-16 h-16 absolute top-16 -right-16 box-border" />
+            <div className="border opacity-25 border-dotted w-16 h-16 absolute top-64 -right-16 box-border" />
 
-          <div className="p-12 h-96 w-128 border border-dotted flex flex-col justify-center">
-            <div className="flex items-center space-x-12">
-              <div>
-                <Logo />
-              </div>
-              <div>
-                <p
-                  className="lowercase text-6xl m-0 font-light"
-                >
-                  Haven
-                </p>
-                <p
-                  className="lowercase text-5xl m-0 font-light"
-                >
-                  Spaces for you.
-                </p>
-              </div>
-            </div>
-            <div className="flex space-x-4 mt-12">
-              <div className="w-0 flex-auto">
-                <LinkButton
-                  block
-                  component={Link}
-                  href="#what-is-haven"
-                  variant={ButtonVariant.OUTLINE}
-                >
-                  Learn More
-                </LinkButton>
-              </div>
-              <div className="w-0 flex-auto">
-                <form>
-                  <Button
-                    block
-                    variant={ButtonVariant.FILLED}
+            <div className="p-12 h-96 w-full max-w-160 border border-dotted flex flex-col justify-center relative box-border">
+              <div className="flex items-center space-x-12">
+                <div>
+                  <Logo
+                    size={LogoSize.LARGE}
+                  />
+                </div>
+                <div>
+                  <p
+                    className="lowercase text-6xl m-0 font-light"
                   >
-                    Connect Wallet
-                  </Button>
-                </form>
+                    Haven
+                  </p>
+                  <p
+                    className="lowercase text-5xl m-0 font-light"
+                  >
+                    Spaces for you.
+                  </p>
+                </div>
+              </div>
+              <div className="flex space-x-4 mt-12">
+                <div className="w-0 flex-auto">
+                  <LinkButton
+                    block
+                    component={Link}
+                    href="#what-is-haven"
+                    variant={ButtonVariant.OUTLINE_INVERSE}
+                  >
+                    Learn More
+                  </LinkButton>
+                </div>
+                <div className="w-0 flex-auto">
+                  <form>
+                    <Button
+                      block
+                      variant={ButtonVariant.FILLED_INVERSE}
+                    >
+                      <Icon name="metamask" className="h-8" />
+                      <span>
+                        Connect Wallet
+                      </span>
+                    </Button>
+                  </form>
+                </div>
               </div>
             </div>
           </div>
@@ -236,7 +260,10 @@ const IndexPage = () => {
                 block
                 variant={ButtonVariant.FILLED}
               >
-                Connect Wallet
+                <Icon name="metamask" className="h-8" />
+                <span>
+                  Connect Wallet
+                </span>
               </Button>
             </form>
           </div>
