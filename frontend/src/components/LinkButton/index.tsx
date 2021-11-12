@@ -1,4 +1,5 @@
-import {Component} from 'solid-js';
+import {Component, JSX} from 'solid-js';
+import {ValidConstructor} from '../../utils/types';
 
 export enum ButtonVariant {
   OUTLINE = 'outline',
@@ -20,25 +21,26 @@ const SIZE_CLASSES: Record<ButtonSize, string> = {
   [ButtonSize.LARGE]: 'h-16',
 };
 
-export type ButtonProps = {
+export type ButtonProps<T extends ValidConstructor = 'a'> = JSX.IntrinsicElements['a'] & {
   variant?: ButtonVariant,
   size?: ButtonSize,
-  component?: any, // FIXME - proper typing
+  component?: T,
   href?: string,
   block?: boolean,
 };
 
-export const LinkButton: Component<ButtonProps> = (props) => {
+export const LinkButton = <T extends ValidConstructor = 'a'>(props: ButtonProps<T>) => {
   const variantClassName = VARIANT_CLASSES[props.variant ?? ButtonVariant.OUTLINE];
   const sizeClassName = SIZE_CLASSES[props.size ?? ButtonSize.MEDIUM];
-  const Component = (props.component ?? 'a');
+  const RenderedComponent = (props.component ?? 'a');
 
   return (
-    <Component
+    <RenderedComponent
+      {...props}
       href={props.href}
       className={`box-border border border-solid cursor-pointer px-4 justify-center items-center uppercase font-bold rounded-full ${props.block ? 'w-full flex' : 'inline-flex'} ${variantClassName} ${sizeClassName}`}
     >
       {props.children}
-    </Component>
+    </RenderedComponent>
   )
 }

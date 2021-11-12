@@ -1,4 +1,4 @@
-import {Component} from 'solid-js';
+import {Component, JSX} from 'solid-js';
 
 export enum SearchInputSize {
   MEDIUM = 'medium',
@@ -8,10 +8,8 @@ const SIZE_CLASSES: Record<SearchInputSize, string> = {
   [SearchInputSize.MEDIUM]: 'h-12',
 };
 
-type SearchInputProps = {
+type SearchInputProps = JSX.IntrinsicElements['input'] & {
   size?: SearchInputSize,
-  placeholder?: string,
-  name?: string,
 }
 
 export const SearchInput: Component<SearchInputProps> = (props) => {
@@ -19,6 +17,7 @@ export const SearchInput: Component<SearchInputProps> = (props) => {
 
   return (
     <input
+      {...props}
       className={`box-border border bg-transparent border-solid rounded-full p-4 placeholder:uppercase border-primary ${sizeClassNames}`}
       type="search"
       placeholder={props.placeholder}

@@ -1,4 +1,4 @@
-import {Component} from 'solid-js';
+import {Component, JSX} from 'solid-js';
 
 export enum ButtonVariant {
   OUTLINE = 'outline',
@@ -20,7 +20,7 @@ const SIZE_CLASSES: Record<ButtonSize, string> = {
   [ButtonSize.LARGE]: 'h-16',
 };
 
-export type ButtonProps = {
+export type ButtonProps = JSX.IntrinsicElements['button'] & {
   variant?: ButtonVariant,
   size?: ButtonSize,
   block?: boolean,
@@ -32,6 +32,7 @@ export const Button: Component<ButtonProps> = (props) => {
 
   return (
     <button
+      {...props}
       className={`box-border border border-solid cursor-pointer px-4 ${props.block ? 'w-full flex' : 'inline-flex'} justify-center items-center uppercase font-bold rounded-full ${variantClassName} ${sizeClassName}`}
     >
       {props.children}
