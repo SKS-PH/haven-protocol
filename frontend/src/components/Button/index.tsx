@@ -33,7 +33,7 @@ export const Button: Component<ButtonProps> = (props) => {
   return (
     <button
       {...props}
-      className={`box-border border border-solid cursor-pointer px-4 ${props.block ? 'w-full flex' : 'inline-flex'} justify-center items-center uppercase font-bold rounded-full ${variantClassName} ${sizeClassName}`}
+      className={`leading-none text-center box-border border border-solid cursor-pointer px-4 ${props.block ? 'w-full flex' : 'inline-flex'} justify-center items-center uppercase font-bold rounded-full ${variantClassName} ${sizeClassName}`}
     >
       {props.children}
     </button>

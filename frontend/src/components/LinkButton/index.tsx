@@ -38,7 +38,7 @@ export const LinkButton = <T extends ValidConstructor = 'a'>(props: ButtonProps<
     <RenderedComponent
       {...props}
       href={props.href}
-      className={`box-border border border-solid cursor-pointer px-4 justify-center items-center uppercase font-bold rounded-full ${props.block ? 'w-full flex' : 'inline-flex'} ${variantClassName} ${sizeClassName}`}
+      className={`leading-none text-center box-border border border-solid cursor-pointer px-4 ${props.block ? 'w-full flex' : 'inline-flex'} justify-center items-center uppercase font-bold rounded-full ${variantClassName} ${sizeClassName}`}
     >
       {props.children}
     </RenderedComponent>

@@ -4,6 +4,7 @@ import { Router } from 'solid-app-router';
 import App from "./App";
 import routes from "./routes";
 
+import "tailwindcss/components.css";
 import "tailwindcss/utilities.css";
 import "./theme.css";
 import "./global.css";

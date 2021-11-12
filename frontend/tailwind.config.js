@@ -5,6 +5,7 @@ module.exports = {
     extend: {
       spacing: {
         128: '32rem',
+        120: '30rem',
       },
       colors: {
         bg: 'var(--color-bg)',
@@ -15,6 +16,10 @@ module.exports = {
 
         'header': 'var(--color-bg-header)',
       },
+    },
+    container: {
+      padding: '1rem',
+      center: true,
     },
   },
   variants: {

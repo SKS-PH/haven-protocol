@@ -4,7 +4,7 @@ export const Logo: Component = () => {
   return (
     <div
       role="presentation"
-      className="inline-flex justify-center items-center w-10 h-10 border border-solid rounded"
+      className="inline-flex justify-center items-center w-10 h-10 border border-current border-solid rounded"
     >
       HVN
     </div>
