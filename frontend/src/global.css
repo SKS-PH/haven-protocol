@@ -1,0 +1,31 @@
+:root {
+  --color-bg: var(--color-negative);
+  --color-fg: var(--color-positive);
+  --color-fg-inverse: var(--color-positive-inverse);
+  --color-primary: var(--color-accent-1);
+  --color-secondary: var(--color-accent-2);
+  --font-family-base: var(--font-family-1);
+}
+
+:root {
+  background-color: var(--color-bg);
+  color: var(--color-fg);
+  font-family: var(--font-family-base);
+  margin: 0;
+}
+
+body {
+  margin: 0;
+}
+
+a {
+  color: var(--color-primary);
+}
+
+button {
+  font: inherit;
+}
+
+input {
+  font: inherit;
+}
