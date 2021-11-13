@@ -14,7 +14,8 @@
     "postcss": "^8.3.11",
     "typescript": "^4.4.3",
     "vite": "^2.5.7",
-    "vite-plugin-solid": "^2.0.3"
+    "vite-plugin-solid": "^2.0.3",
+    "vite-tsconfig-paths": "^3.3.17"
   },
   "dependencies": {
     "solid-app-router": "^0.1.11",

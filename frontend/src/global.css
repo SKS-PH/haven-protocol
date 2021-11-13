@@ -5,6 +5,9 @@
   --color-primary: var(--color-accent-1);
   --color-secondary: var(--color-accent-2);
   --font-family-base: var(--font-family-1);
+
+	--size-header: 6rem;
+	--size-sidebar: 360px;
 }
 
 :root {

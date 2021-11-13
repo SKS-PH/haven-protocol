@@ -1,11 +1,5 @@
 import {Component, JSX} from 'solid-js';
-
-export enum ButtonVariant {
-  OUTLINE = 'outline',
-  FILLED = 'filled',
-  OUTLINE_INVERSE = 'outline-inverse',
-  FILLED_INVERSE = 'filled-inverse',
-}
+import {ButtonSize, ButtonVariant} from '../../utils/button';
 
 const VARIANT_CLASSES: Record<ButtonVariant, string> = {
   [ButtonVariant.OUTLINE]: 'border-primary text-primary no-underline',
@@ -14,17 +8,12 @@ const VARIANT_CLASSES: Record<ButtonVariant, string> = {
   [ButtonVariant.FILLED_INVERSE]: 'border-fg-inverse border-fg-inverse text-primary',
 };
 
-export enum ButtonSize {
-  MEDIUM = 'medium',
-  LARGE = 'large',
-}
-
 const SIZE_CLASSES: Record<ButtonSize, string> = {
   [ButtonSize.MEDIUM]: 'h-12',
   [ButtonSize.LARGE]: 'h-16',
 };
 
-export type ButtonProps = JSX.IntrinsicElements['button'] & {
+export type ButtonProps = JSX.HTMLAttributes<HTMLButtonElement> & {
   variant?: ButtonVariant,
   size?: ButtonSize,
   block?: boolean,
