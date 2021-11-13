@@ -31,7 +31,7 @@ describe('Haven', function () {
 
 			expect((await haven.posts(0))[1]).to.equal(postUri)
 
-			expect(await haven.connect(signer1).post(postUri)).to.be.reverted
+			await expect(haven.connect(signer1).post(postUri)).to.be.reverted
 		})
 	})
 })
