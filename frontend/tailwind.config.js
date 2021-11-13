@@ -46,6 +46,7 @@ module.exports = {
 				"fg-inverse": "var(--color-fg-inverse)",
 				"bg-inverse": "var(--color-bg-inverse)",
 				primary: "var(--color-primary)",
+				"primary-fixed": "var(--color-primary-fixed)",
 				secondary: "var(--color-secondary)",
 				header: "var(--color-bg-header)",
 			},

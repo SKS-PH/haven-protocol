@@ -4,6 +4,7 @@
   --color-fg: var(--color-positive);
   --color-fg-inverse: var(--color-positive-inverse);
   --color-primary: var(--color-accent-1);
+	--color-primary-fixed: var(--color-accent-1-fixed);
   --color-secondary: var(--color-accent-2);
   --font-family-base: var(--font-family-1);
 

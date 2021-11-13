@@ -14,6 +14,7 @@
 	--color-negative-inverse: black;
   --color-positive-inverse: white;
   --color-accent-1: #7950E2;
+  --color-accent-1-fixed: #7950E2;
   --color-accent-2: #51BD96;
 }
 
@@ -30,6 +31,7 @@
 		--color-negative-inverse: black;
 		--color-positive-inverse: white;
 		--color-accent-1: #af8fff;
+		--color-accent-1-fixed: #7950E2;
 		--color-accent-2: #51BD96;
 	}
 }

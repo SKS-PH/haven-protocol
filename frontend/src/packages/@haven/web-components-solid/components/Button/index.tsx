@@ -5,7 +5,7 @@ const VARIANT_CLASSES: Record<ButtonVariant, string> = {
 	[ButtonVariant.OUTLINE]: "border-primary text-primary no-underline",
 	[ButtonVariant.FILLED]: "border-primary bg-primary text-fg-inverse",
 	[ButtonVariant.OUTLINE_INVERSE]: "border-fg-inverse text-fg-inverse no-underline",
-	[ButtonVariant.FILLED_INVERSE]: "border-fg-inverse border-fg-inverse text-primary",
+	[ButtonVariant.FILLED_INVERSE]: "border-fg-inverse border-fg-inverse text-primary-fixed",
 };
 
 const SIZE_CLASSES: Record<ButtonSize, string> = {
