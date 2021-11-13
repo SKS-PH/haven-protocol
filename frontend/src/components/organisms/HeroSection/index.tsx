@@ -10,7 +10,7 @@ export const HeroSection: Component = () => {
 		<div className="h-screen box-border flex justify-center items-center relative text-fg-inverse overflow-hidden pt-header">
 			<div className="absolute bg-fg opacity-50 w-full h-full top-0 left-0" />
 			<div className="absolute bg-primary opacity-50 w-full h-full top-0 left-0" />
-			<div className="relative">
+			<div className="relative max-w-160 w-full">
 				<div className="border opacity-25 border-dotted w-16 h-16 absolute -top-16 left-16 box-border" />
 				<div className="border opacity-25 border-dotted w-32 h-32 absolute -top-32 left-48 box-border" />
 				<div className="border opacity-25 border-dotted w-16 h-16 absolute -top-16 left-80 box-border" />

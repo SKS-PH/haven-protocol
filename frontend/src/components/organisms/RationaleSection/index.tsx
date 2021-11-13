@@ -4,7 +4,7 @@ export const RationaleSection: Component = () => {
 	return (
 		<>
 			<section id="what-is-haven">
-				<div className="container mx-auto py-16 box-border">
+				<div className="container md:max-w-screen-md mx-auto py-16 box-border">
 					<h2 className="font-light text-6xl">What is Haven?</h2>
 					<p className="text-2xl">
 						Hello. Well, Marty, I'm almost eighteen-years-old, it's not like I've never parked before.

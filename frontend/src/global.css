@@ -8,7 +8,13 @@
   --font-family-base: var(--font-family-1);
 
 	--size-header: 6rem;
-	--size-sidebar: 240px;
+	--size-sidebar-lg: calc(50% - 180px);
+	--size-sidebar-xl: calc(50% - 270px);
+	--size-sidebar-2xl: calc(50% - 360px);
+
+	--size-container-lg: calc(50% + 180px);
+	--size-container-xl: calc(50% + 270px);
+	--size-container-2xl: calc(50% + 360px);
 }
 
 :root {
