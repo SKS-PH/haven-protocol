@@ -11,7 +11,8 @@ export const Header = () => {
 				"--color-bg-header": "var(--color-negative-plus-3)",
 			}}
 		>
-			<div className="px-4 h-full box-border">
+			<div className="absolute pointer-events-none bottom-0 left-0 w-full h-0.25 opacity-10 bg-current" />
+			<div className="px-4 h-full box-border relative">
 				<div className="flex justify-between items-center h-full">
 					<div className="mr-4">
 						<Link href="/" className="no-underline">
