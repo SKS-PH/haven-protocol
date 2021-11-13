@@ -19,7 +19,7 @@ export const CtaSection: Component = () => {
 				<div>
 					<form>
 						<Button block variant={ButtonVariant.FILLED}>
-							<Icon name="metamask" className="h-8" />
+							<Icon name="wallet" className="h-8" />
 							<span>Connect Wallet</span>
 						</Button>
 					</form>

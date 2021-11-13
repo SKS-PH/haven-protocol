@@ -43,7 +43,7 @@ export const HeroSection: Component = () => {
 						<div className="sm:w-0 flex-auto">
 							<form>
 								<Button block variant={ButtonVariant.FILLED_INVERSE}>
-									<Icon name="metamask" className="h-8" />
+									<Icon name="wallet" className="h-8" />
 									<span>Connect Wallet</span>
 								</Button>
 							</form>
