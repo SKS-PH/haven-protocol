@@ -1,5 +1,5 @@
 import { Component } from "solid-js";
-import { Button, ButtonVariant, Select } from "@haven/web-components-solid";
+import { Button, ButtonVariant, SearchInput } from "@haven/web-components-solid";
 import { Icon } from "components/molecules/Icon";
 
 export const CtaSection: Component = () => {
