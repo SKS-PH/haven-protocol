@@ -1,6 +1,6 @@
 module.exports = {
 	purge: [],
-	darkMode: false, // or 'media' or 'class'
+	darkMode: "media", // or 'media' or 'class'
 	theme: {
 		maxWidth: {
 			160: "40rem",
@@ -22,9 +22,11 @@ module.exports = {
 				sidebar: "var(--size-sidebar)",
 			},
 			colors: {
+				inherit: "inherit",
 				bg: "var(--color-bg)",
 				fg: "var(--color-fg)",
 				"fg-inverse": "var(--color-fg-inverse)",
+				"bg-inverse": "var(--color-bg-inverse)",
 				primary: "var(--color-primary)",
 				secondary: "var(--color-secondary)",
 				header: "var(--color-bg-header)",
@@ -36,7 +38,9 @@ module.exports = {
 		},
 	},
 	variants: {
-		extend: {},
+		extend: {
+			opacity: ["dark"],
+		},
 	},
 	plugins: [],
 };

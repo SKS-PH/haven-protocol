@@ -10,10 +10,10 @@ export const Navigation: Component = () => {
 				"background-color": "var(--color-bg-sidebar)",
 			}}
 		>
-			<div className="absolute pointer-events-none top-0 right-0 w-full h-0.25 md:h-full md:w-0.25 opacity-10 bg-current" />
+			<div className="absolute pointer-events-none top-0 right-0 w-full h-0.25 md:h-full md:w-0.25 opacity-10 dark:opacity-25 bg-current" />
 			<nav>
 				<h2 className="sr-only">Navigation</h2>
-				<div className="flex md:flex-col">
+				<div className="flex md:flex-col md:py-4">
 					<NavLink iconName="home" href="/my/home" badge="9+">
 						Home
 					</NavLink>

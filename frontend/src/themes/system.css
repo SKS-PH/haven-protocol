@@ -1,0 +1,35 @@
+:root {
+	--font-family-1: 'Red Hat Text', sans-serif;
+}
+
+:root {
+  --color-negative: #eeeeee;
+  --color-negative-plus-3: #ffffff;
+  --color-negative-plus-2: #f8f8f8;
+  --color-negative-plus-1: #f4f4f4;
+  --color-positive: #333333;
+	--color-positive-plus-3: black;
+	--color-positive-plus-2: #111111;
+	--color-positive-plus-1: #191919;
+	--color-negative-inverse: black;
+  --color-positive-inverse: white;
+  --color-accent-1: #7950E2;
+  --color-accent-2: #51BD96;
+}
+
+@media (prefers-color-scheme: dark) {
+	:root {
+		--color-positive: #eeeeee;
+		--color-positive-plus-3: #ffffff;
+		--color-positive-plus-2: #f8f8f8;
+		--color-positive-plus-1: #f4f4f4;
+		--color-negative: #222222;
+		--color-negative-plus-1: #191919;
+		--color-negative-plus-2: #111111;
+		--color-negative-plus-3: black;
+		--color-negative-inverse: black;
+		--color-positive-inverse: white;
+		--color-accent-1: #af8fff;
+		--color-accent-2: #51BD96;
+	}
+}

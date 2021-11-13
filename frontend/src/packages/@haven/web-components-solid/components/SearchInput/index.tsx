@@ -1,28 +1,30 @@
 import { Component, JSX } from "solid-js";
-import { TextInputSize } from "../../utils/textInput";
+import { TextControlSize } from "../../utils/textControl";
 
-const SIZE_CLASSES: Record<TextInputSize, string> = {
-	[TextInputSize.MEDIUM]: "h-12 pr-12",
+const SIZE_CLASSES: Record<TextControlSize, string> = {
+	[TextControlSize.SMALL]: "h-10 pr-10",
+	[TextControlSize.MEDIUM]: "h-12 pr-12",
 };
 
-const INDICATOR_CLASSES: Record<TextInputSize, string> = {
-	[TextInputSize.MEDIUM]: "w-12",
+const INDICATOR_CLASSES: Record<TextControlSize, string> = {
+	[TextControlSize.SMALL]: "w-10",
+	[TextControlSize.MEDIUM]: "w-12",
 };
 
 type SearchInputProps = JSX.IntrinsicElements["input"] & {
-	size?: TextInputSize;
+	size?: TextControlSize;
 	block?: boolean;
 };
 
 export const SearchInput: Component<SearchInputProps> = (props) => {
-	const sizeClassNames = SIZE_CLASSES[props.size ?? TextInputSize.MEDIUM];
-	const indicatorClassNames = INDICATOR_CLASSES[props.size ?? TextInputSize.MEDIUM];
+	const sizeClassNames = SIZE_CLASSES[props.size ?? TextControlSize.MEDIUM];
+	const indicatorClassNames = INDICATOR_CLASSES[props.size ?? TextControlSize.MEDIUM];
 
 	return (
 		<div className={`relative ${!props.block && "inline-block align-middle"}`}>
 			<input
 				{...props}
-				className={`w-full focus:outline-none box-border border bg-transparent border-solid rounded-full pl-4 placeholder:uppercase border-primary ${sizeClassNames} relative`}
+				className={`w-full disabled:cursor-not-allowed bg-transparent text-inherit focus:outline-none box-border border border-solid rounded-full pl-4 placeholder:uppercase border-primary ${sizeClassNames} relative`}
 				type="search"
 				placeholder={props.placeholder}
 			/>

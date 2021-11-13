@@ -28,29 +28,32 @@ export const LinkButton = <T extends ValidConstructor = "a">(props: LinkButtonPr
 	const RenderedComponent = props.component ?? "a";
 
 	// FIXME
-	if (RenderedComponent === "a") {
-		return (
-			<a
-				{...props}
-				href={props.href}
-				className={`leading-none text-center box-border border border-solid cursor-pointer px-4 space-x-2 ${
-					props.block ? "w-full flex" : "inline-flex"
-				} justify-center items-center uppercase font-bold rounded-full ${variantClassName} ${sizeClassName}`}
-			>
-				{props.children}
-			</a>
-		);
-	}
-
 	return (
-		<RenderedComponent
-			{...props}
-			href={props.href}
-			className={`leading-none text-center box-border border border-solid cursor-pointer px-4 space-x-2 ${
-				props.block ? "w-full flex" : "inline-flex"
-			} justify-center items-center uppercase font-bold rounded-full ${variantClassName} ${sizeClassName}`}
-		>
-			{props.children}
-		</RenderedComponent>
+		<>
+			<Show
+				when={RenderedComponent !== "a"}
+				fallback={
+					<a
+						{...props}
+						href={props.href}
+						className={`leading-none text-center box-border border border-solid cursor-pointer px-4 space-x-2 ${
+							props.block ? "w-full flex" : "inline-flex"
+						} justify-center items-center uppercase font-bold rounded-full ${variantClassName} ${sizeClassName}`}
+					>
+						{props.children}
+					</a>
+				}
+			>
+				<RenderedComponent
+					{...props}
+					href={props.href}
+					className={`leading-none text-center box-border border border-solid cursor-pointer px-4 space-x-2 ${
+						props.block ? "w-full flex" : "inline-flex"
+					} justify-center items-center uppercase font-bold rounded-full ${variantClassName} ${sizeClassName}`}
+				>
+					{props.children}
+				</RenderedComponent>
+			</Show>
+		</>
 	);
 };

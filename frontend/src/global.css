@@ -1,5 +1,6 @@
 :root {
   --color-bg: var(--color-negative);
+	--color-bg-inverse: var(--color-negative-inverse);
   --color-fg: var(--color-positive);
   --color-fg-inverse: var(--color-positive-inverse);
   --color-primary: var(--color-accent-1);
@@ -31,6 +32,10 @@ button {
 
 input {
   font: inherit;
+}
+
+select {
+	font: inherit;
 }
 
 h1 {

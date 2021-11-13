@@ -8,7 +8,7 @@ export const Footer: Component = () => {
 	const yearDisplay = thisYear === appYear ? thisYear : `${appYear}-${thisYear}`;
 
 	return (
-		<footer className="bg-fg text-fg-inverse">
+		<footer className="bg-bg-inverse text-fg-inverse">
 			<div className="container mx-auto py-16 box-border">
 				<div className="text-center space-y-8">
 					<div>

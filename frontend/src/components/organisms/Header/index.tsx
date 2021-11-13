@@ -6,12 +6,12 @@ import { Link } from "solid-app-router";
 export const Header = () => {
 	return (
 		<header
-			className="h-header bg-header fixed top-0 left-0 w-full z-10"
+			className="h-header bg-header fixed top-0 left-0 w-full z-20"
 			style={{
 				"--color-bg-header": "var(--color-negative-plus-3)",
 			}}
 		>
-			<div className="absolute pointer-events-none bottom-0 left-0 w-full h-0.25 opacity-10 bg-current" />
+			<div className="absolute pointer-events-none bottom-0 left-0 w-full h-0.25 dark:opacity-25 opacity-10 bg-current" />
 			<div className="px-4 h-full box-border relative">
 				<div className="flex justify-between items-center h-full">
 					<div className="mr-4">
