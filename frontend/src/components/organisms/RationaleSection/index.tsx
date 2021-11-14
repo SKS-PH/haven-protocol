@@ -1,4 +1,4 @@
-import { Component } from "solid-js";
+import { Component } from 'solid-js'
 
 export const RationaleSection: Component = () => {
 	return (
@@ -88,5 +88,5 @@ export const RationaleSection: Component = () => {
 				</div>
 			</section>
 		</>
-	);
-};
+	)
+}

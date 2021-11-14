@@ -1,14 +1,14 @@
-import { Logo } from "components/molecules/Logo";
-import { Icon } from "components/molecules/Icon";
-import { SearchInput, ButtonVariant, LinkButton, Button } from "@haven/web-components-solid";
-import { Link } from "solid-app-router";
+import { Logo } from 'components/molecules/Logo'
+import { Icon } from 'components/molecules/Icon'
+import { SearchInput, ButtonVariant, LinkButton, Button } from '@haven/web-components-solid'
+import { Link } from 'solid-app-router'
 
 export const Header = () => {
 	return (
 		<header
 			className="h-header bg-header fixed top-0 left-0 w-full z-20"
 			style={{
-				"--color-bg-header": "var(--color-negative-plus-3)",
+				'--color-bg-header': 'var(--color-negative-plus-3)',
 			}}
 		>
 			<div className="absolute pointer-events-none bottom-0 left-0 w-full h-0.25 dark:opacity-25 opacity-10 bg-current" />
@@ -53,5 +53,5 @@ export const Header = () => {
 				</div>
 			</div>
 		</header>
-	);
-};
+	)
+}

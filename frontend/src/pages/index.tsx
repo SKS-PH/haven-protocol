@@ -1,8 +1,8 @@
-import { LandingTemplate } from "components/templates/LandingTemplate";
-import { Component } from "solid-js";
+import { LandingTemplate } from 'components/templates/LandingTemplate'
+import { Component } from 'solid-js'
 
 const IndexPage: Component = () => {
-	return <LandingTemplate />;
-};
+	return <LandingTemplate />
+}
 
-export default IndexPage;
+export default IndexPage

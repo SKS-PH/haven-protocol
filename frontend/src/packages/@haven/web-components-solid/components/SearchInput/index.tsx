@@ -1,27 +1,27 @@
-import { Component, JSX } from "solid-js";
-import { TextControlSize } from "../../utils/textControl";
+import { Component, JSX } from 'solid-js'
+import { TextControlSize } from '../../utils/textControl'
 
 const SIZE_CLASSES: Record<TextControlSize, string> = {
-	[TextControlSize.SMALL]: "h-10 pr-10",
-	[TextControlSize.MEDIUM]: "h-12 pr-12",
-};
+	[TextControlSize.SMALL]: 'h-10 pr-10',
+	[TextControlSize.MEDIUM]: 'h-12 pr-12',
+}
 
 const INDICATOR_CLASSES: Record<TextControlSize, string> = {
-	[TextControlSize.SMALL]: "w-10",
-	[TextControlSize.MEDIUM]: "w-12",
-};
+	[TextControlSize.SMALL]: 'w-10',
+	[TextControlSize.MEDIUM]: 'w-12',
+}
 
-type SearchInputProps = JSX.IntrinsicElements["input"] & {
+type SearchInputProps = JSX.IntrinsicElements['input'] & {
 	size?: TextControlSize;
 	block?: boolean;
-};
+}
 
 export const SearchInput: Component<SearchInputProps> = (props) => {
-	const sizeClassNames = SIZE_CLASSES[props.size ?? TextControlSize.MEDIUM];
-	const indicatorClassNames = INDICATOR_CLASSES[props.size ?? TextControlSize.MEDIUM];
+	const sizeClassNames = SIZE_CLASSES[props.size ?? TextControlSize.MEDIUM]
+	const indicatorClassNames = INDICATOR_CLASSES[props.size ?? TextControlSize.MEDIUM]
 
 	return (
-		<div className={`relative ${!props.block && "inline-block align-middle"}`}>
+		<div className={`relative ${!props.block && 'inline-block align-middle'}`}>
 			<input
 				{...props}
 				className={`w-full disabled:cursor-not-allowed bg-transparent text-inherit focus:outline-none box-border border border-solid rounded-full pl-4 placeholder:uppercase border-primary ${sizeClassNames} relative`}
@@ -42,5 +42,5 @@ export const SearchInput: Component<SearchInputProps> = (props) => {
 				</svg>
 			</div>
 		</div>
-	);
-};
+	)
+}

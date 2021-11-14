@@ -1,6 +1,6 @@
-import { Component } from "solid-js";
-import { Button, ButtonVariant, SearchInput } from "@haven/web-components-solid";
-import { Icon } from "components/molecules/Icon";
+import { Component } from 'solid-js'
+import { Button, ButtonVariant, SearchInput } from '@haven/web-components-solid'
+import { Icon } from 'components/molecules/Icon'
 
 export const CtaSection: Component = () => {
 	return (
@@ -26,5 +26,5 @@ export const CtaSection: Component = () => {
 				</div>
 			</div>
 		</section>
-	);
-};
+	)
+}

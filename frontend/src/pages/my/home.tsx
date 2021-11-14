@@ -1,7 +1,7 @@
-import { Component } from "solid-js";
-import { Header } from "components/organisms/Header";
-import { Navigation } from "components/organisms/Navigation";
-import { Select, TextControlSize } from "@haven/web-components-solid";
+import { Component } from 'solid-js'
+import { Header } from 'components/organisms/Header'
+import { Navigation } from 'components/organisms/Navigation'
+import { Select, TextControlSize } from '@haven/web-components-solid'
 
 const HomePage: Component = () => {
 	return (
@@ -27,12 +27,12 @@ const HomePage: Component = () => {
 											size={TextControlSize.SMALL}
 											options={[
 												{
-													label: "Recent",
-													value: "created_at",
+													label: 'Recent',
+													value: 'created_at',
 												},
 												{
-													label: "Most Viewed",
-													value: "view_count",
+													label: 'Most Viewed',
+													value: 'view_count',
 												},
 											]}
 										/>
@@ -50,7 +50,7 @@ const HomePage: Component = () => {
 				</div>
 			</main>
 		</div>
-	);
-};
+	)
+}
 
-export default HomePage;
+export default HomePage

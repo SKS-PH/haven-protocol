@@ -1,13 +1,13 @@
-import { Component } from "solid-js";
-import { NavLink } from "components/organisms/NavLink";
+import { Component } from 'solid-js'
+import { NavLink } from 'components/organisms/NavLink'
 
 export const Navigation: Component = () => {
 	return (
 		<aside
 			className="fixed bottom-0 left-0 w-full h-16 lg:w-sidebar-lg xl:w-sidebar-xl 2xl:w-sidebar-2xl lg:h-full lg:pt-header box-border"
 			style={{
-				"--color-bg-sidebar": "var(--color-negative-plus-2)",
-				"background-color": "var(--color-bg-sidebar)",
+				'--color-bg-sidebar': 'var(--color-negative-plus-2)',
+				'background-color': 'var(--color-bg-sidebar)',
 			}}
 		>
 			<div className="absolute pointer-events-none top-0 right-0 w-full h-0.25 lg:h-full lg:w-0.25 opacity-10 dark:opacity-25 bg-current" />
@@ -26,5 +26,5 @@ export const Navigation: Component = () => {
 				</div>
 			</nav>
 		</aside>
-	);
-};
+	)
+}

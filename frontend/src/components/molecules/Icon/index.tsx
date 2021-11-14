@@ -1,7 +1,7 @@
-import { Component, JSX } from "solid-js";
+import { Component, JSX } from 'solid-js'
 
 const ICONS = {
-	settings: (props: JSX.IntrinsicElements["svg"]) => (
+	settings: (props: JSX.IntrinsicElements['svg']) => (
 		<svg {...props} viewBox="0 0 24 24" fill="none">
 			<path
 				d="M12 15C13.6569 15 15 13.6569 15 12C15 10.3431 13.6569 9 12 9C10.3431 9 9 10.3431 9 12C9 13.6569 10.3431 15 12 15Z"
@@ -17,7 +17,7 @@ const ICONS = {
 			/>
 		</svg>
 	),
-	home: (props: JSX.IntrinsicElements["svg"]) => (
+	home: (props: JSX.IntrinsicElements['svg']) => (
 		<svg {...props} viewBox="0 0 24 24" fill="none">
 			<path d="M3 9.5L12 4L21 9.5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" />
 			<path
@@ -28,7 +28,7 @@ const ICONS = {
 			/>
 		</svg>
 	),
-	search: (props: JSX.IntrinsicElements["svg"]) => (
+	search: (props: JSX.IntrinsicElements['svg']) => (
 		<svg {...props} viewBox="0 0 24 24" fill="none">
 			<path d="M15.5 15.5L19 19" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" />
 			<path
@@ -39,7 +39,7 @@ const ICONS = {
 			/>
 		</svg>
 	),
-	github: (props: JSX.IntrinsicElements["svg"]) => (
+	github: (props: JSX.IntrinsicElements['svg']) => (
 		<svg {...props} viewBox="0 0 24 24" fill="none">
 			<path
 				d="M16 22.0268V19.1568C16.0375 18.68 15.9731 18.2006 15.811 17.7506C15.6489 17.3006 15.3929 16.8902 15.06 16.5468C18.2 16.1968 21.5 15.0068 21.5 9.54679C21.4997 8.15062 20.9627 6.80799 20 5.79679C20.4558 4.5753 20.4236 3.22514 19.91 2.02679C19.91 2.02679 18.73 1.67679 16 3.50679C13.708 2.88561 11.292 2.88561 8.99999 3.50679C6.26999 1.67679 5.08999 2.02679 5.08999 2.02679C4.57636 3.22514 4.54413 4.5753 4.99999 5.79679C4.03011 6.81549 3.49251 8.17026 3.49999 9.57679C3.49999 14.9968 6.79998 16.1868 9.93998 16.5768C9.61098 16.9168 9.35725 17.3222 9.19529 17.7667C9.03334 18.2112 8.96679 18.6849 8.99999 19.1568V22.0268"
@@ -55,7 +55,7 @@ const ICONS = {
 			/>
 		</svg>
 	),
-	wallet: (props: JSX.IntrinsicElements["svg"]) => (
+	wallet: (props: JSX.IntrinsicElements['svg']) => (
 		<svg {...props} viewBox="0 0 24 24" fill="none">
 			<path
 				d="M19 20H5C3.89543 20 3 19.1046 3 18V9C3 7.89543 3.89543 7 5 7H19C20.1046 7 21 7.89543 21 9V18C21 19.1046 20.1046 20 19 20Z"
@@ -74,7 +74,7 @@ const ICONS = {
 			/>
 		</svg>
 	),
-	link: (props: JSX.IntrinsicElements["svg"]) => (
+	link: (props: JSX.IntrinsicElements['svg']) => (
 		<svg {...props} viewBox="0 0 24 24" fill="none">
 			<path
 				d="M14 11.9976C14 9.5059 11.683 7 8.85714 7C8.52241 7 7.41904 7.00001 7.14286 7.00001C4.30254 7.00001 2 9.23752 2 11.9976C2 14.376 3.70973 16.3664 6 16.8714C6.36756 16.9525 6.75006 16.9952 7.14286 16.9952"
@@ -90,7 +90,7 @@ const ICONS = {
 			/>
 		</svg>
 	),
-	plus: (props: JSX.IntrinsicElements["svg"]) => (
+	plus: (props: JSX.IntrinsicElements['svg']) => (
 		<svg {...props} viewBox="0 0 24 24" fill="none">
 			<path
 				d="M6 12H12M18 12H12M12 12V6M12 12V18"
@@ -100,7 +100,7 @@ const ICONS = {
 			/>
 		</svg>
 	),
-	marketplace: (props: JSX.IntrinsicElements["svg"]) => (
+	marketplace: (props: JSX.IntrinsicElements['svg']) => (
 		<svg {...props} viewBox="0 0 24 24" fill="none">
 			<path
 				d="M20.485 3H16.4933L16.9933 8C16.9933 8 17.9933 9 19.4933 9C20.5703 9 21.3036 8.48445 21.6316 8.1937C21.7623 8.07782 21.8101 7.90091 21.7814 7.72861L21.0768 3.50136C21.0286 3.21205 20.7783 3 20.485 3Z"
@@ -134,7 +134,7 @@ const ICONS = {
 			/>
 		</svg>
 	),
-	metamask: (props: JSX.IntrinsicElements["svg"]) => (
+	metamask: (props: JSX.IntrinsicElements['svg']) => (
 		<svg {...props} viewBox="0 0 318.6 318.6">
 			<style type="text/css">
 				{`
@@ -210,16 +210,16 @@ const ICONS = {
 			/>
 		</svg>
 	),
-};
+}
 
-export type IconName = keyof typeof ICONS;
+export type IconName = keyof typeof ICONS
 
-export type IconProps = JSX.IntrinsicElements["svg"] & {
+export type IconProps = JSX.IntrinsicElements['svg'] & {
 	name: IconName;
-};
+}
 
 export const Icon: Component<IconProps> = (props) => {
-	const IconGraphic = ICONS[props.name];
+	const IconGraphic = ICONS[props.name]
 
-	return <IconGraphic {...props} />;
-};
+	return <IconGraphic {...props} />
+}

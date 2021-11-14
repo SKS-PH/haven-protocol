@@ -1,13 +1,13 @@
-import { Component } from "solid-js";
-import { Icon, IconName } from "components/molecules/Icon";
-import { Badge } from "@haven/web-components-solid";
-import { Link } from "solid-app-router";
+import { Component } from 'solid-js'
+import { Icon, IconName } from 'components/molecules/Icon'
+import { Badge } from '@haven/web-components-solid'
+import { Link } from 'solid-app-router'
 
 type NavLinkProps = {
 	badge?: string;
 	iconName: IconName;
 	href: string;
-};
+}
 
 export const NavLink: Component<NavLinkProps> = (props) => {
 	return (
@@ -27,5 +27,5 @@ export const NavLink: Component<NavLinkProps> = (props) => {
 			</span>
 			<span className="lg:flex-auto lg:order-2 font-bold text-sm lg:text-base">{props.children}</span>
 		</Link>
-	);
-};
+	)
+}

@@ -1,11 +1,11 @@
-import { Component } from "solid-js";
-import { Icon } from "components/molecules/Icon";
-import * as config from "haven.config";
+import { Component } from 'solid-js'
+import { Icon } from 'components/molecules/Icon'
+import * as config from 'haven.config'
 
 export const Footer: Component = () => {
-	const thisYear = new Date().getFullYear().toString();
-	const appYear = config.meta.appYear.toString();
-	const yearDisplay = thisYear === appYear ? thisYear : `${appYear}-${thisYear}`;
+	const thisYear = new Date().getFullYear().toString()
+	const appYear = config.meta.appYear.toString()
+	const yearDisplay = thisYear === appYear ? thisYear : `${appYear}-${thisYear}`
 
 	return (
 		<footer className="bg-bg-inverse text-fg-inverse">
@@ -21,7 +21,7 @@ export const Footer: Component = () => {
 					<div className="inline-flex space-x-4">
 						<a href={config.meta.repoUrl}>
 							<Icon name="github" className="w-6" />
-						</a>{" "}
+						</a>{' '}
 						<a href={config.meta.foundationUrl}>
 							<Icon name="link" className="w-6" />
 						</a>
@@ -29,5 +29,5 @@ export const Footer: Component = () => {
 				</div>
 			</div>
 		</footer>
-	);
-};
+	)
+}
