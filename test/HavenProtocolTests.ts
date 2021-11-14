@@ -117,22 +117,23 @@ describe('HavenProtocol', () => {
 		})
 		it('Should transfer balance back to user but not locked amount', async () => {
 			const [, signer1] = await ethers.getSigners()
-			const initialWalletBalance = await havenToken.balanceOf(signer1.address)
 			const subAmount = 50
 			const subFee = await havenToSubscribeTo.subscriptionFee()
 			await havenTokenAsSigner1.approve(havenProtocol.address, subAmount)
 			const subTx = await havenProtocolAsSigner1.subscribe(subAmount, havenToSubscribeTo.address)
 			await subTx.wait()
+			const walletBalanceBeforeUnsub = await havenToken.balanceOf(signer1.address)
+			const [, , havenBalanceAfterSub] = await havenProtocol.havenToSubscriber(havenToSubscribeTo.address, signer1.address)
 
 			const unsubTx = await havenProtocolAsSigner1.unsubscribe(havenToSubscribeTo.address)
 			await unsubTx.wait()
 
-			const actualWalletBalance = await havenToken.balanceOf(signer1.address)
-			expect(actualWalletBalance).to.be.equal(initialWalletBalance.sub(subFee))
+			const walletBalanceAfterUnsub = await havenToken.balanceOf(signer1.address)
+			expect(walletBalanceAfterUnsub).to.be.equal(walletBalanceBeforeUnsub.add(havenBalanceAfterSub))
 
-			const [, lockedAmount, balance] = await havenProtocol.havenToSubscriber(havenToSubscribeTo.address, signer1.address)
+			const [, lockedAmount, havenBalanceAfterUnsub] = await havenProtocol.havenToSubscriber(havenToSubscribeTo.address, signer1.address)
 			expect(lockedAmount).to.be.equal(subFee)
-			expect(balance).to.be.equal(0)
+			expect(havenBalanceAfterUnsub).to.be.equal(0)
 		})
 	})
 })
