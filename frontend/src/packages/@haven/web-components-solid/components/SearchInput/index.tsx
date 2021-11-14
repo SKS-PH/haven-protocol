@@ -17,19 +17,19 @@ type SearchInputProps = JSX.IntrinsicElements['input'] & {
 }
 
 export const SearchInput: Component<SearchInputProps> = (props) => {
-	const sizeClassNames = SIZE_CLASSES[props.size ?? TextControlSize.MEDIUM]
-	const indicatorClassNames = INDICATOR_CLASSES[props.size ?? TextControlSize.MEDIUM]
+	const indicatorClassName = () => INDICATOR_CLASSES[props.size ?? TextControlSize.MEDIUM]
+	const sizeClassName = () => SIZE_CLASSES[props.size ?? TextControlSize.MEDIUM]
 
 	return (
 		<div className={`relative ${!props.block && 'inline-block align-middle'}`}>
 			<input
 				{...props}
-				className={`w-full disabled:cursor-not-allowed bg-transparent text-inherit focus:outline-none box-border border border-solid rounded-full pl-4 placeholder:uppercase border-primary ${sizeClassNames} relative`}
+				className={`w-full disabled:cursor-not-allowed bg-transparent text-inherit focus:outline-none box-border border border-solid rounded-full pl-4 placeholder:uppercase border-primary ${sizeClassName()} relative`}
 				type="search"
 				placeholder={props.placeholder}
 			/>
 			<div
-				className={`absolute top-0 right-0 h-full pointer-events-none flex justify-center items-center ${indicatorClassNames}`}
+				className={`absolute top-0 right-0 h-full pointer-events-none flex justify-center items-center ${indicatorClassName()}`}
 			>
 				<svg className="w-6" viewBox="0 0 24 24" fill="none">
 					<path d="M15.5 15.5L19 19" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" />

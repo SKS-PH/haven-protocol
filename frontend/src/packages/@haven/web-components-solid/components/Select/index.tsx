@@ -25,7 +25,7 @@ export type SelectProps = JSX.IntrinsicElements['select'] & {
 
 const RenderOptions: Component<Option> = (props) => {
 	return (
-		<Show when={props.options?.length ?? 0 > 0} fallback={<option value={props.value}>{props.label}</option>}>
+		<Show when={(props.options?.length ?? 0) > 0} fallback={<option value={props.value}>{props.label}</option>}>
 			<optgroup label={props.label}>
 				<RenderOptions label={props.label}>{props.children}</RenderOptions>
 			</optgroup>
@@ -34,21 +34,21 @@ const RenderOptions: Component<Option> = (props) => {
 }
 
 export const Select: Component<SelectProps> = (props) => {
-	const sizeClassNames = SIZE_CLASSES[props.size ?? TextControlSize.MEDIUM]
-	const indicatorClassNames = INDICATOR_CLASSES[props.size ?? TextControlSize.MEDIUM]
+	const indicatorClassName = () => INDICATOR_CLASSES[props.size ?? TextControlSize.MEDIUM]
+	const sizeClassName = () => SIZE_CLASSES[props.size ?? TextControlSize.MEDIUM]
 
 	return (
 		<span className={`relative ${!props.block ? 'inline-block align-middle' : 'block'}`}>
 			<select
 				{...props}
-				className={`w-full bg-bg text-inherit cursor-pointer disabled:cursor-not-allowed appearance-none focus:outline-none box-border border border-solid rounded-full pl-4 placeholder:uppercase border-primary ${sizeClassNames} relative`}
+				className={`w-full bg-bg text-inherit cursor-pointer disabled:cursor-not-allowed appearance-none focus:outline-none box-border border border-solid rounded-full pl-4 placeholder:uppercase border-primary ${sizeClassName()} relative`}
 			>
 				<For each={props.options} fallback={<></>}>
 					{(child: Option) => <RenderOptions label={child.label} options={child.options} value={child.value} />}
 				</For>
 			</select>
 			<span
-				className={`absolute top-0 right-0 h-full pointer-events-none flex justify-center items-center ${indicatorClassNames}`}
+				className={`absolute top-0 right-0 h-full pointer-events-none flex justify-center items-center ${indicatorClassName()}`}
 			>
 				<svg className="w-6" stroke="currentColor" viewBox="0 0 24 24" fill="none">
 					<polyline points="6 9 12 15 18 9" />

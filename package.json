@@ -1,5 +1,6 @@
 {
-	"name": "@haven/protocol",
+	"name": "@sks/haven-protocol",
+	"license": "UNLICENSED",
 	"engines": {
 		"node": ">=16.6.1"
 	},

@@ -14,7 +14,7 @@ const SIZE_CLASSES: Record<ButtonSize, string> = {
 	[ButtonSize.LARGE]: 'h-16',
 }
 
-export type LinkButtonProps<T extends ValidConstructor = 'a'> = JSX.HTMLAttributes<HTMLAnchorElement> & {
+export type LinkButtonProps<T extends ValidConstructor = 'a'> = JSX.IntrinsicElements['a'] & {
 	variant?: ButtonVariant;
 	size?: ButtonSize;
 	component?: T; // FIXME
@@ -23,8 +23,6 @@ export type LinkButtonProps<T extends ValidConstructor = 'a'> = JSX.HTMLAttribut
 }
 
 export const LinkButton = <T extends ValidConstructor = 'a'>(props: LinkButtonProps<T>) => {
-	const variantClassName = VARIANT_CLASSES[props.variant ?? ButtonVariant.OUTLINE]
-	const sizeClassName = SIZE_CLASSES[props.size ?? ButtonSize.MEDIUM]
 	const RenderedComponent = props.component ?? 'a'
 
 	// FIXME
@@ -38,7 +36,7 @@ export const LinkButton = <T extends ValidConstructor = 'a'>(props: LinkButtonPr
 						href={props.href}
 						className={`leading-none text-center box-border border border-solid cursor-pointer px-4 space-x-2 ${
 							props.block ? 'w-full flex' : 'inline-flex'
-						} justify-center items-center uppercase font-bold rounded-full ${variantClassName} ${sizeClassName}`}
+						} justify-center items-center uppercase font-bold rounded-full ${VARIANT_CLASSES[props.variant ?? ButtonVariant.OUTLINE]} ${SIZE_CLASSES[props.size ?? ButtonSize.MEDIUM]}`}
 					>
 						{props.children}
 					</a>
@@ -49,7 +47,7 @@ export const LinkButton = <T extends ValidConstructor = 'a'>(props: LinkButtonPr
 					href={props.href}
 					className={`leading-none text-center box-border border border-solid cursor-pointer px-4 space-x-2 ${
 						props.block ? 'w-full flex' : 'inline-flex'
-					} justify-center items-center uppercase font-bold rounded-full ${variantClassName} ${sizeClassName}`}
+					} justify-center items-center uppercase font-bold rounded-full ${VARIANT_CLASSES[props.variant ?? ButtonVariant.OUTLINE]} ${SIZE_CLASSES[props.size ?? ButtonSize.MEDIUM]}`}
 				>
 					{props.children}
 				</RenderedComponent>
