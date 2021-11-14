@@ -4,10 +4,11 @@ import { Haven, HavenProtocol, HavenToken } from '../typechain'
 
 describe('HavenProtocol', () => {
 	let havenProtocol: HavenProtocol
+	let havenToken: HavenToken
 	beforeEach(async () => {
 		const HavenProtocol = await ethers.getContractFactory('HavenProtocol')
 		const HavenToken = await ethers.getContractFactory('HavenToken')
-		const havenToken = await HavenToken.deploy()
+		havenToken = await HavenToken.deploy()
 		havenProtocol = await HavenProtocol.deploy(havenToken.address)
 		await havenProtocol.deployed()
 	})
@@ -32,22 +33,16 @@ describe('HavenProtocol', () => {
 	})
 	describe('#subscribe()', async () => {
 		let havenToSubscribeTo: Haven
-		let havenToken: HavenToken
 		let havenProtocolAsSigner1: HavenProtocol
 		let havenTokenAsSigner1: HavenToken
 
 		beforeEach(async () => {
 			const [deployer, signer1, signer2, signer3] = await ethers.getSigners()
-			const HavenProtocol = await ethers.getContractFactory('HavenProtocol')
-			const HavenToken = await ethers.getContractFactory('HavenToken')
-			havenToken = await HavenToken.deploy()
 			havenToken.transfer(signer1.address, 100)
 			havenToken.transfer(signer2.address, 100)
 			havenToken.transfer(signer3.address, 100)
 			havenTokenAsSigner1 = havenToken.connect(signer1)
-			havenProtocol = await HavenProtocol.deploy(havenToken.address)
 			havenProtocolAsSigner1 = havenProtocol.connect(signer1)
-			await havenProtocol.deployed()
 			const Haven = await ethers.getContractFactory('Haven')
 
 			const createHavenTx = await havenProtocol.createHaven(10)
