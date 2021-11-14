@@ -1,6 +1,20 @@
-import { render } from "solid-js/web";
+import { render } from 'solid-js/web'
+import { Router } from 'solid-app-router'
 
-import "./index.css";
-import App from "./App";
+import App from 'App'
+import routes from 'routes'
 
-render(() => <App />, document.getElementById("root") as HTMLElement);
+import 'tailwindcss/components.css'
+import 'tailwindcss/utilities.css'
+import 'global.css'
+
+const mountRoot = window.document.getElementById('root') as HTMLElement
+
+render(
+	() => (
+		<Router>
+			<App routes={routes} />
+		</Router>
+	),
+	mountRoot
+)

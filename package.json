@@ -1,4 +1,9 @@
 {
+	"name": "@sks/haven-protocol",
+	"license": "UNLICENSED",
+	"engines": {
+		"node": ">=16.6.1"
+	},
   "devDependencies": {
     "@nomiclabs/hardhat-ethers": "^2.0.2",
     "@nomiclabs/hardhat-etherscan": "^2.1.7",
