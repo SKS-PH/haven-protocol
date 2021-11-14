@@ -78,15 +78,15 @@ describe('HavenProtocol', () => {
 			havenToken.connect(signer3).approve(havenProtocol.address, 11)
 
 			await expect(havenProtocolAsSigner1.subscribe(9, havenToSubscribeTo.address)).to.be.revertedWith('Insufficient subscription amount!')
-			await expect(havenProtocol.connect(signer2).subscribe(10, havenToSubscribeTo.address)).to.be.ok
-			await expect(havenProtocol.connect(signer3).subscribe(11, havenToSubscribeTo.address)).to.be.ok
+			expect(havenProtocol.connect(signer2).subscribe(10, havenToSubscribeTo.address)).to.be.ok
+			expect(havenProtocol.connect(signer3).subscribe(11, havenToSubscribeTo.address)).to.be.ok
 		})
 		it('Should revert when address isn\'t a haven address otherwise ok', async () => {
 			const [, , someNonHavenAddress] = await ethers.getSigners()
 			havenTokenAsSigner1.approve(havenProtocol.address, 10)
 
 			await expect(havenProtocolAsSigner1.subscribe(10, someNonHavenAddress.address)).to.be.revertedWith('Invalid haven address!')
-			await expect(havenProtocolAsSigner1.subscribe(10, havenToSubscribeTo.address)).to.be.ok
+			expect(havenProtocolAsSigner1.subscribe(10, havenToSubscribeTo.address)).to.be.ok
 		})
 		it('Should transfer subscription fee token amount to haven address and update subscriber balances', async () => {
 			const [, signer1] = await ethers.getSigners()
