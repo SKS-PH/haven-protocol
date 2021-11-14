@@ -97,7 +97,7 @@ describe('HavenProtocol', () => {
 			await expect(havenProtocolAsSigner1.subscribe(10, havenToSubscribeTo.address)).to.be.ok
 		})
 		it('Should transfer subscription fee token amount to haven address and update subscriber balance', async () => {
-			const [_, signer1] = await ethers.getSigners()
+			const [, signer1] = await ethers.getSigners()
 			const subFee = 10
 			havenTokenAsSigner1.approve(havenProtocol.address, subFee)
 
