@@ -34,7 +34,4 @@ contract Haven is Ownable{
 
     function setSubscriptionFee(uint256 _fee) public onlyOwner {}
 
-    function subscribe() public {}
-
-    function unsubscribe() public {}
 }
