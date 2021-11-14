@@ -4,7 +4,9 @@ import { HardhatUserConfig, task } from 'hardhat/config'
 import '@nomiclabs/hardhat-etherscan'
 import '@nomiclabs/hardhat-waffle'
 import '@typechain/hardhat'
+import '@nomiclabs/hardhat-ethers'
 import 'hardhat-gas-reporter'
+import 'hardhat-deploy'
 import 'solidity-coverage'
 
 dotenv.config()
@@ -13,7 +15,6 @@ dotenv.config()
 // https://hardhat.org/guides/create-task.html
 task('accounts', 'Prints the list of accounts', async (taskArgs, hre) => {
 	const accounts = await hre.ethers.getSigners()
-
 	for (const account of accounts) {
 		console.log(account.address)
 	}
@@ -24,6 +25,9 @@ task('accounts', 'Prints the list of accounts', async (taskArgs, hre) => {
 
 const config: HardhatUserConfig = {
 	solidity: '0.8.4',
+	namedAccounts: {
+		deployer: 0
+	},
 	networks: {
 		ropsten: {
 			url: process.env.ROPSTEN_URL || '',
