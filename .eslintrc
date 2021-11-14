@@ -20,7 +20,8 @@
 			"off"
 		],
 		"linebreak-style": [
-			"off"
+			"error",
+			"unix"
 		],
 		"quotes": [
 			"off"
@@ -31,10 +32,6 @@
 		"@typescript-eslint/indent": [
 			"error",
 			"tab"
-		],
-		"@typescript-eslint/linebreak-style": [
-			"error",
-			"unix"
 		],
 		"@typescript-eslint/quotes": [
 			"error",
