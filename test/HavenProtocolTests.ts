@@ -9,7 +9,7 @@ describe('HavenProtocol', function () {
 			const Haven = await ethers.getContractFactory('Haven')
 			const havenProtocol = await HavenProtocol.deploy()
 			await havenProtocol.deployed()
-
+			
 			const createHavenTx = await havenProtocol.createHaven(10)
 			await createHavenTx.wait()
 
