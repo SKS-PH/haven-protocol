@@ -1,9 +1,9 @@
 import { expect } from 'chai'
 import { ethers, waffle } from 'hardhat'
 
-describe('HavenProtocol', function () {
-	describe('#createHaven()', function () {
-		it('Should emit created haven with caller as owner', async function () {
+describe('HavenProtocol', () => {
+	describe('#createHaven()', () => {
+		it('Should emit created haven with caller as owner', async () => {
 			const signer = (await ethers.getSigners())[0]
 			const HavenProtocol = await ethers.getContractFactory('HavenProtocol')
 			const Haven = await ethers.getContractFactory('Haven')
