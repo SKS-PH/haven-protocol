@@ -4,23 +4,37 @@ import { Haven, HavenProtocol, HavenToken } from '../typechain'
 
 describe('HavenProtocol', () => {
 	let havenProtocol: HavenProtocol
+	let havenProtocolAsSigner1: HavenProtocol
 	let havenToken: HavenToken
+	let havenTokenAsSigner1: HavenToken
+	let havenToSubscribeTo: Haven
+
 	beforeEach(async () => {
+		const [deployer , signer1] = await ethers.getSigners()
 		const HavenProtocol = await ethers.getContractFactory('HavenProtocol')
 		const HavenToken = await ethers.getContractFactory('HavenToken')
 		havenToken = await HavenToken.deploy()
 		havenProtocol = await HavenProtocol.deploy(havenToken.address)
 		await havenProtocol.deployed()
+		havenProtocolAsSigner1 = havenProtocol.connect(signer1)
+		havenToken.transfer(signer1.address, 100)
+		havenTokenAsSigner1 = havenToken.connect(signer1)
+		const Haven = await ethers.getContractFactory('Haven')
+
+		const createHavenTx = await havenProtocol.createHaven(10)
+		await createHavenTx.wait()
+
+		const havenToSubscribeToAddr = await havenProtocol.ownerToHavens(deployer.address, 0)
+		havenToSubscribeTo = Haven.attach(havenToSubscribeToAddr)
 	})
 	describe('#createHaven()', () => {
 		it('Should emit created haven with caller as owner', async () => {
 			const [signer0] = await ethers.getSigners()
 			const Haven = await ethers.getContractFactory('Haven')
-			
 			const createHavenTx = await havenProtocol.createHaven(10)
 			await createHavenTx.wait()
 
-			const newHavenAddr = await havenProtocol.ownerToHavens(signer0.address, 0)
+			const newHavenAddr = await havenProtocol.ownerToHavens(signer0.address, 1)
 			expect(newHavenAddr).is.not.equals(0)
 
 			await expect(createHavenTx)
@@ -32,25 +46,6 @@ describe('HavenProtocol', () => {
 		})
 	})
 	describe('#subscribe()', async () => {
-		let havenToSubscribeTo: Haven
-		let havenProtocolAsSigner1: HavenProtocol
-		let havenTokenAsSigner1: HavenToken
-
-		beforeEach(async () => {
-			const [deployer, signer1, signer2, signer3] = await ethers.getSigners()
-			havenToken.transfer(signer1.address, 100)
-			havenToken.transfer(signer2.address, 100)
-			havenToken.transfer(signer3.address, 100)
-			havenTokenAsSigner1 = havenToken.connect(signer1)
-			havenProtocolAsSigner1 = havenProtocol.connect(signer1)
-			const Haven = await ethers.getContractFactory('Haven')
-
-			const createHavenTx = await havenProtocol.createHaven(10)
-			await createHavenTx.wait()
-
-			const havenToSubscribeToAddr = await havenProtocol.ownerToHavens(deployer.address, 0)
-			havenToSubscribeTo = Haven.attach(havenToSubscribeToAddr)
-		})
 		it('Should subscribe user and emit a subscribe event', async () => {
 			const [, signer1] = await ethers.getSigners()
 			const subFee = 10
@@ -76,6 +71,8 @@ describe('HavenProtocol', () => {
 		})
 		it('Should revert when user\'s subscription fee value is not enough otherwise ok', async () => {
 			const [, , signer2, signer3] = await ethers.getSigners()
+			havenToken.transfer(signer2.address, 100)
+			havenToken.transfer(signer3.address, 100)
 			havenTokenAsSigner1.approve(havenProtocol.address, 9)
 			havenToken.connect(signer2).approve(havenProtocol.address, 10)
 			havenToken.connect(signer3).approve(havenProtocol.address, 11)
