@@ -13,6 +13,7 @@ contract HavenProtocol is Ownable {
         bool isSubscribed;
         uint256 lockedAmount;
         uint256 balance;
+        bool hasAccess;
     }
 
     mapping(address => mapping(address => Subscriber)) public havenToSubscriber;
@@ -22,6 +23,7 @@ contract HavenProtocol is Ownable {
     event HavenCreated(address indexed owner, address havenAddress);
 
     event UserSubscribed(address indexed havenAddress, address subscriber, uint256 subscriptionAmount, uint256 subscriptionFee);
+    event UserUnsubscribed(address indexed havenAddress, address subscriber);
 
     constructor(address _havenToken) {
         havenToken = HavenToken(_havenToken);
@@ -42,9 +44,18 @@ contract HavenProtocol is Ownable {
         havenToken.transferFrom(msg.sender, address(this), subscriptionAmount);
         uint256 subFee = Haven(havenAddress).subscriptionFee();
         uint256 balance = subscriptionAmount - subFee;
-        havenToSubscriber[havenAddress][msg.sender] = Subscriber(true, subFee, balance);
+        havenToSubscriber[havenAddress][msg.sender] = Subscriber(true, subFee, balance, true);
         emit UserSubscribed(havenAddress, msg.sender, subscriptionAmount, subFee);
     }
 
-    function unsubscribe() public {}
+    function unsubscribe(address havenAddress) public {
+        require(havenToSubscriber[havenAddress][msg.sender].isSubscribed, "You are not subscribed!");
+        Subscriber storage sub = havenToSubscriber[havenAddress][msg.sender];
+        if(sub.balance > 0) {
+            havenToken.transfer(msg.sender, sub.balance);
+            sub.balance = 0;
+        }
+        sub.isSubscribed = false;
+        emit UserUnsubscribed(havenAddress, msg.sender);
+    }
 }

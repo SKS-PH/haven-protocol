@@ -35,7 +35,7 @@ describe('HavenProtocol', () => {
 			await createHavenTx.wait()
 
 			const newHavenAddr = await havenProtocol.ownerToHavens(signer0.address, 1)
-			expect(newHavenAddr).is.not.equals(0)
+			expect(newHavenAddr).is.not.equal(0)
 
 			await expect(createHavenTx)
 				.to.emit(havenProtocol, 'HavenCreated')
@@ -58,7 +58,7 @@ describe('HavenProtocol', () => {
 				.withArgs(havenToSubscribeTo.address, signer1.address, subAmount, 10)
 
 			const [isSubscribedToHaven] = await havenProtocol.havenToSubscriber(havenToSubscribeTo.address, signer1.address)
-			expect(isSubscribedToHaven).to.be.equal(true)
+			expect(isSubscribedToHaven).to.be.true
 		})
 		it('Should revert when user is already subscribed', async () => {
 			const subFee = 10
@@ -99,6 +99,40 @@ describe('HavenProtocol', () => {
 			expect(signer1LockedAmount.add(signer1Balance)).to.be.equal(subAmount)
 			expect(signer1LockedAmount).to.be.equal(10)
 			expect(signer1Balance).to.be.equal(40)
+		})
+	})
+	describe('#unsubscribe()', async () => {
+		it('Should unsubscribe user and emit unsubscribe event', async () => {
+			const [, signer1] = await ethers.getSigners()
+			await havenTokenAsSigner1.approve(havenProtocol.address, 10)
+			const subTx = await havenProtocolAsSigner1.subscribe(10, havenToSubscribeTo.address)
+			await subTx.wait()
+
+			await expect(havenProtocolAsSigner1.unsubscribe(havenToSubscribeTo.address))
+				.to.emit(havenProtocol, 'UserUnsubscribed')
+				.withArgs(havenToSubscribeTo.address, signer1.address)
+
+			const [isSubscribed] = await havenProtocol.havenToSubscriber(havenToSubscribeTo.address, signer1.address)
+			expect(isSubscribed).to.be.false
+		})
+		it('Should transfer balance back to user but not locked amount', async () => {
+			const [, signer1] = await ethers.getSigners()
+			const initialWalletBalance = await havenToken.balanceOf(signer1.address)
+			const subAmount = 50
+			const subFee = await havenToSubscribeTo.subscriptionFee()
+			await havenTokenAsSigner1.approve(havenProtocol.address, subAmount)
+			const subTx = await havenProtocolAsSigner1.subscribe(subAmount, havenToSubscribeTo.address)
+			await subTx.wait()
+
+			const unsubTx = await havenProtocolAsSigner1.unsubscribe(havenToSubscribeTo.address)
+			await unsubTx.wait()
+
+			const actualWalletBalance = await havenToken.balanceOf(signer1.address)
+			expect(actualWalletBalance).to.be.equal(initialWalletBalance.sub(subFee))
+
+			const [, lockedAmount, balance] = await havenProtocol.havenToSubscriber(havenToSubscribeTo.address, signer1.address)
+			expect(lockedAmount).to.be.equal(subFee)
+			expect(balance).to.be.equal(0)
 		})
 	})
 })
