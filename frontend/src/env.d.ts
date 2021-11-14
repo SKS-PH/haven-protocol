@@ -1,6 +1,6 @@
 /// <reference types="vite/client" />
 
-interface ImportMetaEnv extends Readonly<Record<string, string>> {
+interface ImportMetaEnv extends Readonly<Record<string, unknown>> {
 	readonly VITE_REPO_URL: string;
 	readonly VITE_FOUNDATION_URL: string;
 	readonly VITE_DEV_NAME: string;

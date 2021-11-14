@@ -1,4 +1,4 @@
-import { JSX } from "solid-js";
+import { JSX, Show } from "solid-js";
 import { ValidConstructor } from "../../utils/types";
 import { ButtonSize, ButtonVariant } from "../../utils/button";
 

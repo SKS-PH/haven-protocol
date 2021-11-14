@@ -1,4 +1,4 @@
-import { Component, JSX } from "solid-js";
+import { Component, JSX, Show, For } from "solid-js";
 import { TextControlSize } from "../../utils/textControl";
 
 const SIZE_CLASSES: Record<TextControlSize, string> = {
@@ -13,19 +13,19 @@ const INDICATOR_CLASSES: Record<TextControlSize, string> = {
 
 type Option = {
 	label: string;
-	children?: Option[];
+	options?: Option[];
 	value?: string;
 };
 
 export type SelectProps = JSX.IntrinsicElements["select"] & {
 	size?: TextControlSize;
 	block?: boolean;
-	children?: Option[];
+	options?: Option[];
 };
 
 const RenderOptions: Component<Option> = (props) => {
 	return (
-		<Show when={props.children?.length ?? 0 > 0} fallback={<option value={props.value}>{props.label}</option>}>
+		<Show when={props.options?.length ?? 0 > 0} fallback={<option value={props.value}>{props.label}</option>}>
 			<optgroup label={props.label}>
 				<RenderOptions label={props.label}>{props.children}</RenderOptions>
 			</optgroup>
@@ -43,8 +43,8 @@ export const Select: Component<SelectProps> = (props) => {
 				{...props}
 				className={`w-full bg-bg text-inherit cursor-pointer disabled:cursor-not-allowed appearance-none focus:outline-none box-border border border-solid rounded-full pl-4 placeholder:uppercase border-primary ${sizeClassNames} relative`}
 			>
-				<For each={props.children} fallback={<></>}>
-					{(child) => <RenderOptions label={child.label} children={child.children} value={child.value} />}
+				<For each={props.options} fallback={<></>}>
+					{(child: Option) => <RenderOptions label={child.label} options={child.options} value={child.value} />}
 				</For>
 			</select>
 			<span

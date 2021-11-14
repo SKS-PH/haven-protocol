@@ -23,8 +23,9 @@ const HomePage: Component = () => {
 								<label className="flex items-center space-x-4 relative">
 									<span>Sort</span>
 									<span>
-										<Select size={TextControlSize.SMALL}>
-											{[
+										<Select
+											size={TextControlSize.SMALL}
+											options={[
 												{
 													label: "Recent",
 													value: "created_at",
@@ -34,7 +35,7 @@ const HomePage: Component = () => {
 													value: "view_count",
 												},
 											]}
-										</Select>
+										/>
 									</span>
 								</label>
 							</div>

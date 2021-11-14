@@ -13,5 +13,6 @@
 		"paths": {
 			"@haven/web-components-solid": ["packages/@haven/web-components-solid"]
 		}
-	}
+	},
+	"exclude": ["node_modules"]
 }
