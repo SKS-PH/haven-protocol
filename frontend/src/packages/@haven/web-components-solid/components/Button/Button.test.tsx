@@ -6,8 +6,8 @@ describe('Button', () => {
 	it('should render a button', () => {
 		render(() => (
 			<Button>
-		 		Hello
-		 	</Button>
+				Hello
+			</Button>
 		))
 		const button = screen.getByRole('button')
 		expect(button).toBeInTheDocument()
