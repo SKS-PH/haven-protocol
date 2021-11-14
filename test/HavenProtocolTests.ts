@@ -48,14 +48,14 @@ describe('HavenProtocol', () => {
 	describe('#subscribe()', async () => {
 		it('Should subscribe user and emit a subscribe event', async () => {
 			const [, signer1] = await ethers.getSigners()
-			const subFee = 10
-			havenTokenAsSigner1.approve(havenProtocol.address, subFee)
-			const subscribeTx = await havenProtocolAsSigner1.subscribe(subFee, havenToSubscribeTo.address)
+			const subAmount = 30
+			havenTokenAsSigner1.approve(havenProtocol.address, subAmount)
+			const subscribeTx = await havenProtocolAsSigner1.subscribe(subAmount, havenToSubscribeTo.address)
 			await subscribeTx.wait()
 
 			await expect(subscribeTx)
 				.to.emit(havenProtocol, 'UserSubscribed')
-				.withArgs(havenToSubscribeTo.address, signer1.address, subFee)
+				.withArgs(havenToSubscribeTo.address, signer1.address, subAmount, 10)
 
 			const [isSubscribedToHaven] = await havenProtocol.havenToSubscriber(havenToSubscribeTo.address, signer1.address)
 			expect(isSubscribedToHaven).to.be.equal(true)
@@ -88,15 +88,17 @@ describe('HavenProtocol', () => {
 			await expect(havenProtocolAsSigner1.subscribe(10, someNonHavenAddress.address)).to.be.revertedWith('Invalid haven address!')
 			await expect(havenProtocolAsSigner1.subscribe(10, havenToSubscribeTo.address)).to.be.ok
 		})
-		it('Should transfer subscription fee token amount to haven address and update subscriber balance', async () => {
+		it('Should transfer subscription fee token amount to haven address and update subscriber balances', async () => {
 			const [, signer1] = await ethers.getSigners()
-			const subFee = 10
-			havenTokenAsSigner1.approve(havenProtocol.address, subFee)
+			const subAmount = 50
+			havenTokenAsSigner1.approve(havenProtocol.address, subAmount)
 
-			await expect(() => havenProtocolAsSigner1.subscribe(subFee, havenToSubscribeTo.address))
-				.to.changeTokenBalance(havenToken, havenProtocol, subFee)
-			const [, signer1Balance] = await havenProtocol.havenToSubscriber(havenToSubscribeTo.address, signer1.address)
-			expect(signer1Balance).to.be.equal(subFee)
+			await expect(() => havenProtocolAsSigner1.subscribe(subAmount, havenToSubscribeTo.address))
+				.to.changeTokenBalance(havenToken, havenProtocol, subAmount)
+			const [, signer1LockedAmount, signer1Balance] = await havenProtocol.havenToSubscriber(havenToSubscribeTo.address, signer1.address)
+			expect(signer1LockedAmount.add(signer1Balance)).to.be.equal(subAmount)
+			expect(signer1LockedAmount).to.be.equal(10)
+			expect(signer1Balance).to.be.equal(40)
 		})
 	})
 })

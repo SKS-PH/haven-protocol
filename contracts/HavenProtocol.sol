@@ -11,6 +11,7 @@ contract HavenProtocol is Ownable {
 
     struct Subscriber {
         bool isSubscribed;
+        uint256 lockedAmount;
         uint256 balance;
     }
 
@@ -20,7 +21,7 @@ contract HavenProtocol is Ownable {
 
     event HavenCreated(address indexed owner, address havenAddress);
 
-    event UserSubscribed(address indexed havenAddress, address subscriber, uint256 subscriptionFee);
+    event UserSubscribed(address indexed havenAddress, address subscriber, uint256 subscriptionAmount, uint256 subscriptionFee);
 
     constructor(address _havenToken) {
         havenToken = HavenToken(_havenToken);
@@ -39,8 +40,10 @@ contract HavenProtocol is Ownable {
         require(Haven(havenAddress).subscriptionFee() <= subscriptionAmount, "Insufficient subscription amount!");
         require(!havenToSubscriber[havenAddress][msg.sender].isSubscribed, "You are already subscribed!");
         havenToken.transferFrom(msg.sender, address(this), subscriptionAmount);
-        havenToSubscriber[havenAddress][msg.sender] = Subscriber(true, subscriptionAmount);
-        emit UserSubscribed(havenAddress, msg.sender, subscriptionAmount);
+        uint256 subFee = Haven(havenAddress).subscriptionFee();
+        uint256 balance = subscriptionAmount - subFee;
+        havenToSubscriber[havenAddress][msg.sender] = Subscriber(true, subFee, balance);
+        emit UserSubscribed(havenAddress, msg.sender, subscriptionAmount, subFee);
     }
 
     function unsubscribe() public {}
