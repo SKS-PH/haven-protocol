@@ -97,7 +97,7 @@ describe('HavenProtocol', () => {
 			await havenTokenAsSigner1.approve(havenProtocol.address, subAmount)
 			const protocolFee = subFee.mul(await havenProtocol.protocolFeeBasisPoints()).div(10000) // 4.5% of subFee
 			const expectedUserBalance = subAmount.sub(subFee)
-			const expectedProtocolBalance = protocolFee.add(expectedUserBalance) // commission + user balance after sub fee
+			const expectedProtocolBalance = protocolFee.add(expectedUserBalance) // protocol fee + user balance after sub fee
 			const expectedHavenOwnerBalance = subFee.sub(protocolFee) // haven owner gets rest of sub fee
 			await expect(() => havenProtocolAsSigner1.subscribe(subAmount, havenToSubscribeTo.address))
 				.to.changeTokenBalances(havenToken, [havenProtocol, havenOwner], [expectedProtocolBalance, expectedHavenOwnerBalance])
