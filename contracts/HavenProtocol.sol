@@ -41,14 +41,14 @@ contract HavenProtocol is Ownable {
         require(havens[havenAddress], "Invalid haven address!");
         require(Haven(havenAddress).subscriptionFee() <= subscriptionAmount, "Insufficient subscription amount!");
         require(!havenToSubscriber[havenAddress][msg.sender].isSubscribed, "You are already subscribed!");
-        havenToken.transferFrom(msg.sender, address(this), subscriptionAmount);
         uint256 subFee = Haven(havenAddress).subscriptionFee();
         address havenOwner = Haven(havenAddress).owner();
         uint256 protFee = subFee * protocolFeeBasisPoints / 10000;
         uint256 ownerFee = subFee - protFee;
         uint256 balance = subscriptionAmount - subFee;
-        havenToken.transfer(havenOwner, ownerFee);
         havenToSubscriber[havenAddress][msg.sender] = Subscriber(true,  balance, true);
+        havenToken.transferFrom(msg.sender, address(this), subscriptionAmount);
+        havenToken.transfer(havenOwner, ownerFee);
         emit UserSubscribed(havenAddress, msg.sender, subscriptionAmount, subFee);
     }
 
