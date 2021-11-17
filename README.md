@@ -1,4 +1,4 @@
-## Setup
+# Setup
 First install dependencies by running:
 ```
 npm install
@@ -11,11 +11,29 @@ Run tests with:
 ```
 npx hardhat test
 ```
+## Running a local node
 To run a local hardhat dev node, open a new terminal and run:
 ```
-npx hardhat node
+npx hardhat node --show-accounts
 ```
+## Adding local node to Metamask
+Create a local hardhat network in metamask by doing the following:
+1. Navigate to Metamask Settings>Networks>Add Network.
+2. Label network name appropriately.
+2. In New RPC URL field paste rpc url from the previous step. It is usually `http://127.0.0.1:8545/`.
+3. For Chain ID, input `31337`. Metamask will return the correct one if that is wrong.
+4. Hit Save.
+## Adding a local test account to Metamask
+1. Navigate to Metamask Menu->Import Account.
+2. Select a local account's private key and paste.
+3. Hit Import.
+4. _Optional:_ Label the account nickname appropriately to avoid confusion.
+5. Repeat for as many test accounts as you want.
 
+**Reminder:** Don't send real ETH to these accounts.
+
+
+# Brain dump
 ## What do we want _Haven_ to do?
 
 1. Allow _Haven_ owners to post content.
