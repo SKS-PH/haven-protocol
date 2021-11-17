@@ -15,7 +15,7 @@ describe('HavenProtocol', () => {
 		const HavenProtocol = await ethers.getContractFactory('HavenProtocol')
 		const HavenToken = await ethers.getContractFactory('HavenToken')
 		havenToken = await HavenToken.deploy()
-		havenProtocol = await HavenProtocol.deploy(havenToken.address, 45) // 4.5%
+		havenProtocol = await HavenProtocol.deploy(havenToken.address, 450) // 4.5%
 		await havenProtocol.deployed()
 		havenProtocolAsSigner1 = havenProtocol.connect(signer1)
 		await havenToken.transfer(signer1.address, parseEther('100'))
