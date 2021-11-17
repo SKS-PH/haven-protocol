@@ -27,7 +27,7 @@ Create a local hardhat network in metamask by doing the following:
 1. Navigate to Metamask Menu->Import Account.
 2. Select a local account's private key and paste.
 3. Hit Import.
-4. _Optional:_ Label the account nickname appropriately to avoid confusion.
+4. _Optional:_ Label the account nickname appropriately to avoid confusion. e.g. Test Account #0
 5. Repeat for as many test accounts as you want.
 
 **Reminder:** Don't send real ETH to these accounts.
