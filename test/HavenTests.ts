@@ -11,7 +11,7 @@ describe('Haven', () => {
 		await haven.deployed()
 	})
 	describe('#post()', async () => {
-		it('Should emit created post', async() => {
+		it('Should emit created post', async () => {
 			const postUri = 'some://posturi'
 			const postTx = await haven.post(postUri)
 			const receipt = await postTx.wait()
