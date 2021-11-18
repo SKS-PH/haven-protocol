@@ -8,6 +8,6 @@ export namespace meta {
 }
 
 export namespace moralis {
-	export const serverUrl = 'https://localhost:6969'
-	export const appId = 'APP_ID'
+	export const serverUrl = import.meta.env.VITE_MORALIS_SERVER_URL
+	export const appId = import.meta.env.VITE_MORALIS_APP_ID
 }
