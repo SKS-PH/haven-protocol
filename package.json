@@ -5,6 +5,8 @@
 		"node": ">=16.6.1"
 	},
 	"scripts": {
+		"compile": "hardhat compile",
+		"test": "hardhat test",
 		"dev": "hardhat node --show-accounts"
 	},
   "devDependencies": {
