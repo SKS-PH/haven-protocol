@@ -1,11 +1,18 @@
-node_modules
-.env
-coverage
-coverage.json
-typechain
-
-#Hardhat files
-cache
-artifacts
+# JetBrains
 .idea/
+
+# Jest
+coverage/
+coverage.json
+
+# Node
+node_modules/
+
+# Hardhat
+cache/
+artifacts/
 deployments/
+typechain/
+
+# Haven
+.env

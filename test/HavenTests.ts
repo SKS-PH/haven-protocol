@@ -2,16 +2,16 @@ import { expect } from 'chai'
 import { ethers, waffle } from 'hardhat'
 import { Haven } from '../typechain'
 
-describe('Haven', function () {
+describe('Haven', () => {
 	let haven: Haven
 
-	beforeEach(async function() {
+	beforeEach(async () => {
 		const Haven = await ethers.getContractFactory('Haven')
 		haven = await Haven.deploy(10)
 		await haven.deployed()
 	})
-	describe('#post()', async function () {
-		it('Should emit created post ', async function () {
+	describe('#post()', async () => {
+		it('Should emit created post', async () => {
 			const postUri = 'some://posturi'
 			const postTx = await haven.post(postUri)
 			const receipt = await postTx.wait()
@@ -23,7 +23,7 @@ describe('Haven', function () {
 
 			expect((await haven.posts(0))[1]).to.equal(postUri)
 		})
-		it('Should allow only haven owner otherwise revert', async function() {
+		it('Should allow only haven owner otherwise revert', async () => {
 			const [ _, signer1 ] = await ethers.getSigners()
 			const postUri = 'some://posturi'
 			const postTx = await haven.post(postUri)
