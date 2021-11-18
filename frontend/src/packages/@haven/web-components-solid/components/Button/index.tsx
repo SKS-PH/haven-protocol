@@ -26,8 +26,6 @@ export const Button: Component<ButtonProps> = (props) => {
 	const blockClassName = () => localProps.block ? 'w-full flex' : 'inline-flex'
 	const type = () => props.type ?? 'button'
 
-	console.log(type())
-
 	return (
 		<button
 			{...etcProps}

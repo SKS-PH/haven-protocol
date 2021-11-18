@@ -1,5 +1,5 @@
-import { Moralis } from 'moralis'
-import * as config from 'haven.config'
+// import { Moralis } from 'moralis'
+// import * as config from 'haven.config'
 
 export default interface WalletService {
 	connect(): Promise<unknown>
@@ -23,6 +23,6 @@ export class WalletServiceImpl implements WalletService {
 	}
 
 	async disconnect(): Promise<void> {
-		await Moralis.User.logOut()
+		// await Moralis.User.logOut()
 	}
 }

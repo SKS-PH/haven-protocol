@@ -15,12 +15,12 @@ type Props = {
 }
 
 export const Logo: Component<Props> = (props) => {
-	const sizeClassName = SIZE_CLASSES[props.size ?? LogoSize.MEDIUM]
+	const sizeClassName = () => SIZE_CLASSES[props.size ?? LogoSize.MEDIUM]
 
 	return (
 		<div
 			role="presentation"
-			className={`inline-flex select-none justify-center items-center ${sizeClassName} border-current border-solid rounded`}
+			className={`inline-flex select-none justify-center items-center ${sizeClassName()} border-current border-solid rounded`}
 		>
       HVN
 		</div>

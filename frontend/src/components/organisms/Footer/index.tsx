@@ -3,9 +3,11 @@ import { Icon } from 'components/molecules/Icon'
 import * as config from 'haven.config'
 
 export const Footer: Component = () => {
-	const thisYear = new Date().getFullYear().toString()
-	const appYear = config.meta.appYear.toString()
-	const yearDisplay = thisYear === appYear ? thisYear : `${appYear}-${thisYear}`
+	const yearDisplay = () => {
+		const thisYear = new Date().getFullYear().toString()
+		const appYear = config.meta.appYear.toString()
+		return thisYear === appYear ? thisYear : `${appYear}-${thisYear}`
+	}
 
 	return (
 		<footer className="bg-bg-inverse text-fg-inverse">
@@ -16,7 +18,7 @@ export const Footer: Component = () => {
 						<p className="text-2xl lowercase m-0">{config.meta.appTagline}</p>
 					</div>
 					<p>
-						Copyright &copy; {config.meta.developerName} {yearDisplay}
+						Copyright &copy; {config.meta.developerName} {yearDisplay()}
 					</p>
 					<div className="inline-flex space-x-4">
 						<a href={config.meta.repoUrl}>
