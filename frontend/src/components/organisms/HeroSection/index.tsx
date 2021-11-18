@@ -1,11 +1,17 @@
-import { Component } from 'solid-js'
-import { Link } from 'solid-app-router'
-import { Logo, LogoSize } from 'components/molecules/Logo'
-import { ButtonVariant, LinkButton, Button } from '@haven/web-components-solid'
-import { Icon } from 'components/molecules/Icon'
+import {Component, Show} from 'solid-js'
+import {Logo, LogoSize} from 'components/molecules/Logo'
+import {Button, ButtonVariant, LinkButton} from '@haven/web-components-solid'
+import {Icon} from 'components/molecules/Icon'
 import * as config from 'haven.config'
+import {Wallet} from 'types/Moralis'
 
-export const HeroSection: Component = () => {
+type HeroSectionProps = {
+	wallet?: Wallet
+}
+
+export const HeroSection: Component<HeroSectionProps> = (props) => {
+	const connected = () => Boolean(props.wallet)
+
 	return (
 		<div className="h-screen box-border flex justify-center items-center relative text-fg-inverse overflow-hidden pt-header">
 			<div className="absolute w-full h-full top-0 left-0" style={{ background: 'black' }} />
@@ -36,17 +42,29 @@ export const HeroSection: Component = () => {
 					</div>
 					<div className="sm:flex space-y-4 sm:space-y-0 w-full sm:space-x-4 mt-8 sm:mt-12">
 						<div className="sm:w-0 flex-auto">
-							<LinkButton block component={Link} href="#what-is-haven" variant={ButtonVariant.OUTLINE_INVERSE}>
+							<LinkButton block component="a" href="#what-is-haven" variant={ButtonVariant.OUTLINE_INVERSE}>
 								Learn More
 							</LinkButton>
 						</div>
 						<div className="sm:w-0 flex-auto">
-							<form>
-								<Button block variant={ButtonVariant.FILLED_INVERSE}>
-									<Icon name="wallet" className="h-8" />
-									<span>Connect Wallet</span>
-								</Button>
-							</form>
+							<Show
+								when={connected()}
+								fallback={
+									<form>
+										<Button block variant={ButtonVariant.FILLED_INVERSE}>
+											<Icon name="wallet" className="h-8" />
+											<span>Connect Wallet</span>
+										</Button>
+									</form>
+								}
+							>
+								<LinkButton
+									block
+									variant={ButtonVariant.FILLED_INVERSE}
+								>
+									Create Haven
+								</LinkButton>
+							</Show>
 						</div>
 					</div>
 				</div>

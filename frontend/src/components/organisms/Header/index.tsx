@@ -1,16 +1,38 @@
-import { Logo } from 'components/molecules/Logo'
-import { Icon } from 'components/molecules/Icon'
-import {SearchInput, ButtonVariant, Button, LinkButton} from '@haven/web-components-solid'
-import { Link } from 'solid-app-router'
-import {WalletServiceImpl} from 'services/WalletService'
+import {Logo} from 'components/molecules/Logo'
+import {Icon} from 'components/molecules/Icon'
+import {Button, ButtonVariant, LinkButton, SearchInput} from '@haven/web-components-solid'
+import {Link} from 'solid-app-router'
+import {Component, JSX, Show} from 'solid-js'
+import {Wallet} from 'types/Moralis'
 
-const connectWallet = async (e: Event) => {
-	e.preventDefault()
-	const walletService = new WalletServiceImpl()
-	await walletService.connect()
+
+type HeaderProps = {
+	wallet?: Wallet,
+	dropdown?: string,
+	onLogout?: JSX.EventHandler<any, any>,
+	onLogin?: JSX.EventHandler<any, any>,
 }
 
-export const Header = () => {
+export const Header: Component<HeaderProps> = (props) => {
+	const ethAddress = () => {
+		if (props.wallet) {
+			return props.wallet.get('ethAddress')
+		}
+		return undefined
+	}
+
+	const displayEthAddress = () => {
+		if (props.wallet) {
+			const baseAddress = props.wallet.get('ethAddress')
+			return `0x${baseAddress.slice(2, 6).toUpperCase()}...${baseAddress.slice(-4).toUpperCase()}`
+		}
+		return undefined
+	}
+
+	const connected = () => Boolean(props.wallet)
+
+	const createHavenButtonVariant = () => connected() ? ButtonVariant.FILLED_INVERSE : ButtonVariant.OUTLINE
+
 	return (
 		<header
 			className="h-header bg-header fixed top-0 left-0 w-full z-20"
@@ -38,7 +60,7 @@ export const Header = () => {
 							<div>
 								<LinkButton
 									type="submit"
-									variant={ButtonVariant.OUTLINE}
+									variant={createHavenButtonVariant()}
 									component={Link}
 									href="/create-haven"
 								>
@@ -51,19 +73,57 @@ export const Header = () => {
 								</LinkButton>
 							</div>
 							<div>
-								<form
-									onSubmit={connectWallet}
+								<Show
+									when={connected()}
+									fallback={
+										<form
+											onSubmit={props.onLogin}
+										>
+											<Button
+												type="submit"
+												variant={ButtonVariant.FILLED}
+											>
+												<span>
+													<Icon name="wallet" className="w-6" />
+												</span>
+												<span className="sr-only md:not-sr-only">Connect</span>
+											</Button>
+										</form>
+									}
 								>
-									<Button
-										type="submit"
-										variant={ButtonVariant.FILLED}
-									>
-										<span>
-											<Icon name="wallet" className="w-6" />
-										</span>
-										<span className="sr-only md:not-sr-only">Connect</span>
-									</Button>
-								</form>
+									<div className="relative">
+										<LinkButton
+											variant={ButtonVariant.OUTLINE}
+											title={ethAddress()}
+											href="?dropdown=wallet"
+											component={Link}
+										>
+											<span className="block bg-primary text-fg-inverse w-8 h-8 flex items-center justify-center -ml-2 rounded-full">
+												<Icon name="wallet" className="w-6" />
+											</span>
+											<span className="sr-only md:not-sr-only normal-case">{displayEthAddress()}</span>
+										</LinkButton>
+										<Show
+											when={props.dropdown === 'wallet'}
+										>
+											<div
+												className="absolute top-full right-0"
+											>
+												<div className="bg-bg mt-3 rounded overflow-hidden">
+													<form
+														onSubmit={props.onLogout}
+													>
+														<button
+															className="text-fg bg-bg border-0 px-4 py-0 h-12"
+														>
+															Disconnect
+														</button>
+													</form>
+												</div>
+											</div>
+										</Show>
+									</div>
+								</Show>
 							</div>
 						</div>
 					</div>

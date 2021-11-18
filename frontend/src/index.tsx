@@ -1,5 +1,3 @@
-import { Buffer } from 'buffer'
-
 import { render } from 'solid-js/web'
 import { Router } from 'solid-app-router'
 
@@ -11,8 +9,6 @@ import 'tailwindcss/utilities.css'
 import 'global.css'
 
 const mountRoot = window.document.getElementById('root') as HTMLElement
-
-window.Buffer = Buffer
 
 render(
 	() => (

@@ -1,8 +1,15 @@
-import { Component } from 'solid-js'
-import { Button, ButtonVariant, SearchInput } from '@haven/web-components-solid'
+import {Component, Show} from 'solid-js'
+import {Button, ButtonVariant, LinkButton, SearchInput} from '@haven/web-components-solid'
 import { Icon } from 'components/molecules/Icon'
+import {Wallet} from 'types/Moralis'
 
-export const CtaSection: Component = () => {
+type CtaSectionProps = {
+	wallet?: Wallet
+}
+
+export const CtaSection: Component<CtaSectionProps> = (props) => {
+	const connected = () => Boolean(props.wallet)
+
 	return (
 		<section>
 			<div className="container mx-auto py-16 lg:flex items-center space-y-8 lg:space-y-0 lg:space-x-16 box-border text-center lg:text-left">
@@ -17,12 +24,24 @@ export const CtaSection: Component = () => {
 				</div>
 				<div>or</div>
 				<div>
-					<form>
-						<Button block variant={ButtonVariant.FILLED}>
-							<Icon name="wallet" className="h-8" />
-							<span>Connect Wallet</span>
-						</Button>
-					</form>
+					<Show
+						when={connected()}
+						fallback={
+							<form>
+								<Button block variant={ButtonVariant.FILLED_INVERSE}>
+									<Icon name="wallet" className="h-8" />
+									<span>Connect Wallet</span>
+								</Button>
+							</form>
+						}
+					>
+						<LinkButton
+							block
+							variant={ButtonVariant.FILLED}
+						>
+							Create Haven
+						</LinkButton>
+					</Show>
 				</div>
 			</div>
 		</section>

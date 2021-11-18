@@ -10,3 +10,7 @@ interface ImportMetaEnv extends Readonly<Record<string, unknown>> {
 	readonly VITE_MORALIS_SERVER_URL: string
 	readonly VITE_MORALIS_APP_ID: string
 }
+
+interface HavenWindow extends Window {
+	Moralis: unknown
+}
