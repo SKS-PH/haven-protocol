@@ -1,4 +1,4 @@
-import {Component, JSX, splitProps} from 'solid-js'
+import {Component, JSX, splitProps, Show} from 'solid-js'
 
 const ICONS = {
 	settings: (props: JSX.IntrinsicElements['svg']) => (
@@ -222,5 +222,13 @@ export const Icon: Component<IconProps> = (props) => {
 	const [localProps, etcProps] = splitProps(props, ['name'])
 	const IconGraphic = ICONS[localProps.name]
 
-	return <IconGraphic {...etcProps} />
+	return (
+		<Show
+			when={Boolean(ICONS[localProps.name])}
+		>
+			<IconGraphic
+				{...etcProps}
+			/>
+		</Show>
+	)
 }

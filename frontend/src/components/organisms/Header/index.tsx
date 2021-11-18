@@ -3,7 +3,7 @@ import {Icon} from 'components/molecules/Icon'
 import {Button, ButtonVariant, LinkButton, SearchInput} from '@haven/web-components-solid'
 import {Link} from 'solid-app-router'
 import {Component, JSX, Show} from 'solid-js'
-import {Wallet} from 'types/Moralis'
+import {Wallet} from 'packages/@haven/solid-moralis/types'
 
 
 type HeaderProps = {

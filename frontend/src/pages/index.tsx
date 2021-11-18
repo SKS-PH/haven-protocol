@@ -1,37 +1,26 @@
 import { LandingTemplate } from 'components/templates/LandingTemplate'
-import {Component, createResource} from 'solid-js'
-import {WalletServiceImpl} from 'services/WalletService'
-import { Wallet } from 'types/Moralis'
+import {Component, JSX} from 'solid-js'
 import { useLocation } from 'solid-app-router'
+import SubmitEvent from 'types/SubmitEvent'
+import {useMoralisWallet} from '@haven/solid-moralis'
+import * as config from 'haven.config'
 
 const IndexPage: Component = () => {
-	const [wallet, walletActions] = createResource<Wallet | undefined>(async () => {
-		const walletService = new WalletServiceImpl()
-		await walletService.initialize()
-		return walletService.getConnectedWallet()
+	const location = useLocation()
+	const searchParams = () => new URLSearchParams(location.search)
+	const [wallet, walletActions] = useMoralisWallet({
+		appId: config.moralis.appId,
+		serverUrl: config.moralis.serverUrl,
 	})
 
-	const location = useLocation()
-
-	const searchParams = () => {
-		return new URLSearchParams(location.search)
+	const connectWallet: JSX.EventHandler<HTMLFormElement, SubmitEvent> = async (e) => {
+		e.preventDefault()
+		await walletActions.connect()
 	}
 
-	const connectWallet = async (e: Event) => {
+	const disconnectWallet: JSX.EventHandler<HTMLFormElement, SubmitEvent> = async (e) => {
 		e.preventDefault()
-		const walletService = new WalletServiceImpl()
-		await walletService.initialize()
-		const user = await walletService.connect()
-		walletActions.mutate(user)
-	}
-
-	const disconnectWallet = async (e: Event) => {
-		e.preventDefault()
-		walletActions.mutate(undefined)
-
-		const walletService = new WalletServiceImpl()
-		await walletService.initialize()
-		await walletService.disconnect()
+		await walletActions.disconnect()
 	}
 
 	return (

@@ -4,13 +4,14 @@ import { RationaleSection } from 'components/organisms/RationaleSection'
 import { CtaSection } from 'components/organisms/CtaSection'
 import { Footer } from 'components/organisms/Footer'
 import { Header } from 'components/organisms/Header'
-import { Wallet } from 'types/Moralis'
+import { Wallet } from 'packages/@haven/solid-moralis/types'
+import SubmitEvent from 'types/SubmitEvent'
 
 type LandingTemplateProps = {
 	wallet?: Wallet,
 	searchParams?: URLSearchParams,
-	onLogout?: JSX.EventHandler<any, any>,
-	onLogin?: JSX.EventHandler<any, any>,
+	onLogout?: JSX.EventHandler<HTMLFormElement, SubmitEvent>,
+	onLogin?: JSX.EventHandler<HTMLFormElement, SubmitEvent>,
 }
 
 export const LandingTemplate: Component<LandingTemplateProps> = (props) => {

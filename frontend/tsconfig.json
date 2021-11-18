@@ -15,6 +15,9 @@
 		"paths": {
 			"@haven/web-components-solid": [
 				"packages/@haven/web-components-solid"
+			],
+			"@haven/solid-moralis": [
+				"packages/@haven/solid-moralis"
 			]
 		}
 	},
