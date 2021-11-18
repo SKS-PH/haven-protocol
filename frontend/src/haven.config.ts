@@ -6,3 +6,8 @@ export namespace meta {
 	export const appTagline = import.meta.env.VITE_APP_TAGLINE
 	export const appYear = import.meta.env.VITE_APP_YEAR
 }
+
+export namespace moralis {
+	export const serverUrl = 'https://localhost:6969'
+	export const appId = 'APP_ID'
+}

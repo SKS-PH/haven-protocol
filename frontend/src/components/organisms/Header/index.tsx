@@ -1,7 +1,14 @@
 import { Logo } from 'components/molecules/Logo'
 import { Icon } from 'components/molecules/Icon'
-import { SearchInput, ButtonVariant, LinkButton, Button } from '@haven/web-components-solid'
+import {SearchInput, ButtonVariant, Button, LinkButton} from '@haven/web-components-solid'
 import { Link } from 'solid-app-router'
+import {WalletServiceImpl} from 'services/WalletService'
+
+const connectWallet = async (e: Event) => {
+	e.preventDefault()
+	const walletService = new WalletServiceImpl()
+	await walletService.connect()
+}
 
 export const Header = () => {
 	return (
@@ -29,7 +36,12 @@ export const Header = () => {
 					<div>
 						<div className="flex space-x-4">
 							<div>
-								<LinkButton component={Link} href="/create-haven" variant={ButtonVariant.OUTLINE}>
+								<LinkButton
+									type="submit"
+									variant={ButtonVariant.OUTLINE}
+									component={Link}
+									href="/create-haven"
+								>
 									<span>
 										<span className="sr-only md:not-sr-only">Create Haven</span>
 										<span className="md:hidden">
@@ -39,8 +51,13 @@ export const Header = () => {
 								</LinkButton>
 							</div>
 							<div>
-								<form>
-									<Button variant={ButtonVariant.FILLED}>
+								<form
+									onSubmit={connectWallet}
+								>
+									<Button
+										type="submit"
+										variant={ButtonVariant.FILLED}
+									>
 										<span>
 											<Icon name="wallet" className="w-6" />
 										</span>

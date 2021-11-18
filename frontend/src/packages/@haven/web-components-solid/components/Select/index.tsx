@@ -1,4 +1,4 @@
-import { Component, JSX, Show, For } from 'solid-js'
+import {Component, JSX, Show, For, splitProps} from 'solid-js'
 import { TextControlSize } from '../../utils/textControl'
 
 const SIZE_CLASSES: Record<TextControlSize, string> = {
@@ -34,16 +34,18 @@ const RenderOptions: Component<Option> = (props) => {
 }
 
 export const Select: Component<SelectProps> = (props) => {
-	const indicatorClassName = () => INDICATOR_CLASSES[props.size ?? TextControlSize.MEDIUM]
-	const sizeClassName = () => SIZE_CLASSES[props.size ?? TextControlSize.MEDIUM]
+	const [localProps, etcProps] = splitProps(props, ['size', 'block', 'options'])
+	const indicatorClassName = () => INDICATOR_CLASSES[localProps.size ?? TextControlSize.MEDIUM]
+	const sizeClassName = () => SIZE_CLASSES[localProps.size ?? TextControlSize.MEDIUM]
+	const blockClassName = () => !localProps.block ? 'inline-block align-middle' : 'block'
 
 	return (
-		<span className={`relative ${!props.block ? 'inline-block align-middle' : 'block'}`}>
+		<span className={`relative ${blockClassName()}`}>
 			<select
-				{...props}
-				className={`w-full bg-bg text-inherit cursor-pointer disabled:cursor-not-allowed appearance-none focus:outline-none box-border border border-solid rounded-full pl-4 placeholder:uppercase border-primary ${sizeClassName()} relative`}
+				{...etcProps}
+				className={`w-full bg-bg text-inherit cursor-pointer disabled:cursor-not-allowed appearance-none focus:outline-none box-border border border-solid rounded-full pl-4 placeholder:uppercase border-primary relative ${sizeClassName()}`}
 			>
-				<For each={props.options} fallback={<></>}>
+				<For each={localProps.options} fallback={<></>}>
 					{(child: Option) => <RenderOptions label={child.label} options={child.options} value={child.value} />}
 				</For>
 			</select>

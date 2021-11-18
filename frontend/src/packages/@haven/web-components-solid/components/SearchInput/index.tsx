@@ -1,4 +1,4 @@
-import { Component, JSX } from 'solid-js'
+import {Component, JSX, splitProps} from 'solid-js'
 import { TextControlSize } from '../../utils/textControl'
 
 const SIZE_CLASSES: Record<TextControlSize, string> = {
@@ -17,16 +17,17 @@ type SearchInputProps = JSX.IntrinsicElements['input'] & {
 }
 
 export const SearchInput: Component<SearchInputProps> = (props) => {
-	const indicatorClassName = () => INDICATOR_CLASSES[props.size ?? TextControlSize.MEDIUM]
-	const sizeClassName = () => SIZE_CLASSES[props.size ?? TextControlSize.MEDIUM]
+	const [localProps, etcProps] = splitProps(props, ['size', 'block'])
+	const indicatorClassName = () => INDICATOR_CLASSES[localProps.size ?? TextControlSize.MEDIUM]
+	const sizeClassName = () => SIZE_CLASSES[localProps.size ?? TextControlSize.MEDIUM]
+	const blockClassName = () => !localProps.block && 'inline-block align-middle'
 
 	return (
-		<div className={`relative ${!props.block && 'inline-block align-middle'}`}>
+		<div className={`relative ${blockClassName()}`}>
 			<input
-				{...props}
-				className={`w-full disabled:cursor-not-allowed bg-transparent text-inherit focus:outline-none box-border border border-solid rounded-full pl-4 placeholder:uppercase border-primary ${sizeClassName()} relative`}
+				{...etcProps}
+				className={`w-full disabled:cursor-not-allowed bg-transparent text-inherit focus:outline-none box-border border border-solid rounded-full pl-4 placeholder:uppercase border-primary relative ${sizeClassName()}`}
 				type="search"
-				placeholder={props.placeholder}
 			/>
 			<div
 				className={`absolute top-0 right-0 h-full pointer-events-none flex justify-center items-center ${indicatorClassName()}`}
