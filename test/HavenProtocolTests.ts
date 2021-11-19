@@ -14,7 +14,7 @@ describe('HavenProtocol', () => {
 		const [deployer , signer1] = await ethers.getSigners()
 		const HavenProtocol = await ethers.getContractFactory('HavenProtocol')
 		const HavenToken = await ethers.getContractFactory('HavenToken')
-		havenToken = await HavenToken.deploy()
+		havenToken = await HavenToken.deploy(parseEther('1000000000'), [])
 		havenProtocol = await HavenProtocol.deploy(havenToken.address, 450) // 4.5%
 		await havenProtocol.deployed()
 		havenProtocolAsSigner1 = havenProtocol.connect(signer1)
@@ -27,6 +27,9 @@ describe('HavenProtocol', () => {
 
 		const havenToSubscribeToAddr = await havenProtocol.ownerToHavens(deployer.address, 0)
 		havenToSubscribeTo = Haven.attach(havenToSubscribeToAddr)
+	})
+	it('Should prevent receiving of haven tokens outside of subscribe()', async () => {
+		await expect(havenTokenAsSigner1.send(havenProtocol.address, parseEther('10'), [])).to.be.revertedWith('Please don\'t send your haven tokens here')
 	})
 	describe('#createHaven()', () => {
 		it('Should emit created haven with caller as owner', async () => {
@@ -49,69 +52,67 @@ describe('HavenProtocol', () => {
 	describe('#subscribe()', async () => {
 		it('Should subscribe user and emit a subscribe event', async () => {
 			const [, signer1] = await ethers.getSigners()
-			const subAmount = parseEther('30')
-			await havenTokenAsSigner1.approve(havenProtocol.address, subAmount)
-			const subscribeTx = await havenProtocolAsSigner1.subscribe(subAmount, havenToSubscribeTo.address)
+			await havenTokenAsSigner1.authorizeOperator(havenProtocol.address)
+			const subscribeTx = await havenProtocolAsSigner1.subscribe(havenToSubscribeTo.address)
 			await subscribeTx.wait()
 
 			await expect(subscribeTx)
 				.to.emit(havenProtocol, 'UserSubscribed')
-				.withArgs(havenToSubscribeTo.address, signer1.address, subAmount, parseEther('10'))
+				.withArgs(havenToSubscribeTo.address, signer1.address, parseEther('10'))
 
 			const [isSubscribedToHaven] = await havenProtocol.havenToSubscriber(havenToSubscribeTo.address, signer1.address)
 			expect(isSubscribedToHaven).to.be.true
 		})
 		it('Should revert when user is already subscribed', async () => {
-			const subFee = parseEther('10')
-			await havenTokenAsSigner1.approve(havenProtocol.address, subFee)
-			const subscribeTx = await havenProtocolAsSigner1.subscribe(subFee, havenToSubscribeTo.address)
+			await havenTokenAsSigner1.authorizeOperator(havenProtocol.address)
+			const subscribeTx = await havenProtocolAsSigner1.subscribe(havenToSubscribeTo.address)
 
 			await subscribeTx.wait()
 
-			await expect(havenProtocolAsSigner1.subscribe(subFee, havenToSubscribeTo.address)).to.be.revertedWith('You are already subscribed!')
+			await expect(havenProtocolAsSigner1.subscribe(havenToSubscribeTo.address)).to.be.revertedWith('You are already subscribed!')
 		})
-		it('Should revert when user\'s subscription fee value is not enough otherwise ok', async () => {
+		it('Should revert when user\'s haven balance is not enough otherwise ok', async () => {
 			const [, , signer2, signer3] = await ethers.getSigners()
-			await havenToken.transfer(signer2.address, parseEther('100'))
-			await havenToken.transfer(signer3.address, parseEther('100'))
-			await havenTokenAsSigner1.approve(havenProtocol.address, parseEther('9'))
-			await havenToken.connect(signer2).approve(havenProtocol.address, parseEther('10'))
-			await havenToken.connect(signer3).approve(havenProtocol.address, parseEther('11'))
+			await havenToken.transfer(signer2.address, parseEther('9'))
+			await havenToken.transfer(signer3.address, parseEther('11'))
+			await havenTokenAsSigner1.authorizeOperator(havenProtocol.address)
+			await havenToken.connect(signer2).authorizeOperator(havenProtocol.address)
+			await havenToken.connect(signer3).authorizeOperator(havenProtocol.address)
 
-			await expect(havenProtocolAsSigner1.subscribe(parseEther('9'), havenToSubscribeTo.address)).to.be.revertedWith('Insufficient subscription amount!')
-			expect(havenProtocol.connect(signer2).subscribe(parseEther('10'), havenToSubscribeTo.address)).to.be.ok
-			expect(havenProtocol.connect(signer3).subscribe(parseEther('11'), havenToSubscribeTo.address)).to.be.ok
+			await expect(havenProtocol.connect(signer2).subscribe(havenToSubscribeTo.address)).to.be.revertedWith('Insufficient haven token balance!')
+			expect(havenProtocolAsSigner1.subscribe(havenToSubscribeTo.address)).to.be.ok
+			expect(havenProtocol.connect(signer3).subscribe(havenToSubscribeTo.address)).to.be.ok
 		})
 		it('Should revert when address isn\'t a haven address otherwise ok', async () => {
 			const [, , someNonHavenAddress] = await ethers.getSigners()
-			const subAmount = parseEther('10')
-			await havenTokenAsSigner1.approve(havenProtocol.address, subAmount)
 
-			await expect(havenProtocolAsSigner1.subscribe(subAmount, someNonHavenAddress.address)).to.be.revertedWith('Invalid haven address!')
-			expect(havenProtocolAsSigner1.subscribe(subAmount, havenToSubscribeTo.address)).to.be.ok
+			await havenTokenAsSigner1.authorizeOperator(havenProtocol.address)
+
+			await expect(havenProtocolAsSigner1.subscribe( someNonHavenAddress.address)).to.be.revertedWith('Invalid haven address!')
+			expect(havenProtocolAsSigner1.subscribe(havenToSubscribeTo.address)).to.be.ok
 		})
-		it('Should transfer protocol commission to protocol address, remaining sub fee to haven owner address and update user balance with remaining sub amount', async () => {
-			const [havenOwner, signer1] = await ethers.getSigners()
-			const subAmount = parseEther('50')
+		it('Should transfer protocol commission to protocol address, remaining sub fee to haven owner address', async () => {
+			const [havenOwner] = await ethers.getSigners()
+
 			const subFee = await havenToSubscribeTo.subscriptionFee()
-			await havenTokenAsSigner1.approve(havenProtocol.address, subAmount)
+			await havenTokenAsSigner1.authorizeOperator(havenProtocol.address)
 			const protocolFee = subFee.mul(await havenProtocol.protocolFeeBasisPoints()).div(10000) // 4.5% of subFee
-			const expectedUserBalance = subAmount.sub(subFee)
-			const expectedProtocolBalance = protocolFee.add(expectedUserBalance) // protocol fee + user balance after sub fee
+			const expectedProtocolBalance = protocolFee // protocol fee + user balance after sub fee
 			const expectedHavenOwnerBalance = subFee.sub(protocolFee) // haven owner gets rest of sub fee
-			await expect(() => havenProtocolAsSigner1.subscribe(subAmount, havenToSubscribeTo.address))
+			await expect(() => havenProtocolAsSigner1.subscribe(havenToSubscribeTo.address))
 				.to.changeTokenBalances(havenToken, [havenProtocol, havenOwner], [expectedProtocolBalance, expectedHavenOwnerBalance])
-			const [, signer1Balance] = await havenProtocol.havenToSubscriber(havenToSubscribeTo.address, signer1.address)
 			
-			expect(signer1Balance).to.be.equal(expectedUserBalance)
+		})
+		it('Should revert if haven protocol isnt an erc777 operator of user', async () => {
+			await expect(havenProtocolAsSigner1.subscribe(havenToSubscribeTo.address))
+				.to.be.revertedWith('Haven Protocol is not an authorized operator!')
 		})
 	})
 	describe('#unsubscribe()', async () => {
 		it('Should unsubscribe user and emit unsubscribe event', async () => {
 			const [, signer1] = await ethers.getSigners()
-			const subAmount = parseEther('10')
-			await havenTokenAsSigner1.approve(havenProtocol.address, subAmount)
-			const subTx = await havenProtocolAsSigner1.subscribe(subAmount, havenToSubscribeTo.address)
+			await havenTokenAsSigner1.authorizeOperator(havenProtocol.address)
+			const subTx = await havenProtocolAsSigner1.subscribe(havenToSubscribeTo.address)
 			await subTx.wait()
 
 			await expect(havenProtocolAsSigner1.unsubscribe(havenToSubscribeTo.address))
@@ -120,24 +121,6 @@ describe('HavenProtocol', () => {
 
 			const [isSubscribed] = await havenProtocol.havenToSubscriber(havenToSubscribeTo.address, signer1.address)
 			expect(isSubscribed).to.be.false
-		})
-		it('Should transfer balance back to user', async () => {
-			const [, signer1] = await ethers.getSigners()
-			const subAmount = parseEther('50')
-			await havenTokenAsSigner1.approve(havenProtocol.address, subAmount)
-			const subTx = await havenProtocolAsSigner1.subscribe(subAmount, havenToSubscribeTo.address)
-			await subTx.wait()
-			const walletBalanceBeforeUnsub = await havenToken.balanceOf(signer1.address)
-			const [, havenBalanceAfterSub] = await havenProtocol.havenToSubscriber(havenToSubscribeTo.address, signer1.address)
-
-			const unsubTx = await havenProtocolAsSigner1.unsubscribe(havenToSubscribeTo.address)
-			await unsubTx.wait()
-
-			const walletBalanceAfterUnsub = await havenToken.balanceOf(signer1.address)
-			expect(walletBalanceAfterUnsub).to.be.equal(walletBalanceBeforeUnsub.add(havenBalanceAfterSub))
-
-			const [, havenBalanceAfterUnsub] = await havenProtocol.havenToSubscriber(havenToSubscribeTo.address, signer1.address)
-			expect(havenBalanceAfterUnsub).to.be.equal(0)
 		})
 	})
 })
