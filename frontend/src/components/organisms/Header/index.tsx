@@ -3,11 +3,11 @@ import {Icon} from 'components/molecules/Icon'
 import {Button, ButtonVariant, LinkButton, SearchInput} from '@haven/web-components-solid'
 import {Link} from 'solid-app-router'
 import {Component, JSX, Show} from 'solid-js'
-import {Wallet} from 'packages/@haven/solid-moralis/types'
+import {Wallet} from '@haven/solid-moralis'
 
 
 type HeaderProps = {
-	wallet?: Wallet,
+	wallet?: Wallet | null,
 	dropdown?: string,
 	onLogout?: JSX.EventHandler<any, any>,
 	onLogin?: JSX.EventHandler<any, any>,
@@ -35,7 +35,7 @@ export const Header: Component<HeaderProps> = (props) => {
 
 	return (
 		<header
-			className="h-header bg-header fixed top-0 left-0 w-full z-20"
+			className="h-header bg-header fixed top-0 left-0 w-full z-30"
 			style={{
 				'--color-bg-header': 'var(--color-negative-plus-3)',
 			}}
@@ -98,7 +98,7 @@ export const Header: Component<HeaderProps> = (props) => {
 											href="?dropdown=wallet"
 											component={Link}
 										>
-											<span className="block bg-primary text-fg-inverse w-8 h-8 flex items-center justify-center -ml-2 rounded-full">
+											<span className="block bg-primary text-fg-inverse w-8 h-8 flex items-center justify-center -ml-2 -mr-2 md:mr-0 rounded-full">
 												<Icon name="wallet" className="w-6" />
 											</span>
 											<span className="sr-only md:not-sr-only normal-case">{displayEthAddress()}</span>

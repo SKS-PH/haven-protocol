@@ -1,9 +1,9 @@
-import Moralis, {MoralisStartParams, Wallet} from './types'
+import Moralis, {Maybe, MoralisStartParams, Wallet} from './types'
 
 export default interface WalletService {
 	initialize(): Promise<void>
-	connect(): Promise<Wallet | undefined>
-	getConnectedWallet(): Promise<Wallet | undefined>
+	connect(): Promise<Maybe<Wallet>>
+	getConnectedWallet(): Promise<Maybe<Wallet>>
 	disconnect(): Promise<void>
 }
 
@@ -21,9 +21,9 @@ export class WalletServiceImpl implements WalletService {
 		})
 	}
 
-	async connect(): Promise<Wallet | undefined> {
+	async connect(): Promise<Maybe<Wallet>> {
 		if (!this.moralis) {
-			return
+			return undefined
 		}
 
 		let user = this.moralis.User.current()
@@ -33,12 +33,12 @@ export class WalletServiceImpl implements WalletService {
 		return user
 	}
 
-	async getConnectedWallet(): Promise<Wallet | undefined> {
+	async getConnectedWallet(): Promise<Maybe<Wallet>> {
 		if (!this.moralis) {
 			return undefined
 		}
 
-		return this.moralis.User.current()
+		return this.moralis.User.current() ?? null
 	}
 
 	async disconnect(): Promise<void> {

@@ -1,10 +1,10 @@
 import {Component, Show} from 'solid-js'
 import {Button, ButtonVariant, LinkButton, SearchInput} from '@haven/web-components-solid'
 import { Icon } from 'components/molecules/Icon'
-import {Wallet} from 'packages/@haven/solid-moralis/types'
+import {Wallet} from '@haven/solid-moralis'
 
 type CtaSectionProps = {
-	wallet?: Wallet
+	wallet?: Wallet | null
 }
 
 export const CtaSection: Component<CtaSectionProps> = (props) => {

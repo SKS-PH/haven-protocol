@@ -3,10 +3,10 @@ import {Logo, LogoSize} from 'components/molecules/Logo'
 import {Button, ButtonVariant, LinkButton} from '@haven/web-components-solid'
 import {Icon} from 'components/molecules/Icon'
 import * as config from 'haven.config'
-import {Wallet} from 'packages/@haven/solid-moralis/types'
+import {Wallet} from '@haven/solid-moralis'
 
 type HeroSectionProps = {
-	wallet?: Wallet
+	wallet?: Wallet | null
 }
 
 export const HeroSection: Component<HeroSectionProps> = (props) => {

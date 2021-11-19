@@ -1,5 +1,6 @@
 import {createResource, Resource} from 'solid-js'
-import {MoralisStartParams, Wallet} from './types'
+import {Maybe, MoralisStartParams} from './types'
+import type { Wallet } from './types'
 import WalletService, {WalletServiceImpl} from './service'
 
 type WalletActions = {
@@ -7,8 +8,8 @@ type WalletActions = {
 	disconnect(): Promise<void>,
 }
 
-export const useMoralisWallet = (params: MoralisStartParams): [Resource<Wallet | undefined>, WalletActions] => {
-	const [wallet, walletActions] = createResource<Wallet | undefined>(async () => {
+export const useMoralisWallet = (params: MoralisStartParams): [Resource<Maybe<Wallet>>, WalletActions] => {
+	const [wallet, walletActions] = createResource<Maybe<Wallet>>(async () => {
 		const walletService: WalletService = new WalletServiceImpl(params)
 		await walletService.initialize()
 		return walletService.getConnectedWallet()
@@ -22,7 +23,7 @@ export const useMoralisWallet = (params: MoralisStartParams): [Resource<Wallet |
 	}
 
 	const disconnect = async () => {
-		walletActions.mutate(undefined)
+		walletActions.mutate(null)
 
 		const walletService: WalletService = new WalletServiceImpl(params)
 		await walletService.initialize()
@@ -36,3 +37,5 @@ export const useMoralisWallet = (params: MoralisStartParams): [Resource<Wallet |
 
 	return [wallet, actions]
 }
+
+export { Wallet }
