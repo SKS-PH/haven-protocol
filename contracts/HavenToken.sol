@@ -1,10 +1,11 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
+import "@openzeppelin/contracts/token/ERC777/ERC777.sol";
 
-contract HavenToken is ERC20 {
-    constructor() ERC20("Haven Token", "HAVEN") {
-        _mint(msg.sender, 1000000 ether);
+contract HavenToken is ERC777 {
+    constructor(uint256 initialSupply,
+    address[] memory defaultOperators) ERC777("Haven", "HAVEN", defaultOperators) {
+        _mint(msg.sender, initialSupply, "", "");
     }
 }
