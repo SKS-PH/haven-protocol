@@ -12,7 +12,9 @@ type PostContentProps = {
 export const PostContent: Component<PostContentProps> = (props) => {
 	return (
 		<article>
-			<div>
+			<div
+				className="leading-tight"
+			>
 				<Link
 					href={`/posts/${props.id}`}
 					className="no-underline"
@@ -25,7 +27,7 @@ export const PostContent: Component<PostContentProps> = (props) => {
 				</Link>
 			</div>
 			<div
-				className="text-sm"
+				className="text-sm mt-2"
 			>
 				<div className="inline-flex items-center space-x-2">
 					<Icon
@@ -43,6 +45,7 @@ export const PostContent: Component<PostContentProps> = (props) => {
 				className="text-fg mt-4"
 			>
 				<div
+					className="leading-normal"
 					innerHTML={props.post}
 				/>
 				<Show
