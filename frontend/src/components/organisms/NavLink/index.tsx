@@ -13,7 +13,7 @@ export const NavLink: Component<NavLinkProps> = (props) => {
 	return (
 		<Link
 			href={props.href}
-			className="box-border w-0 lg:px-4 flex-col lg:flex-row flex-auto lg:w-full lg:flex-initial flex justify-center items-center lg:justify-between h-16 no-underline relative"
+			className="box-border w-0 lg:px-6 flex-col lg:flex-row flex-auto lg:w-full lg:flex-initial flex justify-center items-center lg:justify-between h-16 no-underline relative"
 		>
 			<span className="lg:contents relative mt-3 lg:mt-0">
 				<span className="mr-0 lg:mr-4">
