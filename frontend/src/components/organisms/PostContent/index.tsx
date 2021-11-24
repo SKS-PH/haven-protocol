@@ -3,6 +3,7 @@ import {Tag} from '@haven/web-components-solid'
 import {Link} from 'solid-app-router'
 import Post from 'models/Post'
 import { format } from 'timeago.js'
+import {Icon} from '../../molecules/Icon'
 
 type PostContentProps = {
 	[T in keyof Post]: Post[T]
@@ -26,11 +27,17 @@ export const PostContent: Component<PostContentProps> = (props) => {
 			<div
 				className="text-sm"
 			>
-				<time
-					dateTime={props.createdAt.toISOString()}
-				>
-					{format(props.createdAt)}
-				</time>
+				<div className="inline-flex items-center space-x-2">
+					<Icon
+						name="time"
+						className="w-4"
+					/>
+					<time
+						dateTime={props.createdAt.toISOString()}
+					>
+						{format(props.createdAt)}
+					</time>
+				</div>
 			</div>
 			<div
 				className="text-fg mt-4"

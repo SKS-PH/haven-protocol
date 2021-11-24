@@ -14,23 +14,25 @@ const INDICATOR_CLASSES: Record<TextControlSize, string> = {
 type SearchInputProps = JSX.IntrinsicElements['input'] & {
 	size?: TextControlSize;
 	block?: boolean;
+	resizeButton?: string;
 }
 
 export const SearchInput: Component<SearchInputProps> = (props) => {
-	const [localProps, etcProps] = splitProps(props, ['size', 'block'])
+	const [localProps, etcProps] = splitProps(props, ['size', 'block', 'resizeButton'])
 	const indicatorClassName = () => INDICATOR_CLASSES[localProps.size ?? TextControlSize.MEDIUM]
 	const sizeClassName = () => SIZE_CLASSES[localProps.size ?? TextControlSize.MEDIUM]
 	const blockClassName = () => !localProps.block && 'inline-block align-middle'
+	const paddingClassName = () => !localProps.resizeButton ? 'pl-4' : `pl-0 focus:pl-4 ${localProps.resizeButton}:pl-4`
 
 	return (
 		<div className={`relative ${blockClassName()}`}>
 			<input
 				{...etcProps}
-				className={`w-full disabled:cursor-not-allowed bg-transparent text-inherit focus:outline-none box-border border border-solid rounded-full pl-4 placeholder:uppercase border-primary relative ${sizeClassName()}`}
+				className={`w-full disabled:cursor-not-allowed bg-transparent text-inherit focus:outline-none box-border border border-solid rounded-full placeholder:uppercase border-primary relative ${sizeClassName()} ${paddingClassName()}`}
 				type="search"
 			/>
 			<div
-				className={`absolute top-0 right-0 h-full pointer-events-none flex justify-center items-center ${indicatorClassName()}`}
+				className={`absolute top-0 right-0 h-full pointer-events-none flex justify-center items-center text-primary ${indicatorClassName()}`}
 			>
 				<svg className="w-6" viewBox="0 0 24 24" fill="none">
 					<path d="M15.5 15.5L19 19" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" />

@@ -58,6 +58,11 @@ module.exports = {
 	variants: {
 		extend: {
 			opacity: ['dark'],
+			position: ['focus-within'],
+			width: ['focus-within'],
+			height: ['focus-within'],
+			margin: ['focus-within'],
+			padding: ['focus-within', 'focus'],
 		},
 	},
 	plugins: [],
