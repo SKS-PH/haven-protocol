@@ -6,10 +6,10 @@ export const Tag: Component = (props) => {
 			className="inline-block align-middle relative"
 		>
 			<span
-				className="absolute top-0 left-0 w-full h-full bg-current opacity-10"
+				className="absolute top-0 left-0 w-full h-full bg-current opacity-25 rounded-sm"
 			/>
 			<span className="relative px-2 h-6">
-				{props.children}
+				#{props.children}
 			</span>
 		</span>
 	)

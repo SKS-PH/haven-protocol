@@ -2,6 +2,7 @@ import {Component, For, Show} from 'solid-js'
 import {Tag} from '@haven/web-components-solid'
 import {Link} from 'solid-app-router'
 import Post from 'models/Post'
+import { format } from 'timeago.js'
 
 type PostContentProps = {
 	[T in keyof Post]: Post[T]
@@ -23,11 +24,20 @@ export const PostContent: Component<PostContentProps> = (props) => {
 				</Link>
 			</div>
 			<div
+				className="text-sm"
+			>
+				<time
+					dateTime={props.createdAt.toISOString()}
+				>
+					{format(props.createdAt)}
+				</time>
+			</div>
+			<div
 				className="text-fg mt-4"
 			>
-				<div>
-					{props.post}
-				</div>
+				<div
+					innerHTML={props.post}
+				/>
 				<Show
 					when={props.tags.length > 0}
 				>

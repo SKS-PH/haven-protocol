@@ -15,9 +15,7 @@ const HavensMarketplacePage: Component = () => {
 			<Show
 				when={Boolean(wallet())}
 			>
-				<HavenMarketplaceTemplate
-					wallet={wallet()}
-				/>
+				<HavenMarketplaceTemplate />
 			</Show>
 			<Show
 				when={wallet() === null}
