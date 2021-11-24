@@ -58,12 +58,14 @@ export const Header: Component<HeaderProps> = (props) => {
 						</div>
 						<div>
 							<div className="flex space-x-4">
-								<div>
+								<div className="w-12 md:w-auto">
 									<LinkButton
 										type="submit"
 										variant={createHavenButtonVariant()}
 										component={Link}
 										href="/create-haven"
+										compact="md"
+										block
 									>
 										<span>
 											<span className="sr-only md:not-sr-only">Create Haven</span>
@@ -79,10 +81,13 @@ export const Header: Component<HeaderProps> = (props) => {
 										fallback={
 											<form
 												onSubmit={props.onLogin}
+												className="w-12 md:w-auto"
 											>
 												<Button
 													type="submit"
 													variant={ButtonVariant.FILLED}
+													compact="md"
+													block
 												>
 													<span>
 														<Icon name="wallet" className="w-6" />
@@ -92,12 +97,13 @@ export const Header: Component<HeaderProps> = (props) => {
 											</form>
 										}
 									>
-										<div className="relative">
+										<div className="relative w-12 md:w-auto">
 											<LinkButton
 												variant={ButtonVariant.OUTLINE}
 												title={ethAddress()}
 												href="?dropdown=wallet"
 												component={Link}
+												block
 											>
 												<span className="block bg-primary text-fg-inverse w-8 h-8 flex items-center justify-center -ml-2 -mr-2 md:mr-0 rounded-full">
 													<Icon name="wallet" className="w-6" />

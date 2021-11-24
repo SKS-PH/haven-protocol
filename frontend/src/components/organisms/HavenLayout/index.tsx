@@ -1,6 +1,6 @@
 import {Component, For} from 'solid-js'
 import {Link} from 'solid-app-router'
-import {SearchInput, Select, TextControlSize} from '@haven/web-components-solid'
+import {Button, ButtonSize, ButtonVariant, SearchInput, TextControlSize} from '@haven/web-components-solid'
 import {Icon, IconName} from 'components/molecules/Icon'
 
 export enum HavenSubsectionId {
@@ -90,28 +90,45 @@ export const HavenLayout: Component<HavenLayoutProps> = (props) => {
 							<form
 								className="ml-6 lg:ml-0 w-10 lg:w-auto"
 							>
-								<Select
-									name="sort"
-									size={TextControlSize.SMALL}
+								{/*<Select*/}
+								{/*	name="sort"*/}
+								{/*	size={TextControlSize.SMALL}*/}
+								{/*	block*/}
+								{/*	resizeButton="lg"*/}
+								{/*	resizeButtonIcon={*/}
+								{/*		<Icon*/}
+								{/*			name="time"*/}
+								{/*			className="w-6 block"*/}
+								{/*		/>*/}
+								{/*	}*/}
+								{/*	options={[*/}
+								{/*		{*/}
+								{/*			label: 'Recent',*/}
+								{/*			value: 'recent',*/}
+								{/*		},*/}
+								{/*		{*/}
+								{/*			label: 'Popular',*/}
+								{/*			value: 'popular',*/}
+								{/*		}*/}
+								{/*	]}*/}
+								{/*/>*/}
+								<Button
+									size={ButtonSize.SMALL}
+									variant={ButtonVariant.FILLED}
+									compact="md"
 									block
-									resizeButton="lg"
-									resizeButtonIcon={
-										<Icon
-											name="time"
-											className="w-6 block"
-										/>
-									}
-									options={[
-										{
-											label: 'Recent',
-											value: 'recent',
-										},
-										{
-											label: 'Popular',
-											value: 'popular',
-										}
-									]}
-								/>
+								>
+									<div className="flex items-center space-x-4">
+										<span>
+											<Icon name="subscribe" className="w-6" />
+										</span>
+										<span
+											className="sr-only lg:not-sr-only"
+										>
+											Subscribe
+										</span>
+									</div>
+								</Button>
 							</form>
 						</div>
 					</div>
