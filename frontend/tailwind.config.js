@@ -40,6 +40,10 @@ module.exports = {
 				'sidebar-xl': 'var(--size-sidebar-xl)',
 				'sidebar-2xl': 'var(--size-sidebar-2xl)',
 			},
+			padding: {
+				'3/4': '75%',
+				'full': '100%',
+			},
 			colors: {
 				inherit: 'inherit',
 				bg: 'var(--color-bg)',
@@ -68,6 +72,7 @@ module.exports = {
 			height: ['focus-within'],
 			margin: ['focus-within'],
 			padding: ['focus-within', 'focus'],
+			backgroundColor: ['focus-within', 'focus'],
 		},
 	},
 	plugins: [],

@@ -11,4 +11,7 @@ export default interface Post {
 	people: Address[],
 	comments: Comment[],
 	likesAddresses: Address[],
+	tier: string,
+	havenName: string,
+	havenAddress: string,
 }

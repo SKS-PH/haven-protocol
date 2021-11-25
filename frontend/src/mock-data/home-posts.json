@@ -10,7 +10,8 @@
 		"comments": [],
 		"likesAddresses": [],
 		"tier": "Tier 1",
-		"havenName": "Haven Name"
+		"havenName": "Haven Name 1",
+		"havenAddress": "ffaaffaabbccddee114515473457457"
 	},
 	{
 		"id": "2",
@@ -23,7 +24,8 @@
 		"comments": [],
 		"likesAddresses": [],
 		"tier": "Tier 1",
-		"havenName": "Haven Name"
+		"havenName": "Haven Name 2",
+		"havenAddress": "ffaafcaabbccddee114515473457457"
 	},
 	{
 		"id": "3",
@@ -36,7 +38,8 @@
 		"comments": [],
 		"likesAddresses": [],
 		"tier": "Tier 2",
-		"havenName": "Haven Name"
+		"havenName": "Haven Name 2",
+		"havenAddress": "ffaafcaabbccddee114515473457457"
 	},
 	{
 		"id": "4",
@@ -49,7 +52,8 @@
 		"comments": [],
 		"likesAddresses": [],
 		"tier": "Tier 2",
-		"havenName": "Haven Name"
+		"havenName": "Haven Name 1",
+		"havenAddress": "ffaaffaabbccddee114515473457457"
 	},
 	{
 		"id": "5",
@@ -62,6 +66,7 @@
 		"comments": [],
 		"likesAddresses": [],
 		"tier": "Tier 1",
-		"havenName": "Haven Name"
+		"havenName": "Haven Name 2",
+		"havenAddress": "ffaafcaabbccddee114515473457457"
 	}
 ]

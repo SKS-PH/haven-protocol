@@ -1,75 +1,66 @@
-import {Component, For, Show} from 'solid-js'
-import {Tag} from '@haven/web-components-solid'
-import {Link} from 'solid-app-router'
+import {Component, splitProps} from 'solid-js'
 import Post from 'models/Post'
-import { format } from 'timeago.js'
-import {Icon} from '../../molecules/Icon'
+import {HavenPostContent} from 'components/organisms/HavenPostContent'
+import {Link} from 'solid-app-router'
+import {ButtonSize, LinkButton} from '@haven/web-components-solid'
 
 type PostContentProps = {
 	[T in keyof Post]: Post[T]
 }
 
 export const PostContent: Component<PostContentProps> = (props) => {
+	const [localProps, etcProps] = splitProps(props, ['havenAddress', 'havenName'])
 	return (
-		<article>
+		<>
 			<div
-				className="leading-tight"
+				className="space-y-4 md:space-y-0 md:flex items-center justify-between"
 			>
-				<Link
-					href={`/posts/${props.id}`}
-					className="no-underline"
-				>
-					<h2
-						className="normal-case m-0 inline"
+				<div className="h-full inline-flex align-top items-center space-x-4">
+					<Link
+						href={`/havens/${localProps.havenAddress}`}
+						className="no-underline font-bold"
 					>
-						{props.title}
-					</h2>
-				</Link>
-			</div>
-			<div
-				className="text-sm mt-2"
-			>
-				<div className="inline-flex items-center space-x-2">
-					<Icon
-						name="time"
-						className="w-4"
-					/>
-					<time
-						dateTime={props.createdAt.toISOString()}
+						<img
+							src="http://placehold.it/48"
+							alt={localProps.havenName}
+							className="rounded-full block"
+						/>
+					</Link>
+					<div>
+						<Link
+							href={`/havens/${localProps.havenAddress}`}
+							className="no-underline font-bold"
+						>
+							<span>
+								{localProps.havenName}
+							</span>
+						</Link>
+						<br />
+						<Link
+							href={`/havens/${localProps.havenAddress}`}
+							className="no-underline font-medium"
+						>
+							<small>
+								{localProps.havenAddress}
+							</small>
+						</Link>
+					</div>
+				</div>
+				<div className="text-right">
+					<LinkButton
+						href={`/havens/${localProps.havenAddress}/marketplace`}
+						size={ButtonSize.SMALL}
 					>
-						{format(props.createdAt)}
-					</time>
+						View Marketplace
+					</LinkButton>
 				</div>
 			</div>
-			<div
-				className="text-fg mt-4"
-			>
-				<div
-					className="leading-normal"
-					innerHTML={props.post}
-				/>
-				<Show
-					when={props.tags.length > 0}
-				>
-					<div className="mt-8">
-						<div className="-m-2">
-							<For each={props.tags}>
-								{(tag) => (
-									<div className="p-2 inline-block align-top">
-										<Link
-											href={`/search?q=${tag}`}
-										>
-											<Tag>
-												{tag}
-											</Tag>
-										</Link>
-									</div>
-								)}
-							</For>
-						</div>
-					</div>
-				</Show>
-			</div>
-		</article>
+			<hr
+				className="h-0.25 border-0 my-4 p-0 bg-current opacity-25"
+			/>
+			<HavenPostContent
+				{...etcProps}
+			/>
+		</>
 	)
 }
