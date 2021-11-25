@@ -36,23 +36,43 @@ type HavenLayoutProps = {
 }
 
 export const HavenLayout: Component<HavenLayoutProps> = (props) => {
-
 	return (
-		<div>
-			<div className="pt-8 box-border lg:-mb-4 relative z-20">
-				<div className="container lg:max-w-container-lg xl:max-w-container-xl 2xl:max-w-container-2xl lg:ml-0 box-border">
-					<div className="px-4 lg:px-6 box-border flex items-center">
-						<img src="http://placehold.it/250" className="h-24 rounded-full" alt="Haven Name" />
+		<div className="relative">
+			<div
+				className="sticky top-header md:-top-0 z-20 pointer-events-none"
+			>
+				<div
+					className="absolute -top-24 md:-top-8 left-0 w-full h-24 md:h-48 bg-no-repeat bg-cover bg-bottom"
+					style={{
+						'background-color': 'black'
+					}}
+				/>
+				<div
+					className="absolute -top-24 md:-top-8 left-0 w-full h-24 md:h-48 bg-no-repeat bg-cover bg-bottom opacity-50"
+					style={{
+						'background-image': 'url(http://placehold.it/240)'
+					}}
+				/>
+				<div className="container lg:max-w-container-lg xl:max-w-container-xl 2xl:max-w-container-2xl lg:ml-0 box-border relative">
+					<div className="bg-bg md:bg-transparent px-4 mt-24 md:mt-8 lg:px-6 box-border flex md:flex-col flex-row justify-center items-center space-x-4 md:space-x-0 md:items-start">
+						<div>
+							<img src="http://placehold.it/250" className="h-12 md:h-24 rounded-full block" alt="Haven Name" />
+						</div>
+						<div className="md:text-3xl md:font-normal font-bold flex-auto h-16 flex items-center">
+							Haven Name
+						</div>
 					</div>
 				</div>
+
 			</div>
-			<div className="bg-bg sticky top-header left-0 lg:pt-2 z-10">
-				<div className="absolute pointer-events-none bottom-0 left-0 w-full h-0.25 dark:opacity-25 opacity-10 bg-current" />
+			<div className="sticky top-header z-20">
+				<div className="absolute pointer-events-none bottom-0 left-0 w-full h-0.25 dark:opacity-25 opacity-10 bg-current z-30" />
+
 				<div className="container lg:max-w-container-lg xl:max-w-container-xl 2xl:max-w-container-2xl lg:ml-0 box-border">
 					<div className="px-4 lg:px-6 box-border">
-						<div className="flex justify-between items-center box-border h-16 2xl:space-x-8 relative">
-							<div className="md:text-3xl md:font-normal font-bold flex-auto">Haven Name</div>
-							<div className="h-full flex items-center space-x-6 ml-4 2xl:ml-0">
+						<div className="flex ml-auto justify-between items-center box-border h-16 2xl:space-x-8 relative">
+							<div className="md:flex-auto w-12 md:w-auto" />
+							<div className="bg-bg md:bg-transparent h-full flex items-center space-x-6 ml-4 2xl:ml-0 relative z-20 pointer-events-auto">
 								<For each={HAVEN_SUBSECTIONS}>
 									{(s) => {
 										const activeClassName = (subsection: HavenSubsection) => subsection.id === props.activeSubsection && 'font-bold'
@@ -75,7 +95,7 @@ export const HavenLayout: Component<HavenLayoutProps> = (props) => {
 								</For>
 							</div>
 							<form
-								className="w-10 ml-6 2xl:ml-0 flex bg-bg z-10 items-center focus-within:absolute focus-within:top-0 focus-within:left-0 focus-within:w-full focus-within:h-full focus-within:ml-0 2xl:focus-within:static 2xl:focus-within:w-auto 2xl:focus-within:h-auto 2xl:w-auto"
+								className="bg-bg md:bg-transparent pointer-events-auto h-full w-10 pl-6 2xl:pl-0 flex z-20 items-center focus-within:absolute focus-within:top-0 focus-within:left-0 focus-within:w-full focus-within:h-full focus-within:ml-0 2xl:focus-within:static 2xl:focus-within:w-auto 2xl:focus-within:h-auto 2xl:w-auto"
 							>
 								<div className="flex-auto w-full">
 									<SearchInput
@@ -88,7 +108,7 @@ export const HavenLayout: Component<HavenLayoutProps> = (props) => {
 								</div>
 							</form>
 							<form
-								className="ml-6 2xl:ml-0 w-10 2xl:w-auto"
+								className="bg-bg md:bg-transparent pl-6 2xl:pl-0 w-20 h-full flex items-center xl:w-auto pointer-events-auto flex-auto md:flex-initial"
 							>
 								{/*<Select*/}
 								{/*	name="sort"*/}
@@ -115,7 +135,7 @@ export const HavenLayout: Component<HavenLayoutProps> = (props) => {
 								<Button
 									size={ButtonSize.SMALL}
 									variant={ButtonVariant.FILLED}
-									compact="md"
+									compact="xl"
 									block
 								>
 									<div className="flex items-center space-x-4">
@@ -123,7 +143,7 @@ export const HavenLayout: Component<HavenLayoutProps> = (props) => {
 											<Icon name="subscribe" className="w-6" />
 										</span>
 										<span
-											className="sr-only 2xl:not-sr-only"
+											className="sr-only xl:not-sr-only"
 										>
 											Subscribe
 										</span>
@@ -134,10 +154,9 @@ export const HavenLayout: Component<HavenLayoutProps> = (props) => {
 					</div>
 				</div>
 			</div>
-			<div>
-				<div className="container lg:max-w-container-lg xl:max-w-container-xl 2xl:max-w-container-2xl lg:ml-0 box-border mb-16 lg:mb-0">
-					{props.children}
-				</div>
+
+			<div className="container lg:max-w-container-lg xl:max-w-container-xl 2xl:max-w-container-2xl lg:ml-0 box-border mb-16 lg:mb-0">
+				{props.children}
 			</div>
 		</div>
 	)
