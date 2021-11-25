@@ -50,6 +50,10 @@ module.exports = {
 				secondary: 'var(--color-secondary)',
 				header: 'var(--color-bg-header)',
 			},
+			placeholderOpacity: {
+				0: '0',
+				100: '100',
+			},
 		},
 		container: {
 			center: true,

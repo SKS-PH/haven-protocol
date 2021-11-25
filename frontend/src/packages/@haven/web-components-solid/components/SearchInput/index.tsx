@@ -2,8 +2,13 @@ import {Component, JSX, splitProps} from 'solid-js'
 import { TextControlSize } from '../../utils/textControl'
 
 const SIZE_CLASSES: Record<TextControlSize, string> = {
-	[TextControlSize.SMALL]: 'h-10 pr-10',
-	[TextControlSize.MEDIUM]: 'h-12 pr-12',
+	[TextControlSize.SMALL]: 'h-10',
+	[TextControlSize.MEDIUM]: 'h-12',
+}
+
+const PADDING_CLASSES: Record<TextControlSize, string> = {
+	[TextControlSize.SMALL]: 'pr-10',
+	[TextControlSize.MEDIUM]: 'pr-12',
 }
 
 const INDICATOR_CLASSES: Record<TextControlSize, string> = {
@@ -19,16 +24,18 @@ type SearchInputProps = JSX.IntrinsicElements['input'] & {
 
 export const SearchInput: Component<SearchInputProps> = (props) => {
 	const [localProps, etcProps] = splitProps(props, ['size', 'block', 'resizeButton'])
-	const indicatorClassName = () => INDICATOR_CLASSES[localProps.size ?? TextControlSize.MEDIUM]
+	const indicatorClassName = () =>INDICATOR_CLASSES[localProps.size ?? TextControlSize.MEDIUM]
 	const sizeClassName = () => SIZE_CLASSES[localProps.size ?? TextControlSize.MEDIUM]
-	const blockClassName = () => !localProps.block && 'inline-block align-middle'
+	const paddingRightClassName = () => !localProps.resizeButton ? PADDING_CLASSES[localProps.size ?? TextControlSize.MEDIUM] : `pr-0 ${localProps.resizeButton}:${PADDING_CLASSES[localProps.size ?? TextControlSize.MEDIUM]}`
+	const placeholderClassName = () => !localProps.resizeButton ? '' : `${localProps.resizeButton}:placeholder-opacity-100 placeholder-opacity-0`
+	const blockClassName = () => !localProps.block ? 'inline-block align-middle' : 'w-full block'
 	const paddingClassName = () => !localProps.resizeButton ? 'pl-4' : `pl-0 focus:pl-4 ${localProps.resizeButton}:pl-4`
 
 	return (
 		<div className={`relative ${blockClassName()}`}>
 			<input
 				{...etcProps}
-				className={`w-full disabled:cursor-not-allowed bg-transparent text-inherit focus:outline-none box-border border border-solid rounded-full placeholder:uppercase border-primary relative ${sizeClassName()} ${paddingClassName()}`}
+				className={`py-0 w-full disabled:cursor-not-allowed bg-transparent text-inherit focus:outline-none box-border border border-solid rounded-full placeholder:uppercase border-primary relative ${sizeClassName()} ${paddingClassName()} ${paddingRightClassName()} ${placeholderClassName()}`}
 				type="search"
 			/>
 			<div

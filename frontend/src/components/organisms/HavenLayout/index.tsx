@@ -50,9 +50,9 @@ export const HavenLayout: Component<HavenLayoutProps> = (props) => {
 				<div className="absolute pointer-events-none bottom-0 left-0 w-full h-0.25 dark:opacity-25 opacity-10 bg-current" />
 				<div className="container lg:max-w-container-lg xl:max-w-container-xl 2xl:max-w-container-2xl lg:ml-0 box-border">
 					<div className="px-4 lg:px-6 box-border">
-						<div className="flex justify-between items-center box-border h-16 lg:space-x-8 relative">
+						<div className="flex justify-between items-center box-border h-16 2xl:space-x-8 relative">
 							<div className="md:text-3xl md:font-normal font-bold flex-auto">Haven Name</div>
-							<div className="h-full flex items-center space-x-6 ml-4 lg:ml-0">
+							<div className="h-full flex items-center space-x-6 ml-4 2xl:ml-0">
 								<For each={HAVEN_SUBSECTIONS}>
 									{(s) => {
 										const activeClassName = (subsection: HavenSubsection) => subsection.id === props.activeSubsection && 'font-bold'
@@ -65,7 +65,7 @@ export const HavenLayout: Component<HavenLayoutProps> = (props) => {
 													<Icon name={s.iconName} className="w-6 h-6 block" />
 												</span>
 												<span
-													className="sr-only lg:not-sr-only"
+													className="sr-only 2xl:not-sr-only"
 												>
 													{s.label}
 												</span>
@@ -75,26 +75,26 @@ export const HavenLayout: Component<HavenLayoutProps> = (props) => {
 								</For>
 							</div>
 							<form
-								className="w-10 ml-6 lg:ml-0 flex bg-bg z-10 items-center focus-within:absolute focus-within:top-0 focus-within:left-0 focus-within:w-full focus-within:h-full focus-within:ml-0 lg:focus-within:static lg:focus-within:w-auto lg:focus-within:h-auto lg:w-auto"
+								className="w-10 ml-6 2xl:ml-0 flex bg-bg z-10 items-center focus-within:absolute focus-within:top-0 focus-within:left-0 focus-within:w-full focus-within:h-full focus-within:ml-0 2xl:focus-within:static 2xl:focus-within:w-auto 2xl:focus-within:h-auto 2xl:w-auto"
 							>
-								<div className="flex-auto">
+								<div className="flex-auto w-full">
 									<SearchInput
 										size={TextControlSize.SMALL}
 										name="q"
 										placeholder="Search posts, attachments..."
 										block
-										resizeButton="lg"
+										resizeButton="2xl"
 									/>
 								</div>
 							</form>
 							<form
-								className="ml-6 lg:ml-0 w-10 lg:w-auto"
+								className="ml-6 2xl:ml-0 w-10 2xl:w-auto"
 							>
 								{/*<Select*/}
 								{/*	name="sort"*/}
 								{/*	size={TextControlSize.SMALL}*/}
 								{/*	block*/}
-								{/*	resizeButton="lg"*/}
+								{/*	resizeButton="2xl"*/}
 								{/*	resizeButtonIcon={*/}
 								{/*		<Icon*/}
 								{/*			name="time"*/}
@@ -123,7 +123,7 @@ export const HavenLayout: Component<HavenLayoutProps> = (props) => {
 											<Icon name="subscribe" className="w-6" />
 										</span>
 										<span
-											className="sr-only lg:not-sr-only"
+											className="sr-only 2xl:not-sr-only"
 										>
 											Subscribe
 										</span>
