@@ -10,6 +10,14 @@ const routes = [
 		component: lazy(() => import('./pages/my/home')),
 	},
 	{
+		path: '/my/settings',
+		component: lazy(() => import('./pages/my/settings')),
+	},
+	{
+		path: '/marketplace',
+		component: lazy(() => import('./pages/marketplace')),
+	},
+	{
 		path: '/havens/:id',
 		component: lazy(() => import('./pages/havens/[id]')),
 	},

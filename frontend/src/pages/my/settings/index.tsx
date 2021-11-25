@@ -1,10 +1,10 @@
 import {Component, Show} from 'solid-js'
-import {HavenHomeTemplate} from 'components/templates/HavenHomeTemplate'
 import {useMoralisWallet} from '@haven/solid-moralis'
 import * as config from 'haven.config'
 import {Navigate} from 'solid-app-router'
+import {HavenSettingsTemplate} from 'components/templates/HavenSettingsTemplate'
 
-const MyHomePage: Component = () => {
+const MySettingsPage: Component = () => {
 	const [wallet] = useMoralisWallet({
 		appId: config.moralis.appId,
 		serverUrl: config.moralis.serverUrl,
@@ -15,7 +15,7 @@ const MyHomePage: Component = () => {
 			<Show
 				when={Boolean(wallet())}
 			>
-				<HavenHomeTemplate />
+				<HavenSettingsTemplate />
 			</Show>
 			<Show
 				when={wallet() === null}
@@ -28,4 +28,4 @@ const MyHomePage: Component = () => {
 	)
 }
 
-export default MyHomePage
+export default MySettingsPage

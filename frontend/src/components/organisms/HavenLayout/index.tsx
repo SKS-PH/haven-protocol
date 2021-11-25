@@ -44,7 +44,8 @@ export const HavenLayout: Component<HavenLayoutProps> = (props) => {
 				<div
 					className="absolute -top-24 md:-top-8 left-0 w-full h-24 md:h-48 bg-no-repeat bg-cover bg-bottom"
 					style={{
-						'background-color': 'black'
+						'--color-bg-sidebar': 'var(--color-negative-plus-2)',
+						'background-color': 'var(--color-bg-sidebar)',
 					}}
 				/>
 				<div
@@ -75,11 +76,15 @@ export const HavenLayout: Component<HavenLayoutProps> = (props) => {
 							<div className="bg-bg md:bg-transparent h-full flex items-center space-x-6 ml-4 2xl:ml-0 relative z-20 pointer-events-auto">
 								<For each={HAVEN_SUBSECTIONS}>
 									{(s) => {
-										const activeClassName = (subsection: HavenSubsection) => subsection.id === props.activeSubsection && 'font-bold'
+										const activeClassName = (subsection: HavenSubsection) => (
+											subsection.id === props.activeSubsection
+												? 'font-bold border-current'
+												: 'border-transparent'
+										)
 										return (
 											<Link
 												href={s.url(props.id)}
-												className={`relative h-full space-x-2 flex items-center no-underline ${activeClassName(s)}`}
+												className={`box-border relative h-full space-x-2 flex items-center no-underline border-solid border-t-0 border-l-0 border-r-0 border-b-4 ${activeClassName(s)}`}
 											>
 												<span>
 													<Icon name={s.iconName} className="w-6 h-6 block" />
