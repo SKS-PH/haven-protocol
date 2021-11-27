@@ -8,7 +8,7 @@ import '@nomiclabs/hardhat-ethers'
 import 'hardhat-gas-reporter'
 import 'hardhat-deploy'
 import 'solidity-coverage'
-import 'hardhat-erc1820'
+import './plugins/hardhat-erc1820'
 
 dotenv.config()
 
