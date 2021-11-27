@@ -3,13 +3,13 @@ import {UserLayout} from 'widgets/UserLayout'
 import {HavenPostContent} from 'components/organisms/HavenPostContent'
 import {Card} from 'components/molecules/Card'
 import {HavenLayout, HavenSubsectionId} from 'components/organisms/HavenLayout'
-import {Post} from 'models'
+import {Haven, Post} from 'models'
 import {LockedPostContent} from 'components/organisms/LockedPostContent'
 import {Wallet} from '@haven/solid-moralis'
 
 type HavenPostsTemplateProps = {
 	posts?: Post[],
-	id: string,
+	haven?: Haven,
 	wallet?: Wallet | null,
 }
 
@@ -20,7 +20,7 @@ export const HavenPostsTemplate: Component<HavenPostsTemplateProps> = (props) =>
 		>
 			<HavenLayout
 				wallet={props.wallet}
-				id={props.id}
+				haven={props.haven}
 				activeSubsection={HavenSubsectionId.POSTS}
 			>
 				<div className="max-w-screen-md mx-auto">

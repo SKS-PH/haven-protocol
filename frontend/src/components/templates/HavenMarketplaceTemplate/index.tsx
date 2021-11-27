@@ -2,12 +2,13 @@ import {Component, Show, For} from 'solid-js'
 import {UserLayout} from 'widgets/UserLayout'
 import {HavenLayout, HavenSubsectionId} from 'components/organisms/HavenLayout'
 import {Wallet} from '@haven/solid-moralis'
-import {Work} from 'models'
+import {Haven, Work} from 'models'
 import {Card} from 'components/molecules/Card'
-import {HavenWorkPreview} from '../../organisms/HavenWorkPreview'
+import {HavenWorkPreview} from 'components/organisms/HavenWorkPreview'
 
 type HavenMarketplaceTemplateProps = {
 	works?: Work[],
+	haven?: Haven,
 	wallet?: Wallet | null,
 }
 
@@ -17,7 +18,7 @@ export const HavenMarketplaceTemplate: Component<HavenMarketplaceTemplateProps> 
 			wallet={props.wallet}
 		>
 			<HavenLayout
-				id="a"
+				haven={props.haven}
 				wallet={props.wallet}
 				activeSubsection={HavenSubsectionId.WORKS}
 			>

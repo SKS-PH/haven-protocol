@@ -3,15 +3,16 @@ import {UserLayout} from 'widgets/UserLayout'
 import {HavenPostContent} from 'components/organisms/HavenPostContent'
 import {Card} from 'components/molecules/Card'
 import {HavenLayout, HavenSubsectionId} from 'components/organisms/HavenLayout'
-import {Post} from 'models'
+import {Haven, Post} from 'models'
 import {LockedPostContent} from 'components/organisms/LockedPostContent'
 import {Wallet} from '@haven/solid-moralis'
-import {TimeAgo} from '../../molecules/TimeAgo'
+import {TimeAgo} from 'components/molecules/TimeAgo'
 import {Button, ButtonSize, ButtonVariant, MultilineInput} from '@haven/web-components-solid'
 import { Link } from 'solid-app-router'
 
 type HavenSinglePostTemplateProps = {
 	post?: Post,
+	haven?: Haven,
 	wallet?: Wallet | null,
 }
 
@@ -22,7 +23,7 @@ export const HavenSinglePostTemplate: Component<HavenSinglePostTemplateProps> = 
 		>
 			<HavenLayout
 				wallet={props.wallet}
-				id="a"
+				haven={props.haven}
 				activeSubsection={HavenSubsectionId.POSTS}
 			>
 				<div className="max-w-screen-md mx-auto">

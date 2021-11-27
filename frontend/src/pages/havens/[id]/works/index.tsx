@@ -3,7 +3,7 @@ import {useMoralisWallet} from '@haven/solid-moralis'
 import * as config from 'haven.config'
 import {HavenMarketplaceTemplate} from 'components/templates/HavenMarketplaceTemplate'
 import {useParams} from 'solid-app-router'
-import {useHavenWorks} from '../../../../hooks/content'
+import {useHaven, useHavenWorks} from '../../../../hooks/content'
 
 const HavensMarketplacePage: Component = () => {
 	const [wallet] = useMoralisWallet({
@@ -12,10 +12,12 @@ const HavensMarketplacePage: Component = () => {
 	})
 	const params = useParams()
 	const [works] = useHavenWorks({ address: params.id })
+	const [haven] = useHaven({ address: params.id })
 
 	return (
 		<HavenMarketplaceTemplate
 			works={works()}
+			haven={haven()}
 			wallet={wallet()}
 		/>
 	)

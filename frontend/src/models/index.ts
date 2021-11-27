@@ -15,6 +15,8 @@ export interface Haven {
 	owner: User
 	tags: string[]
 	subscribers: User[]
+	primaryImageUrl: string
+	coverImageUrl: string
 }
 
 export interface Post {

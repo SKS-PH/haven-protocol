@@ -2,7 +2,7 @@ import {Component} from 'solid-js'
 import {HavenPostsTemplate} from 'components/templates/HavenPostsTemplate'
 import {useMoralisWallet} from '@haven/solid-moralis'
 import * as config from 'haven.config'
-import {useHavenPosts} from 'hooks/content'
+import {useHaven, useHavenPosts} from 'hooks/content'
 import {useParams} from 'solid-app-router'
 
 const HavensHomePage: Component = () => {
@@ -12,11 +12,12 @@ const HavensHomePage: Component = () => {
 	})
 	const params = useParams()
 	const [posts] = useHavenPosts({ address: params.id })
+	const [haven] = useHaven({ address: params.id })
 
 	return (
 		<HavenPostsTemplate
 			posts={posts()}
-			id={params.id}
+			haven={haven()}
 			wallet={wallet()}
 		/>
 	)

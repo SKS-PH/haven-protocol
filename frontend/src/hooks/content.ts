@@ -1,13 +1,29 @@
 import {createEffect, createSignal} from 'solid-js'
-import {Post, Work} from 'models'
-import havenPosts from 'mock-data/haven-posts'
-import homePosts from 'mock-data/home-posts'
-import havenWorks from 'mock-data/haven-works'
+import {Haven, Post, Work} from 'models'
 import {unified} from 'unified'
 import remarkParse from 'remark-parse'
 import remarkGfm from 'remark-gfm'
 import remarkRehype from 'remark-rehype'
 import rehypeStringify from 'rehype-stringify'
+import * as gen from 'mock-data/generators'
+
+type UseHavenParams = {
+	address: string
+}
+
+export const useHaven = (params: UseHavenParams) => {
+	const [haven, setHaven] = createSignal<Haven>()
+
+	createEffect(() => {
+		setTimeout(async () => {
+			setHaven(gen.haven({
+				address: params.address
+			}))
+		}, 1000)
+	})
+
+	return [haven]
+}
 
 type UseHavenPostsParams = {
 	address: string
@@ -18,7 +34,7 @@ export const useHavenPosts = (params: UseHavenPostsParams) => {
 
 	createEffect(() => {
 		setTimeout(async () => {
-			const processedPostsPromise = havenPosts.map(async p => {
+			const processedPostsPromise = gen.collection(12, gen.post, 'id').map(async p => {
 				const postVfile = await unified()
 					.use(remarkParse)
 					.use(remarkGfm)
@@ -57,7 +73,7 @@ export const useHavenSinglePost = (params: UseHavenSinglePostParams) => {
 
 	createEffect(() => {
 		setTimeout(async () => {
-			const [originalPost] = havenPosts
+			const [originalPost] = gen.collection(12, gen.post, 'id')
 			const postVfile = await unified()
 				.use(remarkParse)
 				.use(remarkGfm)
@@ -107,7 +123,7 @@ export const useHomePosts = (params: UseHomePostsParams) => {
 
 	createEffect(() => {
 		setTimeout(async () => {
-			const processedPostsPromise = homePosts.map(async p => {
+			const processedPostsPromise = gen.collection(12, gen.post, 'id').map(async p => {
 				const postVfile = await unified()
 					.use(remarkParse)
 					.use(remarkGfm)
@@ -137,7 +153,7 @@ export const useHavenWorks = (params: UseHavenWorksParams) => {
 
 	createEffect(() => {
 		setTimeout(() => {
-			const processedWorks = havenWorks.map(w => ({
+			const processedWorks = gen.collection(12, gen.work, 'id').map(w => ({
 				...w,
 				haven: {
 					...w.haven,
