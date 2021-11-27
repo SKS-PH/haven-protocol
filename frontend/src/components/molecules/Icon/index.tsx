@@ -166,7 +166,7 @@ const ICONS = {
 			/>
 		</svg>
 	),
-	marketplace: (props: JSX.IntrinsicElements['svg']) => (
+	works: (props: JSX.IntrinsicElements['svg']) => (
 		<svg {...props} viewBox="0 0 24 24"
 			fill="none"
 		>

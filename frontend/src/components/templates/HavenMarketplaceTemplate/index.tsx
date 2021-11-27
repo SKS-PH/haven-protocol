@@ -1,9 +1,13 @@
-import {Component} from 'solid-js'
+import {Component, Show, For} from 'solid-js'
 import {UserLayout} from 'widgets/UserLayout'
 import {HavenLayout, HavenSubsectionId} from 'components/organisms/HavenLayout'
 import {Wallet} from '@haven/solid-moralis'
+import {Work} from 'models'
+import {Card} from 'components/molecules/Card'
+import {HavenWorkPreview} from '../../organisms/HavenWorkPreview'
 
 type HavenMarketplaceTemplateProps = {
+	works?: Work[],
 	wallet?: Wallet | null,
 }
 
@@ -14,9 +18,34 @@ export const HavenMarketplaceTemplate: Component<HavenMarketplaceTemplateProps> 
 		>
 			<HavenLayout
 				id="a"
-				activeSubsection={HavenSubsectionId.MARKETPLACE}
+				wallet={props.wallet}
+				activeSubsection={HavenSubsectionId.WORKS}
 			>
-				Marketplace
+				<div className="px-4 lg:px-6 py-4 md:py-8">
+
+					<Show
+						when={Array.isArray(props.works)}
+					>
+
+						<div className="my-4 md:my-8 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-4">
+							<For
+								each={props.works}
+							>
+								{(work) => (
+									<Card>
+										<article className="w-full pb-full relative">
+											<HavenWorkPreview
+												name={work.name}
+												imageUrl={work.imageUrl}
+											/>
+										</article>
+									</Card>
+								)}
+							</For>
+						</div>
+					</Show>
+
+				</div>
 			</HavenLayout>
 		</UserLayout>
 	)

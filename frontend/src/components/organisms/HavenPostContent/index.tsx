@@ -60,7 +60,7 @@ export const HavenPostContent: Component<HavenPostContentProps> = (props) => {
 								{(tag) => (
 									<div className="p-2 inline-block align-top">
 										<Link
-											href={`/search?q=${tag}`}
+											href={`/posts?q=${tag}`}
 										>
 											<Tag>
 												#{tag}

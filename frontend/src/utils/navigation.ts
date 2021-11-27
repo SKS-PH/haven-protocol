@@ -21,7 +21,7 @@ export const NAVIGATION_ITEMS: NavigationItem[] = [
 		id: NavigationItemId.HAVENS,
 	},
 	{
-		iconName: 'marketplace',
+		iconName: 'works',
 		href: '/marketplace',
 		label: 'Marketplace',
 		id: NavigationItemId.MARKETPLACE,

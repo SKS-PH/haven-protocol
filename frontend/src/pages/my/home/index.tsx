@@ -3,14 +3,14 @@ import {HavenHomeTemplate} from 'components/templates/HavenHomeTemplate'
 import {useMoralisWallet} from '@haven/solid-moralis'
 import * as config from 'haven.config'
 import {Navigate} from 'solid-app-router'
-import {useHomePosts} from 'hooks/posts'
+import {useHomePosts} from 'hooks/content'
 
 const MyHomePage: Component = () => {
 	const [wallet] = useMoralisWallet({
 		appId: config.moralis.appId,
 		serverUrl: config.moralis.serverUrl,
 	})
-	const [posts] = useHomePosts()
+	const [posts] = useHomePosts({ userAddress: wallet()?.get('ethAddress') })
 
 	return (
 		<>

@@ -6,7 +6,7 @@ import {Wallet} from '@haven/solid-moralis'
 
 export enum HavenSubsectionId {
 	POSTS = 'posts',
-	MARKETPLACE = 'marketplace',
+	WORKS = 'marketplace',
 }
 
 type HavenSubsection = {
@@ -24,10 +24,10 @@ const HAVEN_SUBSECTIONS: HavenSubsection[] = [
 		iconName: 'posts',
 	},
 	{
-		id: HavenSubsectionId.MARKETPLACE,
+		id: HavenSubsectionId.WORKS,
 		url: (id) => `/havens/${id}/marketplace`,
-		label: 'Marketplace',
-		iconName: 'marketplace',
+		label: 'Works',
+		iconName: 'works',
 	},
 ]
 
@@ -55,16 +55,16 @@ export const HavenLayout: Component<HavenLayoutProps> = (props) => {
 				<div
 					className="absolute -top-24 md:-top-8 left-0 w-full h-24 md:h-48 bg-no-repeat bg-cover bg-bottom opacity-50"
 					style={{
-						'background-image': 'url(http://placehold.it/240)'
+						'background-image': 'url(http://picsum.photos/240)'
 					}}
 				/>
 				<div className={`container lg:max-w-container-lg xl:max-w-container-xl 2xl:max-w-container-2xl ${containerClassName()} box-border relative`}>
 					<div className="bg-bg md:bg-transparent px-4 mt-24 md:mt-8 lg:px-6 box-border flex md:flex-col flex-row justify-center items-center space-x-4 md:space-x-0 md:items-start">
 						<div>
-							<img src="http://placehold.it/250" className="h-12 md:h-24 rounded-full block" alt="Haven Name" />
+							<img src="http://picsum.photos/250" className="h-12 md:h-24 rounded-full block" alt="Seventh Haven" />
 						</div>
 						<div className="md:text-3xl md:font-normal font-bold flex-auto h-16 flex items-center">
-							Haven Name
+							Seventh Haven
 						</div>
 					</div>
 				</div>

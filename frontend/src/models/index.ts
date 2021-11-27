@@ -18,16 +18,16 @@ export interface Haven {
 }
 
 export interface Post {
-	id: string,
-	createdAt: Date,
-	content: string,
-	title: string,
-	works: Work[],
-	haven: Haven,
-	tags: string[],
-	comments: Comment[],
-	likes: User[],
-	tier: string,
+	id: string
+	createdAt: Date
+	content: string
+	title: string
+	works: Work[]
+	haven: Haven
+	tags: string[]
+	comments: Comment[]
+	likes: User[]
+	tier: string
 }
 
 export interface Subscription {
@@ -36,13 +36,17 @@ export interface Subscription {
 }
 
 export interface User {
+	address: Address
 	subscriptions: Address[]
 	nickname: string
 }
 
 export interface Work {
-	name: string;
-	description: string;
-	url: string;
-	havenAddress: string;
+	id: string
+	name: string
+	description: string
+	url: string
+	haven: Haven
+	tier: string
+	imageUrl: string
 }

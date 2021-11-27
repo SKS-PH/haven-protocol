@@ -20,11 +20,16 @@ export const PostContent: Component<PostContentProps> = (props) => {
 						href={`/havens/${localProps.haven.address}`}
 						className="no-underline font-bold"
 					>
-						<img
-							src="http://placehold.it/48"
-							alt={localProps.haven.name}
-							className="rounded-full block"
-						/>
+						<span
+							className="block w-12 h-12 rounded-full overflow-hidden relative"
+						>
+							<span className="absolute top-0 left-0 w-full h-full bg-current opacity-25" />
+							<img
+								src="http://picsum.photos/48"
+								alt={localProps.haven.name}
+								className="block w-full h-full object-cover object-center relative"
+							/>
+						</span>
 					</Link>
 					<div>
 						<Link
