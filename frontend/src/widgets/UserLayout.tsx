@@ -1,12 +1,16 @@
 import {Component, createMemo, JSX} from 'solid-js'
 import {UserLayout as UserLayoutBase} from 'components/organisms/UserLayout'
 import {useLocation} from 'solid-app-router'
-import {useMoralisWallet} from '@haven/solid-moralis'
+import {useMoralisWallet, Wallet} from '@haven/solid-moralis'
 import * as config from 'haven.config'
 import SubmitEvent from 'types/SubmitEvent'
 import {NavigationItemId} from 'utils/navigation'
 
-export const UserLayout: Component = (props) => {
+type UserLayoutProps = {
+	wallet?: Wallet | null
+}
+
+export const UserLayout: Component<UserLayoutProps> = (props) => {
 	const location = useLocation()
 	const dropdown = () => new URLSearchParams(location.search).get('dropdown') ?? undefined
 
@@ -30,7 +34,7 @@ export const UserLayout: Component = (props) => {
 		return undefined
 	})
 
-	const [wallet, walletActions] = useMoralisWallet({
+	const [, walletActions] = useMoralisWallet({
 		appId: config.moralis.appId,
 		serverUrl: config.moralis.serverUrl,
 	})
@@ -47,7 +51,7 @@ export const UserLayout: Component = (props) => {
 
 	return (
 		<UserLayoutBase
-			wallet={wallet()}
+			wallet={props.wallet}
 			dropdown={dropdown()}
 			onLogout={disconnectWallet}
 			onLogin={connectWallet}

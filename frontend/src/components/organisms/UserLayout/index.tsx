@@ -1,4 +1,4 @@
-import {Component, JSX} from 'solid-js'
+import {Component, JSX, Show} from 'solid-js'
 import {Header} from 'components/organisms/Header'
 import {Navigation} from 'components/organisms/Navigation'
 import {Wallet} from '@haven/solid-moralis'
@@ -21,12 +21,23 @@ export const UserLayout: Component<UserLayoutProps> = (props) => {
 				onLogout={props.onLogout}
 				dropdown={props.dropdown}
 			/>
-			<Navigation
-				activeNavigationId={props.activeNavigationId}
-			/>
-			<main className="lg:pl-sidebar-lg xl:pl-sidebar-xl 2xl:pl-sidebar-2xl pt-header box-border min-h-screen">
-				{props.children}
-			</main>
+			<Show
+				when={Boolean(props.wallet)}
+			>
+				<Navigation
+					activeNavigationId={props.activeNavigationId}
+				/>
+				<main className="lg:pl-sidebar-lg xl:pl-sidebar-xl 2xl:pl-sidebar-2xl pt-header box-border min-h-screen">
+					{props.children}
+				</main>
+			</Show>
+			<Show
+				when={props.wallet === null}
+			>
+				<main className="pt-header box-border min-h-screen">
+					{props.children}
+				</main>
+			</Show>
 		</div>
 	)
 }

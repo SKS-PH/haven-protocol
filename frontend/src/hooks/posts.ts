@@ -13,8 +13,7 @@ export const useHavenPosts = () => {
 
 	createEffect(() => (
 		setTimeout(async () => {
-			const thePosts = (havenPosts as unknown as Post[])
-			const processedPostsPromise = thePosts.map(async p => {
+			const processedPostsPromise = havenPosts.map(async p => {
 				const postVfile = await unified()
 					.use(remarkParse)
 					.use(remarkGfm)
@@ -40,8 +39,7 @@ export const useHomePosts = () => {
 
 	createEffect(() => (
 		setTimeout(async () => {
-			const thePosts = (homePosts as unknown as Post[])
-			const processedPostsPromise = thePosts.map(async p => {
+			const processedPostsPromise = homePosts.map(async p => {
 				const postVfile = await unified()
 					.use(remarkParse)
 					.use(remarkGfm)

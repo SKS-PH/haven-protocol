@@ -12,12 +12,10 @@ const HavensHomePage: Component = () => {
 	const [posts] = useHavenPosts()
 
 	return (
-		<>
-			<HavenPostsTemplate
-				posts={posts()}
-				wallet={wallet()}
-			/>
-		</>
+		<HavenPostsTemplate
+			posts={posts()}
+			wallet={wallet()}
+		/>
 	)
 }
 

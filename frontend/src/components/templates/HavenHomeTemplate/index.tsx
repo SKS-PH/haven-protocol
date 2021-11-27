@@ -3,14 +3,18 @@ import {UserLayout} from 'widgets/UserLayout'
 import {Post} from 'models'
 import {Card} from 'components/molecules/Card'
 import {PostContent} from 'components/organisms/PostContent'
+import {Wallet} from '@haven/solid-moralis'
 
 type HavenHomeTemplateProps = {
-	posts?: Post[]
+	posts?: Post[],
+	wallet?: Wallet | null,
 }
 
 export const HavenHomeTemplate: Component<HavenHomeTemplateProps> = (props) => {
 	return (
-		<UserLayout>
+		<UserLayout
+			wallet={props.wallet}
+		>
 			<div className="container lg:max-w-container-lg xl:max-w-container-xl 2xl:max-w-container-2xl lg:ml-0 box-border mb-16 lg:mb-0">
 				<div className="max-w-screen-md mx-auto">
 					<div className="px-4 lg:px-6 py-4 md:py-8">

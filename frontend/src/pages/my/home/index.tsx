@@ -18,6 +18,7 @@ const MyHomePage: Component = () => {
 				when={Boolean(wallet())}
 			>
 				<HavenHomeTemplate
+					wallet={wallet()}
 					posts={posts()}
 				/>
 			</Show>

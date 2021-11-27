@@ -1,10 +1,17 @@
 import {Component} from 'solid-js'
 import {UserLayout} from 'widgets/UserLayout'
 import {HavenLayout, HavenSubsectionId} from 'components/organisms/HavenLayout'
+import {Wallet} from '@haven/solid-moralis'
 
-export const HavenMarketplaceTemplate: Component = () => {
+type HavenMarketplaceTemplateProps = {
+	wallet?: Wallet | null,
+}
+
+export const HavenMarketplaceTemplate: Component<HavenMarketplaceTemplateProps> = (props) => {
 	return (
-		<UserLayout>
+		<UserLayout
+			wallet={props.wallet}
+		>
 			<HavenLayout
 				id="a"
 				activeSubsection={HavenSubsectionId.MARKETPLACE}

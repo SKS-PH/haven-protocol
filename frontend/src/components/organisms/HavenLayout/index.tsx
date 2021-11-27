@@ -2,6 +2,7 @@ import {Component, For} from 'solid-js'
 import {Link} from 'solid-app-router'
 import {Button, ButtonSize, ButtonVariant, SearchInput, TextControlSize} from '@haven/web-components-solid'
 import {Icon, IconName} from 'components/molecules/Icon'
+import {Wallet} from '@haven/solid-moralis'
 
 export enum HavenSubsectionId {
 	POSTS = 'posts',
@@ -33,9 +34,12 @@ const HAVEN_SUBSECTIONS: HavenSubsection[] = [
 type HavenLayoutProps = {
 	id: string,
 	activeSubsection?: HavenSubsectionId,
+	wallet?: Wallet | null,
 }
 
 export const HavenLayout: Component<HavenLayoutProps> = (props) => {
+	const containerClassName = () => props.wallet ? 'lg:ml-0' : ''
+
 	return (
 		<div className="relative">
 			<div
@@ -54,7 +58,7 @@ export const HavenLayout: Component<HavenLayoutProps> = (props) => {
 						'background-image': 'url(http://placehold.it/240)'
 					}}
 				/>
-				<div className="container lg:max-w-container-lg xl:max-w-container-xl 2xl:max-w-container-2xl lg:ml-0 box-border relative">
+				<div className={`container lg:max-w-container-lg xl:max-w-container-xl 2xl:max-w-container-2xl ${containerClassName()} box-border relative`}>
 					<div className="bg-bg md:bg-transparent px-4 mt-24 md:mt-8 lg:px-6 box-border flex md:flex-col flex-row justify-center items-center space-x-4 md:space-x-0 md:items-start">
 						<div>
 							<img src="http://placehold.it/250" className="h-12 md:h-24 rounded-full block" alt="Haven Name" />
@@ -64,12 +68,11 @@ export const HavenLayout: Component<HavenLayoutProps> = (props) => {
 						</div>
 					</div>
 				</div>
-
 			</div>
 			<div className="sticky top-header z-20">
 				<div className="absolute pointer-events-none bottom-0 left-0 w-full h-0.25 dark:opacity-25 opacity-10 bg-current z-30" />
 
-				<div className="container lg:max-w-container-lg xl:max-w-container-xl 2xl:max-w-container-2xl lg:ml-0 box-border">
+				<div className={`container lg:max-w-container-lg xl:max-w-container-xl 2xl:max-w-container-2xl box-border ${containerClassName()}`}>
 					<div className="px-4 lg:px-6 box-border">
 						<div className="flex ml-auto justify-between items-center box-border h-16 2xl:space-x-8 relative">
 							<div className="md:flex-auto w-12 md:w-auto" />
@@ -160,7 +163,7 @@ export const HavenLayout: Component<HavenLayoutProps> = (props) => {
 				</div>
 			</div>
 
-			<div className="container lg:max-w-container-lg xl:max-w-container-xl 2xl:max-w-container-2xl lg:ml-0 box-border mb-16 lg:mb-0">
+			<div className={`container lg:max-w-container-lg xl:max-w-container-xl 2xl:max-w-container-2xl ${containerClassName()} box-border mb-16 lg:mb-0`}>
 				{props.children}
 			</div>
 		</div>

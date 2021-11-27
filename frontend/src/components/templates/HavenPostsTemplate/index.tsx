@@ -14,107 +14,55 @@ type HavenPostsTemplateProps = {
 
 export const HavenPostsTemplate: Component<HavenPostsTemplateProps> = (props) => {
 	return (
-		<>
-			<Show
-				when={props.wallet === null}
+		<UserLayout
+			wallet={props.wallet}
+		>
+			<HavenLayout
+				wallet={props.wallet}
+				id="a"
+				activeSubsection={HavenSubsectionId.POSTS}
 			>
-				<HavenLayout
-					id="a"
-					activeSubsection={HavenSubsectionId.POSTS}
-				>
-					<div className="max-w-screen-md mx-auto">
-						<div className="px-4 lg:px-6 py-4 md:py-8">
-							<Show
-								when={Array.isArray(props.posts)}
+				<div className="max-w-screen-md mx-auto">
+					<div className="px-4 lg:px-6 py-4 md:py-8">
+						<Show
+							when={Array.isArray(props.posts)}
+						>
+							<For
+								each={props.posts}
 							>
-								<For
-									each={props.posts}
-								>
-									{(post) => (
-										<div className="my-4 md:my-8">
-											<Card>
-												<Show
-													when={post.tier === 'Tier 1'}
-													fallback={
-														<article className="p-8 box-border">
-															<LockedPostContent tier={post.tier} title={post.title} />
-														</article>
-													}
-												>
-													<article className="p-4 box-border">
-														<HavenPostContent
-															id={post.id}
-															createdAt={new Date(post.createdAt)}
-															content={post.content}
-															title={post.title}
-															works={post.works}
-															tags={post.tags}
-															comments={post.comments}
-															likes={post.likes}
-															tier={post.tier}
-														/>
+								{(post) => (
+									<div className="my-4 md:my-8">
+										<Card>
+											<Show
+												when={post.tier === 'Tier 1'}
+												fallback={
+													<article className="p-8 box-border">
+														<LockedPostContent tier={post.tier} title={post.title} />
 													</article>
-												</Show>
-											</Card>
-										</div>
-									)}
-								</For>
-							</Show>
-						</div>
+												}
+											>
+												<article className="p-4 box-border">
+													<HavenPostContent
+														id={post.id}
+														createdAt={post.createdAt}
+														content={post.content}
+														title={post.title}
+														works={post.works}
+														tags={post.tags}
+														comments={post.comments}
+														likes={post.likes}
+														tier={post.tier}
+													/>
+												</article>
+											</Show>
+										</Card>
+									</div>
+								)}
+							</For>
+						</Show>
 					</div>
-				</HavenLayout>
-			</Show>
-			<Show
-				when={Boolean(props.wallet)}
-			>
-				<UserLayout>
-					<HavenLayout
-						id="a"
-						activeSubsection={HavenSubsectionId.POSTS}
-					>
-						<div className="max-w-screen-md mx-auto">
-							<div className="px-4 lg:px-6 py-4 md:py-8">
-								<Show
-									when={Array.isArray(props.posts)}
-								>
-									<For
-										each={props.posts}
-									>
-										{(post) => (
-											<div className="my-4 md:my-8">
-												<Card>
-													<Show
-														when={post.tier === 'Tier 1'}
-														fallback={
-															<article className="p-8 box-border">
-																<LockedPostContent tier={post.tier} title={post.title} />
-															</article>
-														}
-													>
-														<article className="p-4 box-border">
-															<HavenPostContent
-																id={post.id}
-																createdAt={new Date(post.createdAt)}
-																content={post.content}
-																title={post.title}
-																works={post.works}
-																tags={post.tags}
-																comments={post.comments}
-																likes={post.likes}
-																tier={post.tier}
-															/>
-														</article>
-													</Show>
-												</Card>
-											</div>
-										)}
-									</For>
-								</Show>
-							</div>
-						</div>
-					</HavenLayout>
-				</UserLayout>
-			</Show>
-		</>
+				</div>
+			</HavenLayout>
+		</UserLayout>
 	)
 }
