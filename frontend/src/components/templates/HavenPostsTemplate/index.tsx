@@ -1,53 +1,120 @@
 import {Component, For, Show} from 'solid-js'
 import {UserLayout} from 'widgets/UserLayout'
-import {PostContent} from 'components/organisms/PostContent'
+import {HavenPostContent} from 'components/organisms/HavenPostContent'
 import {Card} from 'components/molecules/Card'
 import {HavenLayout, HavenSubsectionId} from 'components/organisms/HavenLayout'
-import Post from 'models/Post'
+import {Post} from 'models'
+import {LockedPostContent} from 'components/organisms/LockedPostContent'
+import {Wallet} from '@haven/solid-moralis'
 
 type HavenPostsTemplateProps = {
-	posts?: Post[]
+	posts?: Post[],
+	wallet?: Wallet | null,
 }
 
 export const HavenPostsTemplate: Component<HavenPostsTemplateProps> = (props) => {
 	return (
-		<UserLayout>
-			<HavenLayout
-				id="a"
-				activeSubsection={HavenSubsectionId.POSTS}
+		<>
+			<Show
+				when={props.wallet === null}
 			>
-				<div className="max-w-screen-md mx-auto">
-					<div className="px-4 lg:px-6 py-4">
-						<Show
-							when={Array.isArray(props.posts)}
-						>
-							<For
-								each={props.posts}
+				<HavenLayout
+					id="a"
+					activeSubsection={HavenSubsectionId.POSTS}
+				>
+					<div className="max-w-screen-md mx-auto">
+						<div className="px-4 lg:px-6 py-4 md:py-8">
+							<Show
+								when={Array.isArray(props.posts)}
 							>
-								{(post) => (
-									<div className="my-4">
-										<Card>
-											<div className="p-4 box-border">
-												<PostContent
-													id={post.id}
-													createdAt={new Date(post.createdAt)}
-													post={post.post}
-													title={post.title}
-													attachments={post.attachments}
-													tags={post.tags}
-													people={post.people}
-													comments={post.comments}
-													likesAddresses={post.likesAddresses}
-												/>
-											</div>
-										</Card>
-									</div>
-								)}
-							</For>
-						</Show>
+								<For
+									each={props.posts}
+								>
+									{(post) => (
+										<div className="my-4 md:my-8">
+											<Card>
+												<Show
+													when={post.tier === 'Tier 1'}
+													fallback={
+														<article className="p-8 box-border">
+															<LockedPostContent tier={post.tier} title={post.title} />
+														</article>
+													}
+												>
+													<article className="p-4 box-border">
+														<HavenPostContent
+															id={post.id}
+															createdAt={new Date(post.createdAt)}
+															content={post.content}
+															title={post.title}
+															works={post.works}
+															tags={post.tags}
+															comments={post.comments}
+															likes={post.likes}
+															tier={post.tier}
+														/>
+													</article>
+												</Show>
+											</Card>
+										</div>
+									)}
+								</For>
+							</Show>
+						</div>
 					</div>
-				</div>
-			</HavenLayout>
-		</UserLayout>
+				</HavenLayout>
+			</Show>
+			<Show
+				when={Boolean(props.wallet)}
+			>
+				<UserLayout>
+					<HavenLayout
+						id="a"
+						activeSubsection={HavenSubsectionId.POSTS}
+					>
+						<div className="max-w-screen-md mx-auto">
+							<div className="px-4 lg:px-6 py-4 md:py-8">
+								<Show
+									when={Array.isArray(props.posts)}
+								>
+									<For
+										each={props.posts}
+									>
+										{(post) => (
+											<div className="my-4 md:my-8">
+												<Card>
+													<Show
+														when={post.tier === 'Tier 1'}
+														fallback={
+															<article className="p-8 box-border">
+																<LockedPostContent tier={post.tier} title={post.title} />
+															</article>
+														}
+													>
+														<article className="p-4 box-border">
+															<HavenPostContent
+																id={post.id}
+																createdAt={new Date(post.createdAt)}
+																content={post.content}
+																title={post.title}
+																works={post.works}
+																tags={post.tags}
+																comments={post.comments}
+																likes={post.likes}
+																tier={post.tier}
+															/>
+														</article>
+													</Show>
+												</Card>
+											</div>
+										)}
+									</For>
+								</Show>
+							</div>
+						</div>
+					</HavenLayout>
+				</UserLayout>
+			</Show>
+		</>
 	)
 }

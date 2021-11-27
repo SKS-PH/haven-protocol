@@ -100,9 +100,9 @@ export const HavenLayout: Component<HavenLayoutProps> = (props) => {
 								</For>
 							</div>
 							<form
-								className="bg-bg md:bg-transparent pointer-events-auto h-full w-10 pl-6 2xl:pl-0 flex z-20 items-center focus-within:absolute focus-within:top-0 focus-within:left-0 focus-within:w-full focus-within:h-full focus-within:ml-0 2xl:focus-within:static 2xl:focus-within:w-auto 2xl:focus-within:h-auto 2xl:w-auto"
+								className="bg-bg md:bg-transparent pointer-events-auto h-full w-10 pl-6 2xl:pl-0 flex z-20 items-center focus-within:absolute focus-within:top-0 focus-within:left-0 focus-within:w-full focus-within:h-full focus-within:pl-0 2xl:focus-within:static 2xl:focus-within:w-auto 2xl:focus-within:h-auto 2xl:w-auto"
 							>
-								<div className="flex-auto w-full">
+								<div className="flex-auto w-full rounded-full md:focus-within:bg-bg">
 									<SearchInput
 										size={TextControlSize.SMALL}
 										name="q"
