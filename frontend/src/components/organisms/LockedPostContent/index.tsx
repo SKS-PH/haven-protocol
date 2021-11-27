@@ -1,7 +1,7 @@
 import {Component} from 'solid-js'
-import Post from 'models/Post'
+import {Post} from 'models'
 import {Button, ButtonVariant} from '@haven/web-components-solid'
-import {Icon} from '../../molecules/Icon'
+import {Icon} from 'components/molecules/Icon'
 
 type LockedPostContentProps = {
 	tier: Post['tier'],

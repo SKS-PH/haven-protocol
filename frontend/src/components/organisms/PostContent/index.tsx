@@ -1,5 +1,5 @@
 import {Component, splitProps} from 'solid-js'
-import Post from 'models/Post'
+import {Post} from 'models'
 import {HavenPostContent} from 'components/organisms/HavenPostContent'
 import {Link} from 'solid-app-router'
 import {ButtonSize, LinkButton} from '@haven/web-components-solid'
@@ -9,7 +9,7 @@ type PostContentProps = {
 }
 
 export const PostContent: Component<PostContentProps> = (props) => {
-	const [localProps, etcProps] = splitProps(props, ['havenAddress', 'havenName'])
+	const [localProps, etcProps] = splitProps(props, ['haven'])
 	return (
 		<>
 			<div
@@ -17,38 +17,38 @@ export const PostContent: Component<PostContentProps> = (props) => {
 			>
 				<div className="h-full inline-flex align-top items-center space-x-4">
 					<Link
-						href={`/havens/${localProps.havenAddress}`}
+						href={`/havens/${localProps.haven.address}`}
 						className="no-underline font-bold"
 					>
 						<img
 							src="http://placehold.it/48"
-							alt={localProps.havenName}
+							alt={localProps.haven.name}
 							className="rounded-full block"
 						/>
 					</Link>
 					<div>
 						<Link
-							href={`/havens/${localProps.havenAddress}`}
+							href={`/havens/${localProps.haven.address}`}
 							className="no-underline font-bold"
 						>
 							<span>
-								{localProps.havenName}
+								{localProps.haven.name}
 							</span>
 						</Link>
 						<br />
 						<Link
-							href={`/havens/${localProps.havenAddress}`}
+							href={`/havens/${localProps.haven.address}`}
 							className="no-underline font-medium"
 						>
 							<small>
-								{localProps.havenAddress}
+								{localProps.haven.address}
 							</small>
 						</Link>
 					</div>
 				</div>
 				<div className="text-right">
 					<LinkButton
-						href={`/havens/${localProps.havenAddress}/marketplace`}
+						href={`/havens/${localProps.haven.address}/marketplace`}
 						size={ButtonSize.SMALL}
 					>
 						View Marketplace

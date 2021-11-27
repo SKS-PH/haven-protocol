@@ -1,7 +1,7 @@
 import {createEffect, createSignal} from 'solid-js'
-import Post from 'models/Post'
-import havenPosts from 'mock-data/haven-posts.json'
-import homePosts from 'mock-data/home-posts.json'
+import {Post} from 'models'
+import havenPosts from 'mock-data/haven-posts'
+import homePosts from 'mock-data/home-posts'
 import {unified} from 'unified'
 import remarkParse from 'remark-parse'
 import remarkGfm from 'remark-gfm'
@@ -20,7 +20,7 @@ export const useHavenPosts = () => {
 					.use(remarkGfm)
 					.use(remarkRehype)
 					.use(rehypeStringify)
-					.process(p.post)
+					.process(p.content)
 
 				return ({
 					...p,
@@ -47,7 +47,7 @@ export const useHomePosts = () => {
 					.use(remarkGfm)
 					.use(remarkRehype)
 					.use(rehypeStringify)
-					.process(p.post)
+					.process(p.content)
 
 				return ({
 					...p,

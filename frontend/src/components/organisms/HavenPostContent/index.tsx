@@ -1,12 +1,12 @@
 import {Component, For, Show} from 'solid-js'
 import {Tag} from '@haven/web-components-solid'
 import {Link} from 'solid-app-router'
-import Post from 'models/Post'
+import {Post} from 'models'
 import {Icon} from 'components/molecules/Icon'
 import {TimeAgo} from 'components/molecules/TimeAgo'
 
 type HavenPostContentProps = {
-	[T in keyof Omit<Post, 'havenName' | 'havenAddress'>]: Post[T]
+	[T in keyof Omit<Post, 'haven'>]: Post[T]
 }
 
 export const HavenPostContent: Component<HavenPostContentProps> = (props) => {
@@ -49,7 +49,7 @@ export const HavenPostContent: Component<HavenPostContentProps> = (props) => {
 			>
 				<div
 					className="leading-normal"
-					innerHTML={props.post}
+					innerHTML={props.content}
 				/>
 				<Show
 					when={props.tags.length > 0}

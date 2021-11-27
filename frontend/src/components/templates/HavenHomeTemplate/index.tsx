@@ -1,6 +1,6 @@
 import {Component, For, Show} from 'solid-js'
 import {UserLayout} from 'widgets/UserLayout'
-import Post from 'models/Post'
+import {Post} from 'models'
 import {Card} from 'components/molecules/Card'
 import {PostContent} from 'components/organisms/PostContent'
 
@@ -27,16 +27,14 @@ export const HavenHomeTemplate: Component<HavenHomeTemplateProps> = (props) => {
 												<PostContent
 													id={post.id}
 													createdAt={new Date(post.createdAt)}
-													post={post.post}
+													content={post.content}
 													title={post.title}
-													attachments={post.attachments}
+													works={post.works}
 													tags={post.tags}
-													people={post.people}
 													comments={post.comments}
-													likesAddresses={post.likesAddresses}
+													likes={post.likes}
 													tier={post.tier}
-													havenName={post.havenName}
-													havenAddress={post.havenAddress}
+													haven={post.haven}
 												/>
 											</article>
 										</Card>
