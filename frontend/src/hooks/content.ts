@@ -28,7 +28,7 @@ export const useHavenPosts = (params: UseHavenPostsParams) => {
 
 				return ({
 					...p,
-					post: postVfile.toString(),
+					content: postVfile.toString(),
 				})
 			})
 			const processedPosts = await Promise.all(processedPostsPromise)
@@ -45,6 +45,57 @@ export const useHavenPosts = (params: UseHavenPostsParams) => {
 	})
 
 	return [posts]
+}
+
+type UseHavenSinglePostParams = {
+	address: string
+	id: string
+}
+
+export const useHavenSinglePost = (params: UseHavenSinglePostParams) => {
+	const [post, setPost] = createSignal<Post>()
+
+	createEffect(() => {
+		setTimeout(async () => {
+			const [originalPost] = havenPosts
+			const postVfile = await unified()
+				.use(remarkParse)
+				.use(remarkGfm)
+				.use(remarkRehype)
+				.use(rehypeStringify)
+				.process(originalPost.content)
+
+			const processedPostsPromise = originalPost.comments.map(async p => {
+				const postVfile = await unified()
+					.use(remarkParse)
+					.use(remarkGfm)
+					.use(remarkRehype)
+					.use(rehypeStringify)
+					.process(p.content)
+
+				return ({
+					...p,
+					content: postVfile.toString(),
+				})
+			})
+
+			const processedComments = await Promise.all(processedPostsPromise)
+
+			const processedPost: Post = {
+				...originalPost,
+				content: postVfile.toString(),
+				haven: {
+					...originalPost.haven,
+					address: params.address,
+				},
+				comments: processedComments,
+			}
+
+			setPost(processedPost)
+		}, 1000)
+	})
+
+	return [post]
 }
 
 type UseHomePostsParams = {
@@ -66,7 +117,7 @@ export const useHomePosts = (params: UseHomePostsParams) => {
 
 				return ({
 					...p,
-					post: postVfile.toString(),
+					content: postVfile.toString(),
 				})
 			})
 			const processedPosts = await Promise.all(processedPostsPromise)

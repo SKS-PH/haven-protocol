@@ -3,7 +3,7 @@ type Address = string
 export interface Comment {
 	id: string
 	author: User
-	message: string
+	content: string
 	createdAt: Date
 	likes: User[]
 }
@@ -39,6 +39,7 @@ export interface User {
 	address: Address
 	subscriptions: Address[]
 	nickname: string
+	imageUrl: string
 }
 
 export interface Work {

@@ -9,7 +9,7 @@ type NavigationProps = {
 export const Navigation: Component<NavigationProps> = (props) => {
 	return (
 		<aside
-			className="fixed z-10 bottom-0 left-0 w-full h-16 lg:w-sidebar-lg xl:w-sidebar-xl 2xl:w-sidebar-2xl lg:h-full lg:pt-header box-border"
+			className="fixed z-20 bottom-0 left-0 w-full h-16 lg:w-sidebar-lg xl:w-sidebar-xl 2xl:w-sidebar-2xl lg:h-full lg:pt-header box-border"
 			style={{
 				'--color-bg-sidebar': 'var(--color-negative-plus-2)',
 				'background-color': 'var(--color-bg-sidebar)',

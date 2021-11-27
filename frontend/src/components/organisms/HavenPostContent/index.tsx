@@ -6,17 +6,21 @@ import {Icon} from 'components/molecules/Icon'
 import {TimeAgo} from 'components/molecules/TimeAgo'
 
 type HavenPostContentProps = {
-	[T in keyof Omit<Post, 'haven'>]: Post[T]
+	[T in keyof Omit<Post, 'haven' | 'comments'>]: Post[T]
+} & {
+	haven?: Post['haven']
 }
 
 export const HavenPostContent: Component<HavenPostContentProps> = (props) => {
+	const link = () => props.haven ? `/havens/${props.haven?.address}/posts/${props.id}` : `/posts/${props.id}`
+
 	return (
 		<>
 			<div
 				className="leading-tight"
 			>
 				<Link
-					href={`/posts/${props.id}`}
+					href={link()}
 					className="no-underline"
 				>
 					<h2

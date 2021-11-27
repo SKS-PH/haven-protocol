@@ -25,7 +25,7 @@ const HAVEN_SUBSECTIONS: HavenSubsection[] = [
 	},
 	{
 		id: HavenSubsectionId.WORKS,
-		url: (id) => `/havens/${id}/marketplace`,
+		url: (id) => `/havens/${id}/works`,
 		label: 'Works',
 		iconName: 'works',
 	},
@@ -61,7 +61,7 @@ export const HavenLayout: Component<HavenLayoutProps> = (props) => {
 				<div className={`container lg:max-w-container-lg xl:max-w-container-xl 2xl:max-w-container-2xl ${containerClassName()} box-border relative`}>
 					<div className="bg-bg md:bg-transparent px-4 mt-24 md:mt-8 lg:px-6 box-border flex md:flex-col flex-row justify-center items-center space-x-4 md:space-x-0 md:items-start">
 						<div>
-							<img src="http://picsum.photos/250" className="h-12 md:h-24 rounded-full block" alt="Seventh Haven" />
+							<img src="http://picsum.photos/250" className="h-12 md:h-24 rounded-lg block" alt="Seventh Haven" />
 						</div>
 						<div className="md:text-3xl md:font-normal font-bold flex-auto h-16 flex items-center">
 							Seventh Haven

@@ -21,7 +21,7 @@ export const PostContent: Component<PostContentProps> = (props) => {
 						className="no-underline font-bold"
 					>
 						<span
-							className="block w-12 h-12 rounded-full overflow-hidden relative"
+							className="block w-12 h-12 rounded-md overflow-hidden relative"
 						>
 							<span className="absolute top-0 left-0 w-full h-full bg-current opacity-25" />
 							<img
@@ -53,10 +53,10 @@ export const PostContent: Component<PostContentProps> = (props) => {
 				</div>
 				<div className="text-right">
 					<LinkButton
-						href={`/havens/${localProps.haven.address}/marketplace`}
+						href={`/havens/${localProps.haven.address}/works`}
 						size={ButtonSize.SMALL}
 					>
-						View Marketplace
+						View Works
 					</LinkButton>
 				</div>
 			</div>
@@ -65,6 +65,7 @@ export const PostContent: Component<PostContentProps> = (props) => {
 			/>
 			<HavenPostContent
 				{...etcProps}
+				haven={localProps.haven}
 			/>
 		</>
 	)

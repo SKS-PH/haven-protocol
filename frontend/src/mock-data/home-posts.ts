@@ -3,6 +3,8 @@ import {Post} from 'models'
 const homePosts: Post[] = []
 
 for (let i = 0; i < 24; i += 1) {
+	const width = Math.floor(Math.random() * 100) + 500
+	const height = Math.floor(Math.random() * 100) + 500
 	homePosts.push({
 		id: i.toString(),
 		createdAt: new Date('2021-11-24T22:09:46.000Z'),
@@ -19,6 +21,7 @@ for (let i = 0; i < 24; i += 1) {
 			address: 'ffeeffee',
 			description: 'Description',
 			owner: {
+				imageUrl: `https://source.unsplash.com/random/${width}x${height}`,
 				address: 'ddeeddee',
 				subscriptions: [],
 				nickname: 'TheoryOfNekomata',

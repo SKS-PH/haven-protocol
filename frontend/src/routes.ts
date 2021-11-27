@@ -22,8 +22,12 @@ const routes = [
 		component: lazy(() => import('./pages/havens/[id]')),
 	},
 	{
-		path: '/havens/:id/marketplace',
-		component: lazy(() => import('./pages/havens/[id]/marketplace')),
+		path: '/havens/:id/posts/:postId',
+		component: lazy(() => import('./pages/havens/[id]/posts/[postId]')),
+	},
+	{
+		path: '/havens/:id/works',
+		component: lazy(() => import('./pages/havens/[id]/works')),
 	},
 ]
 

@@ -9,6 +9,7 @@ import {Wallet} from '@haven/solid-moralis'
 
 type HavenPostsTemplateProps = {
 	posts?: Post[],
+	id: string,
 	wallet?: Wallet | null,
 }
 
@@ -19,7 +20,7 @@ export const HavenPostsTemplate: Component<HavenPostsTemplateProps> = (props) =>
 		>
 			<HavenLayout
 				wallet={props.wallet}
-				id="a"
+				id={props.id}
 				activeSubsection={HavenSubsectionId.POSTS}
 			>
 				<div className="max-w-screen-md mx-auto">
@@ -43,13 +44,13 @@ export const HavenPostsTemplate: Component<HavenPostsTemplateProps> = (props) =>
 											>
 												<article className="p-4 box-border">
 													<HavenPostContent
+														haven={post.haven}
 														id={post.id}
 														createdAt={post.createdAt}
 														content={post.content}
 														title={post.title}
 														works={post.works}
 														tags={post.tags}
-														comments={post.comments}
 														likes={post.likes}
 														tier={post.tier}
 													/>

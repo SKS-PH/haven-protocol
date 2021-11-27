@@ -16,6 +16,7 @@ for (let i = 0; i < 24; i += 1) {
 			address: 'ffeeffee',
 			description: 'The haven next to the Sixth Haven',
 			owner: {
+				imageUrl: `https://source.unsplash.com/random/${width}x${height}`,
 				address: 'ddeeddee',
 				nickname: 'TheoryOfNekomata',
 				subscriptions: [],
