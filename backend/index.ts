@@ -81,7 +81,7 @@ ServerResponse
 
 interface PostQuerystring {}
 interface PostParams {
-	heavenId?: string;
+	havenId: string;
 }
 interface PostHeaders {}
 interface PostBody {}
@@ -111,17 +111,18 @@ server.post<{
 	Headers: PostHeaders;
 	Body: PostBody|any;
 }>('/haven/:havenId/posts', post, async (request, reply) => {
+  console.log(request.params)
   const doc = await TileDocument.create(ceramic, request.body, {
       controllers: [ceramic?.did?.id||''],
-      family: request.params.heavenId,
+      family: request.params.havenId,
     },
     { pin: true }
   );
 
   const havenPosts = await TileDocument.deterministic(ceramic, {
     controllers: [ceramic?.did?.id||''],
-    family: request.params.heavenId,
-    tags: [request.params.heavenId||'']
+    family: request.params.havenId,
+    tags: [request.params.havenId]
   });
 
   const streamId = doc.id.toString();
@@ -150,8 +151,8 @@ server.get<{
   
   const doc = await TileDocument.deterministic(ceramic, {
     controllers: [ceramic?.did?.id||''],
-    family: request.params.heavenId,
-    tags: [request.params.heavenId||'']
+    family: request.params.havenId,
+    tags: [request.params.havenId]
   }, { 
     anchor: false, publish: false 
   })
