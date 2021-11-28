@@ -61,8 +61,9 @@ export const HeroSection: Component<HeroSectionProps> = (props) => {
 								<LinkButton
 									block
 									variant={ButtonVariant.FILLED_INVERSE}
+									href="/my/home"
 								>
-									Create Haven
+									Browse Havens
 								</LinkButton>
 							</Show>
 						</div>

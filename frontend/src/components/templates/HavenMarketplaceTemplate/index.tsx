@@ -5,6 +5,7 @@ import {Wallet} from '@haven/solid-moralis'
 import {Haven, Work} from 'models'
 import {Card} from 'components/molecules/Card'
 import {HavenWorkPreview} from 'components/organisms/HavenWorkPreview'
+import { Link } from 'solid-app-router'
 
 type HavenMarketplaceTemplateProps = {
 	works?: Work[],
@@ -33,14 +34,18 @@ export const HavenMarketplaceTemplate: Component<HavenMarketplaceTemplateProps> 
 								each={props.works}
 							>
 								{(work) => (
-									<Card>
-										<article className="w-full pb-full relative">
-											<HavenWorkPreview
-												name={work.name}
-												imageUrl={work.imageUrl}
-											/>
-										</article>
-									</Card>
+									<Link
+										href={`/havens/${props.haven?.address}/works/${work.id}`}
+									>
+										<Card>
+											<article className="w-full pb-full relative">
+												<HavenWorkPreview
+													title={work.name}
+													imageUrl={work.imageUrl}
+												/>
+											</article>
+										</Card>
+									</Link>
 								)}
 							</For>
 						</div>

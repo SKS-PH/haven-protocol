@@ -1,14 +1,14 @@
 import {Component, splitProps} from 'solid-js'
-import {Post} from 'models'
-import {HavenPostContent} from 'components/organisms/HavenPostContent'
+import {Work} from 'models'
 import {Link} from 'solid-app-router'
 import {ButtonSize, LinkButton} from '@haven/web-components-solid'
+import {HavenWorkContent} from 'components/organisms/HavenWorkContent'
 
-type PostContentProps = {
-	[T in keyof Post]: Post[T]
+type WorkContentProps = {
+	[T in keyof Work]: Work[T]
 }
 
-export const PostContent: Component<PostContentProps> = (props) => {
+export const WorkContent: Component<WorkContentProps> = (props) => {
 	const [localProps, etcProps] = splitProps(props, ['haven'])
 	return (
 		<>
@@ -63,7 +63,7 @@ export const PostContent: Component<PostContentProps> = (props) => {
 			<hr
 				className="h-0.25 border-0 my-4 p-0 bg-current opacity-25"
 			/>
-			<HavenPostContent
+			<HavenWorkContent
 				{...etcProps}
 				haven={localProps.haven}
 			/>

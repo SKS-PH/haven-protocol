@@ -82,7 +82,7 @@ export const useHavenSinglePost = (params: UseHavenSinglePostParams) => {
 				.process(originalPost.content)
 
 			const processedPostsPromise = originalPost.comments.map(async p => {
-				const postVfile = await unified()
+				const commentVfile = await unified()
 					.use(remarkParse)
 					.use(remarkGfm)
 					.use(remarkRehype)
@@ -91,7 +91,7 @@ export const useHavenSinglePost = (params: UseHavenSinglePostParams) => {
 
 				return ({
 					...p,
-					content: postVfile.toString(),
+					content: commentVfile.toString(),
 				})
 			})
 
@@ -166,4 +166,22 @@ export const useHavenWorks = (params: UseHavenWorksParams) => {
 	})
 
 	return [works]
+}
+
+type UseSingleWorkParams = {
+	id: string
+}
+
+export const useHavenSingleWork = (params: UseSingleWorkParams) => {
+	const [work, setWork] = createSignal<Work>()
+
+	createEffect(() => {
+		setTimeout(async () => {
+			setWork(gen.work({
+				id: params.id,
+			}))
+		}, 1000)
+	})
+
+	return [work]
 }

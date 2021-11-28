@@ -46,7 +46,7 @@ export interface User {
 
 export interface Work {
 	id: string
-	name: string
+	title: string
 	description: string
 	url: string
 	haven: Haven
