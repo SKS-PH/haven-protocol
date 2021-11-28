@@ -33,6 +33,10 @@ const routes = [
 		path: '/havens/:id/works/:workId',
 		component: lazy(() => import('./pages/havens/[id]/works/[workId]')),
 	},
+	{
+		path: '/works/:workId',
+		component: lazy(() => import('./pages/works/[workId]')),
+	},
 ]
 
 export default routes

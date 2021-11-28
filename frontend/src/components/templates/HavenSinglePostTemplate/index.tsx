@@ -10,6 +10,7 @@ import {TimeAgo} from 'components/molecules/TimeAgo'
 import {Button, ButtonSize, ButtonVariant, MultilineInput} from '@haven/web-components-solid'
 import { Link } from 'solid-app-router'
 import {HavenWorkPreview} from '../../organisms/HavenWorkPreview'
+import {CommentContent} from '../../organisms/CommentContent'
 
 type HavenSinglePostTemplateProps = {
 	post?: Post,
@@ -117,30 +118,7 @@ export const HavenSinglePostTemplate: Component<HavenSinglePostTemplateProps> = 
 													>
 														{(c) => (
 															<div className="my-8">
-																<div className="flex h-8 items-center space-x-4">
-																	<Link
-																		href={`/users/${c.author.address}`}
-																		className="no-underline font-bold"
-																	>
-																		<img src={c.author.imageUrl} alt={c.author.nickname} className="h-8 w-8 object-cover object-center rounded-full block" />
-																	</Link>
-																	<div className="leading-none">
-																		<div>
-																			<Link
-																				href={`/users/${c.author.address}`}
-																				className="no-underline font-bold"
-																			>
-																				{c.author.nickname}
-																			</Link>
-																		</div>
-																		<div>
-																			<small>
-																				<TimeAgo dateTime={c.createdAt} />
-																			</small>
-																		</div>
-																	</div>
-																</div>
-																<div className="mt-4" innerHTML={c.content} />
+																<CommentContent id={c.id} author={c.author} content={c.content} createdAt={c.createdAt} likes={c.likes} />
 															</div>
 														)}
 													</For>
