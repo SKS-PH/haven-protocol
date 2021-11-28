@@ -45,6 +45,10 @@ Create a local hardhat network in metamask by doing the following:
 
 > **Reminder:** Don't send real ETH to these accounts.
 
+## Adding the Haven token to metamask
+Running `npm run dev` pre-funds account #1 and #2 with 100 Haven tokens. Find the haven token contract address from the output of 
+`npm run dev` and Import token on Metamask.
+
 # Brain dump
 ## What do we want _Haven_ to do?
 
