@@ -40,7 +40,7 @@ const comment: RouteShorthandOptions = {
       type: 'object',
       properties: {
         id: { type: 'string' },
-        createdAt: { type: 'string', format: 'date' },
+        createdAt: { type: 'string', format: 'date-time' },
         userAddress: { type: 'string' },
         message: { type: 'string' },
         attachments: { type: 'array', items: { type: 'string' } },

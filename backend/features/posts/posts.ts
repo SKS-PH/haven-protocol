@@ -42,7 +42,7 @@ const post: RouteShorthandOptions = {
       type: 'object',
       properties: {
         id: { type: 'string' },
-        createdAt: { type: 'string', format: 'date' },
+        createdAt: { type: 'string', format: 'date-time' },
         post: { type: 'string' },
         title: { type: 'string' },
         attachments: { type: 'array', items: { type: 'string' } },
