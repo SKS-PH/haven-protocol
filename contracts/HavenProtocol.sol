@@ -4,7 +4,6 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/interfaces/IERC1820Registry.sol";
 import "@openzeppelin/contracts/interfaces/IERC777Recipient.sol";
 import "@chainlink/contracts/src/v0.8/interfaces/KeeperCompatibleInterface.sol";
-import "./Haven.sol";
 import "./HavenToken.sol";
 import "hardhat/console.sol";
 
@@ -15,32 +14,50 @@ contract HavenProtocol is Ownable, IERC777Recipient, KeeperCompatibleInterface {
         keccak256("ERC777TokensRecipient");
     uint256 private constant SUBSCRIPTION_DURATION = 30 * 86400; // can parameterize if there is any reason to
 
-    mapping(address => address[]) public ownerToHavens;
+    mapping(address => uint256[]) public ownerToHavens;
 
-    mapping(address => bool) public havens;
+    mapping(uint256 => bool) public havenExists;
+
+    Haven[] public havens;
+
+    mapping(uint256 => Post[]) public posts;
 
     struct Subscription {
         uint256 id;
-        address haven;
+        uint256 havenId;
         address subscriber;
         uint256 initialSubTimestamp;
         uint256 lastRenewalTimestamp;
     }
+
+    struct Post {
+        uint256 id;
+        string post_uri;
+        uint256 timestamp;
+    }
+
+    struct Haven {
+        uint256 id;
+        address owner;
+        uint256 subscriptionFee;
+    }
     uint256 public protocolFeeBasisPoints;
     Subscription[] public subscriptions;
-    mapping(address => mapping(address => uint256)) public havenToSubscriptionId;
-    mapping(address => mapping(address => bool)) public havenToSubscriptionStatus;
+    mapping(uint256 => mapping(address => uint256)) public havenToSubscriptionId;
+    mapping(uint256 => mapping(address => bool)) public havenToSubscriptionStatus;
 
     HavenToken public havenToken;
 
-    event HavenCreated(address indexed owner, address havenAddress);
+    event HavenCreated(address indexed owner, uint256 havenId);
+
+    event PostCreated(uint256 indexed postId, string post_uri, uint256 timestamp);
 
     event UserSubscribed(
-        address indexed havenAddress,
+        uint256 indexed havenId,
         address subscriber,
         uint256 subscriptionFee
     );
-    event UserUnsubscribed(address indexed havenAddress, address subscriber);
+    event UserUnsubscribed(uint256 indexed havenId, address subscriber);
 
     constructor(address _havenToken, uint256 _protocolFeeBasisPoints) {
         havenToken = HavenToken(_havenToken);
@@ -54,49 +71,62 @@ contract HavenProtocol is Ownable, IERC777Recipient, KeeperCompatibleInterface {
     }
 
     function createHaven(uint256 _subscriptionFee) public {
-        Haven newHaven = new Haven(_subscriptionFee);
-        newHaven.transferOwnership(msg.sender);
-        ownerToHavens[msg.sender].push(address(newHaven));
-        havens[address(newHaven)] = true;
-        emit HavenCreated(msg.sender, address(newHaven));
+        uint256 havenId = havens.length;
+        havens.push(Haven(havenId, msg.sender, _subscriptionFee));
+        ownerToHavens[msg.sender].push(havenId);
+        havenExists[havenId] = true;
+        emit HavenCreated(msg.sender, havenId);
     }
 
-    function subscribe(address havenAddress) public {
+    function post(
+        uint256 havenId,
+        string memory _post_uri
+    ) public returns(uint256) {
+        require(havenExists[havenId], "Haven doesnt exist");
+        require(havens[havenId].owner == msg.sender, "You are not the owner of this haven");
+        uint256 postId = posts[havenId].length;
+        uint256 timeStamp = block.timestamp;
+        posts[havenId].push(Post(postId, _post_uri, timeStamp));
+        emit PostCreated(postId, _post_uri, timeStamp);
+        return postId;
+    }
+
+    function subscribe(uint256 havenId) public {
         require(
             havenToken.isOperatorFor(address(this), msg.sender),
             "Haven Protocol is not an authorized operator!"
         );
-        require(havens[havenAddress], "Invalid haven address!");
-        uint256 subFee = Haven(havenAddress).subscriptionFee();
+        require(havenExists[havenId], "Invalid haven address!");
+        uint256 subFee = havens[havenId].subscriptionFee;
         require(
             havenToken.balanceOf(msg.sender) >= subFee,
             "Insufficient haven token balance!"
         );
-        require(!havenToSubscriptionStatus[havenAddress][msg.sender], "You are already subscribed!");
+        require(!havenToSubscriptionStatus[havenId][msg.sender], "You are already subscribed!");
         uint256 id = subscriptions.length;
-        subscriptions.push(Subscription(id, havenAddress, msg.sender, block.timestamp, block.timestamp));
-        havenToSubscriptionId[havenAddress][msg.sender] = id;
-        havenToSubscriptionStatus[havenAddress][msg.sender] = true;
-        billSubscriber(havenAddress, msg.sender);
-        emit UserSubscribed(havenAddress, msg.sender, subFee);
+        subscriptions.push(Subscription(id, havenId, msg.sender, block.timestamp, block.timestamp));
+        havenToSubscriptionId[havenId][msg.sender] = id;
+        havenToSubscriptionStatus[havenId][msg.sender] = true;
+        billSubscriber(havenId, msg.sender);
+        emit UserSubscribed(havenId, msg.sender, subFee);
     }
 
-    function billSubscriber(address haven, address subscriber) private {
-        uint256 subFee = Haven(haven).subscriptionFee();
-        address havenOwner = Haven(haven).owner();
+    function billSubscriber(uint256 havenId, address subscriber) private {
+        uint256 subFee = havens[havenId].subscriptionFee;
+        address havenOwner = havens[havenId].owner;
         uint256 protFee = (subFee * protocolFeeBasisPoints) / 10000;
         uint256 ownerFee = subFee - protFee;
         havenToken.operatorSend(subscriber, address(this), subFee, "", "");
         havenToken.send(havenOwner, ownerFee, "");
     }
 
-    function unsubscribe(address havenAddress) public {
+    function unsubscribe(uint256 havenId) public {
         require(
-            havenToSubscriptionStatus[havenAddress][msg.sender],
+            havenToSubscriptionStatus[havenId][msg.sender],
             "You are not subscribed!"
         );
-        havenToSubscriptionStatus[havenAddress][msg.sender] = false;
-        emit UserUnsubscribed(havenAddress, msg.sender);
+        havenToSubscriptionStatus[havenId][msg.sender] = false;
+        emit UserUnsubscribed(havenId, msg.sender);
     }
 
     function tokensReceived(
@@ -149,16 +179,16 @@ contract HavenProtocol is Ownable, IERC777Recipient, KeeperCompatibleInterface {
         (uint256[] memory toRenew) = abi.decode(performData, (uint256[]));
         for(uint256 i = 0; i < toRenew.length; i++) {
             Subscription storage sub = subscriptions[toRenew[i]];
-            bool canRenew = havenToken.balanceOf(sub.subscriber) >= Haven(sub.haven).subscriptionFee();
+            bool canRenew = havenToken.balanceOf(sub.subscriber) >= havens[sub.havenId].subscriptionFee;
             bool shouldRenew = sub.lastRenewalTimestamp + SUBSCRIPTION_DURATION <= block.timestamp;
             if(!shouldRenew) {
                 revert("Subscription not yet expired!");
             }
             if(canRenew) {
                 sub.lastRenewalTimestamp = block.timestamp;
-                billSubscriber(sub.haven, sub.subscriber);
+                billSubscriber(sub.havenId, sub.subscriber);
             } 
-            havenToSubscriptionStatus[sub.haven][sub.subscriber] = canRenew;
+            havenToSubscriptionStatus[sub.havenId][sub.subscriber] = canRenew;
         }
     }
 }
