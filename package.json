@@ -45,6 +45,7 @@
 	},
 	"dependencies": {
 		"@chainlink/contracts": "^0.2.2",
-		"@openzeppelin/contracts": "^4.3.3"
+		"@openzeppelin/contracts": "^4.3.3",
+		"node-fetch": "^2.6.6"
 	}
 }
