@@ -2,15 +2,21 @@ import fastify, { FastifyInstance, RouteShorthandOptions } from 'fastify'
 import { Server, IncomingMessage, ServerResponse } from 'http'
 import {Ceramic} from '@ceramicnetwork/core'
 import IPFS from 'ipfs-core'
-import dagJose from 'dag-jose'
-import { convert } from 'blockcodec-to-ipld-format'
+import dagJoseDefault from 'dag-jose'
+import {BlockCodec, convert} from 'blockcodec-to-ipld-format'
 import KeyDidResolver from 'key-did-resolver'
 import ThreeIdResolver from '@ceramicnetwork/3id-did-resolver'
 import ThreeIdProvider from '3id-did-provider'
-const dagJoseFormat = convert(dagJose)
 import { randomBytes } from '@stablelib/random'
 import { DID, DIDOptions } from 'dids'
 
+type DagJoseDefaultExport = BlockCodec<unknown, unknown> & {
+	default?: BlockCodec<unknown, unknown>,
+}
+
+const dagJoseModule = dagJoseDefault as unknown as DagJoseDefaultExport
+const dagJose: DagJoseDefaultExport = dagJoseModule['default'] ?? dagJoseDefault
+const dagJoseFormat = convert(dagJose as BlockCodec<unknown, unknown>)
 
 const CERAMIC_API_URL = 'http://localhost:7007'
 
