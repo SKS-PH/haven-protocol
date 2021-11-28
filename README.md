@@ -15,6 +15,7 @@ To run onchain locally, open a new terminal and run:
 ```shell
 npm run onchain
 ```
+This command shows contract addresses for local deployments of the HavenToken and HavenProtocol along with test accounts.
 ## Running local offchain
 To run offchain locally, open a new terminal and run:
 ```shell
@@ -31,6 +32,15 @@ To seed local onchain and offchain with test data make sure offchain and onchain
 ```shell
 npm run seed
 ```
+## Moralis contract event indexing configuration
+1. Create a local dev server on the moralis dashboard.
+2. Make sure local onchain is running and run the following command with the values from the instance you created:
+```shell
+moralis-admin-cli add-contract --moralisApiKey FAM6pYzBKjcM 
+--moralisApiSecret 7thQGNKKqX8s --abiPath "./deployments/localhost/HavenProtocol.json"
+```
+3. Select all events and enter the contract address HavenProtocol is deployed at locally when prompted.
+4. Follow the instructions on the moralis server instance detail page to configure and run the devchain proxy server.
 
 # Metamask configuration
 
