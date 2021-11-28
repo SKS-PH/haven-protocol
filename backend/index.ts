@@ -9,6 +9,7 @@ import ThreeIdResolver from '@ceramicnetwork/3id-did-resolver'
 import ThreeIdProvider from '3id-did-provider'
 import { randomBytes } from '@stablelib/random'
 import { DID, DIDOptions } from 'dids'
+import { TileDocument } from '@ceramicnetwork/stream-tile';
 
 type DagJoseDefaultExport = BlockCodec<unknown, unknown> & {
 	default?: BlockCodec<unknown, unknown>,
@@ -66,7 +67,6 @@ const didSetup = async () => {
 	const did = new DID({ resolver })
 	did.setProvider(provider)
 	ceramic.did = did
-
 	ceramic.did.authenticate()
 
 }
@@ -81,12 +81,10 @@ ServerResponse
 
 interface PostQuerystring {}
 interface PostParams {
-	params?: string;
+	heavenId?: string;
 }
 interface PostHeaders {}
-interface PostBody {
-	post?: object;
-}
+interface PostBody {}
 
 const post: RouteShorthandOptions = {
 	schema: {
@@ -111,13 +109,35 @@ server.post<{
 	Querystring: PostQuerystring;
 	Params: PostParams;
 	Headers: PostHeaders;
-	Body: PostBody;
-}>('/haven/:havenId/posts', post, (request, reply) => {
-	console.log(request.body)
-	console.log(request.params)
-	posts.push(request.body)
-	// should save to ceramic
-	reply.code(200).send({ post: 'should save to ceramic' })
+	Body: PostBody|any;
+}>('/haven/:havenId/posts', post, async (request, reply) => {
+  const doc = await TileDocument.create(ceramic, request.body, {
+      controllers: [ceramic?.did?.id||''],
+      family: request.params.heavenId,
+    },
+    { pin: true }
+  );
+
+  const havenPosts = await TileDocument.deterministic(ceramic, {
+    controllers: [ceramic?.did?.id||''],
+    family: request.params.heavenId,
+    tags: [request.params.heavenId||'']
+  });
+
+  const streamId = doc.id.toString();
+
+  let havenPostsContent: any = havenPosts.content
+
+  let posts: any[] = []
+  if (Array.isArray(havenPostsContent.posts)) {
+    posts = havenPostsContent.posts
+    posts.push(streamId)
+  } else {
+    posts = [streamId]
+  }
+  havenPostsContent.posts = posts
+  await havenPosts.update(havenPostsContent, undefined, { pin: true })
+	reply.code(200).send({ streamId: streamId })
 })
 
 
@@ -125,9 +145,37 @@ server.get<{
 	Querystring: PostQuerystring;
 	Params: PostParams;
 	Headers: PostHeaders;
-}>('/haven/:havenId/posts', (request, reply) => {
+}>('/haven/:havenId/posts', async (request, reply) => {
 	// should come from ceramic
-	reply.code(200).send(posts)
+  
+  const doc = await TileDocument.deterministic(ceramic, {
+    controllers: [ceramic?.did?.id||''],
+    family: request.params.heavenId,
+    tags: [request.params.heavenId||'']
+  }, { 
+    anchor: false, publish: false 
+  })
+
+  let havenPostsContent: any = doc.content
+
+  let queries: any[] = []
+
+  if (!havenPostsContent.posts) {
+    reply.code(200).send([])
+    return
+  }
+
+  havenPostsContent.posts.forEach((streamId: string) => {
+    return queries.push({
+      streamId: streamId
+    })
+  });
+
+  const streamMap = await ceramic.multiQuery(queries)
+  
+	reply.code(200).send(havenPostsContent.posts.map((streamId: string) => {
+    return streamMap[streamId].content
+  }))
 })
 
 server.get<{
