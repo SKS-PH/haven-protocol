@@ -1,10 +1,10 @@
 import {Component, Show} from 'solid-js'
 import {Link} from 'solid-app-router'
 import {Work} from 'models'
-import {Button, ButtonVariant} from '@haven/web-components-solid'
+import {ButtonVariant, LinkButton, Tag} from '@haven/web-components-solid'
 
 type HavenWorkContentProps = {
-	[T in keyof Omit<Work, 'haven' | 'comments'>]: Work[T]
+	[T in keyof Omit<Work, 'haven'>]: Work[T]
 } & {
 	haven?: Work['haven']
 }
@@ -15,11 +15,16 @@ export const HavenWorkContent: Component<HavenWorkContentProps> = (props) => {
 			when={Boolean(props.haven)}
 		>
 			<div className="lg:grid lg:grid-cols-7">
-				<div className="h-48 lg:h-auto lg:col-span-3">
-					<img src={props.imageUrl} alt={props.title} className="w-full h-full lg:h-96 object-cover object-right-bottom block" />
+				<div className="h-48 lg:h-auto lg:col-span-3 relative">
+					<img src={props.imageUrl} alt={props.title} className="absolute top-0 left-0 w-full h-full object-cover object-right-bottom block" />
 				</div>
-				<div className="col-span-4 p-4 lg:p-8 box-border flex flex-col">
-					<div className="flex items-center lg:items-start lg:flex-col flex-auto">
+				<div className="col-span-4 p-4 lg:p-8 box-border flex flex-col space-y-8">
+					<div>
+						<Tag>
+							Unlocked at {props.tier}
+						</Tag>
+					</div>
+					<div className="flex items-center lg:items-start lg:flex-col">
 						<div>
 							<Link
 								href={`/havens/${props.haven?.address}`}
@@ -38,7 +43,7 @@ export const HavenWorkContent: Component<HavenWorkContentProps> = (props) => {
 							</Link>
 						</div>
 						<div
-							className="leading-tight lg:mt-4 ml-4 lg:ml-0"
+							className="leading-tight flex-auto lg:mt-4 ml-4 lg:ml-0"
 						>
 							<h2
 								className="normal-case m-0 inline font-semibold"
@@ -70,13 +75,17 @@ export const HavenWorkContent: Component<HavenWorkContentProps> = (props) => {
 							</div>
 						</div>
 					</div>
+					<div className="mt-4 flex-auto">
+						{props.description}
+					</div>
 					<div className="mt-4">
-						<Button
+						<LinkButton
 							variant={ButtonVariant.FILLED}
 							block
+							href={props.url}
 						>
 							Download
-						</Button>
+						</LinkButton>
 					</div>
 				</div>
 			</div>
