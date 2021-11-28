@@ -9,6 +9,7 @@ import {Wallet} from '@haven/solid-moralis'
 import {TimeAgo} from 'components/molecules/TimeAgo'
 import {Button, ButtonSize, ButtonVariant, MultilineInput} from '@haven/web-components-solid'
 import { Link } from 'solid-app-router'
+import {HavenWorkPreview} from '../../organisms/HavenWorkPreview'
 
 type HavenSinglePostTemplateProps = {
 	post?: Post,
@@ -53,13 +54,42 @@ export const HavenSinglePostTemplate: Component<HavenSinglePostTemplateProps> = 
 												likes={props.post!.likes}
 												tier={props.post!.tier}
 											/>
+											<Show
+												when={Array.isArray(props.post!.works) && props.post!.works.length > 0}
+											>
+												<div
+													id="works"
+													className="mt-8 grid grid-cols-3 gap-4"
+												>
+													<For
+														each={props.post!.works}
+													>
+														{(work) => (
+															<Link
+																href={`/havens/${props.haven?.address}/works/${work.id}`}
+															>
+																<Card>
+																	<article className="w-full pb-full relative">
+																		<HavenWorkPreview
+																			title={work.title}
+																			imageUrl={work.imageUrl}
+																		/>
+																	</article>
+																</Card>
+															</Link>
+														)}
+													</For>
+												</div>
+											</Show>
 											<hr
 												className="h-0.25 border-0 my-8 p-0 bg-current opacity-25"
 											/>
 											<Show
 												when={Array.isArray(props.post!.comments)}
 											>
-												<div>
+												<div
+													id="comments"
+												>
 													<div className="mb-8">
 														<h3 className="m-0">
 															Comments
