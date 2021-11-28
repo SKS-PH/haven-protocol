@@ -25,6 +25,9 @@ const func: DeployFunction = async ({getNamedAccounts, deployments, network, eth
 		await havenToken.transfer(account1.address, parseEther('100'))
 		await havenToken.transfer(account2.address, parseEther('100'))
 		console.log('-------Funded account#1 and account#2 with 100 Haven-------')
+		console.log('-------Subscribe account#1 to created haven address-------')
+		await havenToken.connect(account1).authorizeOperator(havenProtocolAddress)
+		await havenProtocol.connect(account1).subscribe(havenAddress)
 	}
 }
 
