@@ -1,11 +1,12 @@
-import {HardhatRuntimeEnvironment} from 'hardhat/types'
-import {DeployFunction} from 'hardhat-deploy/types'
+import { task } from 'hardhat/config'
 
-const func: DeployFunction = async ({getNamedAccounts, deployments, network, ethers}: HardhatRuntimeEnvironment) => {
-	const { deploy, log } = deployments
+task('seed', 'Seeds onchain and offchain', async (taskArgs, hre, runSuper) => {
+	const network = hre.network
+	const ethers = hre.ethers
+	const deployments = hre.deployments
 	const [ deployer, account1, account2 ] = await ethers.getSigners()
 	const parseEther = ethers.utils.parseEther
-	if(network.name === 'hardhat') {
+	if(network.name === 'hardhat' || network.name === 'localhost') {
 		const havenTokenAddress = (await deployments.get('HavenToken')).address
 		const havenProtocolAddress = (await deployments.get('HavenProtocol')).address
 		const HavenProtocol = await ethers.getContractFactory('HavenProtocol')
@@ -16,20 +17,19 @@ const func: DeployFunction = async ({getNamedAccounts, deployments, network, eth
 		console.log('-------Deploying a haven-------')
 		const createTx = await havenProtocol.createHaven(parseEther('15'))
 		const createReceipt = await createTx.wait()
-		const havenCreatedAbi = ['event HavenCreated(address indexed owner, address havenAddress)']
+		const havenCreatedAbi = ['event HavenCreated(address indexed owner, uint256 havenId)']
 		const havenCreatedIface = new ethers.utils.Interface(havenCreatedAbi)
-		const havenAddress = havenCreatedIface.parseLog(createReceipt.logs[2]).args.havenAddress
-		const newHaven = Haven.attach(havenAddress)
-		console.log('Haven address deployed at: %s', havenAddress)
-		console.log('-------Funding account#1 and account#2-------')
+		const havenId = havenCreatedIface.parseLog(createReceipt.logs[0]).args.havenId
+		console.log('Haven: %s created', havenId)
+		console.log('Funding account#1 and account#2...')
 		await havenToken.transfer(account1.address, parseEther('100'))
 		await havenToken.transfer(account2.address, parseEther('100'))
-		console.log('-------Funded account#1 and account#2 with 100 Haven-------')
-		console.log('-------Subscribe account#1 to created haven address-------')
+		console.log('Funded account#1 and account#2 with 100 Haven!')
+		console.log('Subscribing account#1 to haven: %s...', havenId)
 		await havenToken.connect(account1).authorizeOperator(havenProtocolAddress)
-		await havenProtocol.connect(account1).subscribe(havenAddress)
+		await havenProtocol.connect(account1).subscribe(havenId)
+		console.log('Subscribed!')
 	}
-}
+})
 
-func.tags = ['HavenProtocol']
-export default func
+export default {}
