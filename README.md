@@ -2,28 +2,37 @@
 
 ## Setup
 
-1.  First install dependencies by running:
-    ```shell
-    npm install
-    ```
-
-2.  Compile smart contracts with:
-    ```shell
-    npm run compile
-    ```
-
-3.  Run tests with:
-    ```shell
-    npm test
-    ```
-
-## Running a local node
-
-To run a local hardhat dev node, open a new terminal and run:
+To install all dependencies of onchain, offchain and frontend, run:
 
 ```shell
-npm run dev
+npm run deps
 ```
+
+## Running local onchain
+
+To run onchain locally, open a new terminal and run:
+
+```shell
+npm run onchain
+```
+## Running local offchain
+To run offchain locally, open a new terminal and run:
+```shell
+npm run offchain
+```
+## Runing local frontend
+To run frontend locally, open a new terminal and run:
+```shell
+npm run frontend
+```
+
+## Seeding onchain and offchain
+To seed local onchain and offchain with test data make sure offchain and onchain is started then run:
+```shell
+npm run seed
+```
+
+# Metamask configuration
 
 ## Adding local node to Metamask
 
