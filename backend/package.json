@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc -p tsconfig.json",
@@ -12,9 +13,18 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@sinclair/typebox": "^0.22.1",
-    "@types/node": "^16.11.10",
+    "@ceramicnetwork/3id-did-resolver": "^1.4.9",
+    "@ceramicnetwork/core": "^1.11.0",
+    "@stablelib/random": "^1.0.0",
+    "3id-did-provider": "^1.1.1",
+    "blockcodec-to-ipld-format": "^1.0.0",
+    "dag-jose": "^0.3.0",
+    "did-resolver": "^3.1.0",
+    "dids": "^2.4.0",
     "fastify": "^3.24.0",
+    "ipfs-core": "~0.7.1",
+    "key-did-provider-ed25519": "^1.1.0",
+    "key-did-resolver": "^1.4.0",
     "typescript": "^4.5.2"
   }
 }
