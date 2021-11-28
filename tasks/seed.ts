@@ -1,8 +1,5 @@
 import { task } from 'hardhat/config'
-<<<<<<< Updated upstream
-=======
 import fetch from 'node-fetch'
->>>>>>> Stashed changes
 
 task('seed', 'Seeds onchain and offchain', async (taskArgs, hre, runSuper) => {
 	const network = hre.network
