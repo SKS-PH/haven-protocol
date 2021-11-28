@@ -4,6 +4,7 @@ import {Button, ButtonVariant, LinkButton} from '@haven/web-components-solid'
 import {Icon} from 'components/molecules/Icon'
 import * as config from 'haven.config'
 import {Wallet} from '@haven/solid-moralis'
+import HERO from 'assets/img/hero.jpg'
 
 type HeroSectionProps = {
 	wallet?: Wallet | null
@@ -15,6 +16,7 @@ export const HeroSection: Component<HeroSectionProps> = (props) => {
 	return (
 		<div className="h-screen box-border flex justify-center items-center relative text-fg-inverse overflow-hidden pt-header">
 			<div className="absolute w-full h-full top-0 left-0" style={{ background: 'black' }} />
+			<img className="absolute bg-primary-fixed w-full h-full top-0 left-0 object-cover object-center opacity-50" src={HERO} alt="" />
 			<div className="absolute bg-primary-fixed opacity-50 w-full h-full top-0 left-0" />
 			<div className="relative max-w-160 w-full">
 				<div className="border opacity-25 border-dotted w-16 h-16 absolute -top-16 left-16 box-border" />
@@ -31,7 +33,7 @@ export const HeroSection: Component<HeroSectionProps> = (props) => {
 				<div className="border opacity-25 border-dotted w-16 h-16 absolute top-64 -right-16 box-border" />
 
 				<div className="p-8 sm:p-12 h-96 w-full max-w-160 border border-dotted flex flex-col justify-center relative box-border">
-					<div className="flex items-center space-x-8 sm:space-x-12">
+					<div className="flex items-center space-x-8 sm:space-x-12 relative">
 						<div>
 							<Logo size={LogoSize.LARGE} />
 						</div>
@@ -40,7 +42,7 @@ export const HeroSection: Component<HeroSectionProps> = (props) => {
 							<p className="lowercase text-5xl m-0 font-light">{config.meta.appTagline}</p>
 						</div>
 					</div>
-					<div className="sm:flex space-y-4 sm:space-y-0 w-full sm:space-x-4 mt-8 sm:mt-12">
+					<div className="relative sm:flex space-y-4 sm:space-y-0 w-full sm:space-x-4 mt-8 sm:mt-12">
 						<div className="sm:w-0 flex-auto">
 							<LinkButton block component="a" href="#what-is-haven" variant={ButtonVariant.OUTLINE_INVERSE}>
 								Learn More

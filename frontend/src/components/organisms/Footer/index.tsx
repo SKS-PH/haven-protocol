@@ -29,6 +29,29 @@ export const Footer: Component = () => {
 								<Icon name="link" className="w-6" />
 							</a>
 						</div>
+						<div>
+							Image Credits to
+							{' '}
+							<a href="https://unsplash.com/@zis_view?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText" rel="noreferrer noopener" target="_blank">
+								Zalfa Imani
+							</a>
+							{', '}
+							<a href="https://unsplash.com/@carrier_lost?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText" rel="noreferrer noopener" target="_blank">
+								Ian Taylor
+							</a>
+							{', '}
+							<a href="https://unsplash.com/@michalmatlon?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText" rel="noreferrer noopener" target="_blank">
+								Michal Matlon
+							</a>
+							{', '}
+							<a href="https://unsplash.com/@rhondak?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText" rel="noreferrer noopener" target="_blank">
+								RhondaK Native Florida Folk Artist
+							</a>
+							{', and '}
+							<a href="https://unsplash.com/@nickxshotz?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText" rel="noreferrer noopener" target="_blank">
+								Nicholas Green
+							</a>
+						</div>
 					</div>
 				</div>
 			</div>

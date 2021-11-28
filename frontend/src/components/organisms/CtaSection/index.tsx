@@ -11,8 +11,9 @@ export const CtaSection: Component<CtaSectionProps> = (props) => {
 	const connected = () => Boolean(props.wallet)
 
 	return (
-		<section>
-			<div className="container mx-auto">
+		<section className="relative">
+			<div className="absolute top-0 left-0 w-full h-full bg-current opacity-10" />
+			<div className="container mx-auto relative">
 				<div className="px-4 lg:px-6 box-border py-16 lg:flex items-center space-y-8 lg:space-y-0 lg:space-x-16 box-border text-center lg:text-left">
 					<div className="flex-auto">
 						<h3 className="font-light text-5xl mt-0">Sounds good?</h3>
