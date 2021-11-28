@@ -26,6 +26,7 @@
     "vite-tsconfig-paths": "^3.3.17"
   },
   "dependencies": {
+    "@theoryofnekomata/formxtra": "^0.2.3",
     "moralis": "^0.0.134",
     "rehype-stringify": "^9.0.2",
     "remark-gfm": "^3.0.1",

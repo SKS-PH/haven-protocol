@@ -63,7 +63,7 @@ export const Header: Component<HeaderProps> = (props) => {
 										type="submit"
 										variant={createHavenButtonVariant()}
 										component={Link}
-										href="/create-haven"
+										href="?modal=create-haven"
 										compact="md"
 										block
 									>

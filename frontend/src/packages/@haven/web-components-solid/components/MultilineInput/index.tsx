@@ -21,7 +21,7 @@ export const MultilineInput: Component<MultilineInputProps> = (props) => {
 		<div className={`relative ${blockClassName()}`}>
 			<textarea
 				{...etcProps}
-				className={`py-0 px-1 w-full resize-y disabled:cursor-not-allowed bg-transparent text-inherit focus:outline-none box-border border border-solid rounded placeholder:uppercase border-primary relative ${sizeClassName()}`}
+				className={`block py-0 px-1 w-full resize-y disabled:cursor-not-allowed bg-transparent text-inherit focus:outline-none box-border border border-solid rounded placeholder:uppercase border-primary relative ${sizeClassName()}`}
 			/>
 		</div>
 	)

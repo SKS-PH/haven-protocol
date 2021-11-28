@@ -35,7 +35,7 @@ export const SearchInput: Component<SearchInputProps> = (props) => {
 		<div className={`relative ${blockClassName()}`}>
 			<input
 				{...etcProps}
-				className={`py-0 w-full disabled:cursor-not-allowed bg-transparent text-inherit focus:outline-none box-border border border-solid rounded-full placeholder:uppercase border-primary relative ${sizeClassName()} ${paddingClassName()} ${paddingRightClassName()} ${placeholderClassName()}`}
+				className={`block py-0 w-full disabled:cursor-not-allowed bg-transparent text-inherit focus:outline-none box-border border border-solid rounded-full placeholder:uppercase border-primary relative ${sizeClassName()} ${paddingClassName()} ${paddingRightClassName()} ${placeholderClassName()}`}
 				type="search"
 			/>
 			<div

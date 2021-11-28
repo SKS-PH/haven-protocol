@@ -1,11 +1,11 @@
-import { MultilineInput } from '.'
+import { TextInput } from '.'
 import { render, screen } from 'solid-testing-library'
 import '@testing-library/jest-dom'
 
-describe('MultilineInput', () => {
+describe('TextInput', () => {
 	it('should render a textbox', () => {
 		render(() => (
-			<MultilineInput />
+			<TextInput />
 		))
 		const textbox = screen.getByRole('textbox')
 		expect(textbox).toBeInTheDocument()
