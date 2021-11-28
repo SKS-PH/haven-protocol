@@ -7,7 +7,7 @@ import { convert } from 'blockcodec-to-ipld-format'
 import KeyDidResolver from 'key-did-resolver'
 import ThreeIdResolver from '@ceramicnetwork/3id-did-resolver'
 import ThreeIdProvider from '3id-did-provider'
-const dagJoseFormat = convert(dagJose.default)
+const dagJoseFormat = convert(dagJose)
 import { randomBytes } from '@stablelib/random'
 import { DID, DIDOptions } from 'dids'
 
@@ -18,6 +18,13 @@ const ipfs = await IPFS.create({ ipld: { formats: [dagJoseFormat] } })
 
 const ceramic = await Ceramic.create(ipfs)
 
+type ThreeIdProviderDefaultExport = {
+	default?: {
+		create(...args: unknown[]): Promise<ThreeIdProvider>,
+	}
+	create(...args: unknown[]): Promise<ThreeIdProvider>,
+}
+
 const resolver = {
 	...KeyDidResolver.getResolver(),
 	...ThreeIdResolver.getResolver(ceramic),
@@ -25,7 +32,6 @@ const resolver = {
 const did = new DID({ resolver })
 ceramic.did = did
 const posts: any = []
-console.log(ThreeIdProvider)
 const didSetup = async () => {
 	const authId = 'myAuthenticationMethod' // a name of the auth method
 	const authSecret = randomBytes(32)
@@ -37,16 +43,18 @@ const didSetup = async () => {
 		return request.payload.paths
 	}
 
-	const threeId = await ThreeIdProvider.default.create({ 
+	const ThreeIdProviderModule = ThreeIdProvider as unknown as ThreeIdProviderDefaultExport
+	const ThreeIdProviderClass: ThreeIdProviderDefaultExport = ThreeIdProviderModule['default'] ?? ThreeIdProvider
+	const threeId = await ThreeIdProviderClass.create({
 		authId: 'genesis',
 		authSecret,
-		getPermission, 
-		ceramic 
+		getPermission,
+		ceramic
 	})
 
-	const resolver: any = { 
+	const resolver: any = {
 		...KeyDidResolver.getResolver(),
-		...ThreeIdResolver.getResolver(ceramic) 
+		...ThreeIdResolver.getResolver(ceramic)
 	}
 	const provider: any = threeId.getDidProvider()
 	const did = new DID({ resolver })
