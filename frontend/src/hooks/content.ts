@@ -168,6 +168,20 @@ export const useHavenWorks = (params: UseHavenWorksParams) => {
 	return [works]
 }
 
+export const useWorks = () => {
+	const [works, setWorks] = createSignal<Work[]>()
+
+	createEffect(() => {
+		setTimeout(() => {
+			const processedWorks = gen.collection(64, gen.work, 'id')
+
+			setWorks(processedWorks)
+		}, 1000)
+	})
+
+	return [works]
+}
+
 type UseSingleWorkParams = {
 	id: string
 }
