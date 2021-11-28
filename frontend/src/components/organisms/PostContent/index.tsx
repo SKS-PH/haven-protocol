@@ -2,7 +2,7 @@ import {Component, splitProps} from 'solid-js'
 import {Post} from 'models'
 import {HavenPostContent} from 'components/organisms/HavenPostContent'
 import {Link} from 'solid-app-router'
-import {ButtonSize, LinkButton} from '@haven/web-components-solid'
+import {ButtonSize, LinkButton, Tag} from '@haven/web-components-solid'
 
 type PostContentProps = {
 	[T in keyof Post]: Post[T]
@@ -67,6 +67,34 @@ export const PostContent: Component<PostContentProps> = (props) => {
 				{...etcProps}
 				haven={localProps.haven}
 			/>
+			<hr
+				className="h-0.25 border-0 my-4 p-0 bg-current opacity-25"
+			/>
+			<div className="space-x-4 flex">
+				<Link
+					className="text-sm"
+					href={`/havens/${localProps.haven.address}/posts/${props.id}`}
+				>
+					<Tag>
+						{props.likes.length} Likes
+					</Tag>
+				</Link>
+				<Link
+					className="text-sm"
+					href={`/havens/${localProps.haven.address}/posts/${props.id}#comments`}
+				>
+					<Tag>
+						{props.comments.length} Comments
+					</Tag>
+				</Link>
+				<Link className="text-sm"
+					href={`/havens/${localProps.haven.address}/posts/${props.id}#works`}
+				>
+					<Tag>
+						{props.works.length} Works
+					</Tag>
+				</Link>
+			</div>
 		</>
 	)
 }

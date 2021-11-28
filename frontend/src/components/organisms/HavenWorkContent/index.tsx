@@ -16,15 +16,16 @@ export const HavenWorkContent: Component<HavenWorkContentProps> = (props) => {
 		>
 			<div className="lg:grid lg:grid-cols-7">
 				<div className="h-48 lg:h-auto lg:col-span-3 relative">
+					<div className="absolute top-0 left-0 w-full h-full bg-current opacity-10" />
 					<img src={props.imageUrl} alt={props.title} className="absolute top-0 left-0 w-full h-full object-cover object-right-bottom block" />
 				</div>
 				<div className="col-span-4 p-4 lg:p-8 box-border flex flex-col space-y-8">
-					<div>
+					<div className="text-sm">
 						<Tag>
 							Unlocked at {props.tier}
 						</Tag>
 					</div>
-					<div className="flex items-center lg:items-start lg:flex-col">
+					<div className="flex items-center lg:items-start lg:flex-col flex-auto">
 						<div>
 							<Link
 								href={`/havens/${props.haven?.address}`}
@@ -74,9 +75,6 @@ export const HavenWorkContent: Component<HavenWorkContentProps> = (props) => {
 								</div>
 							</div>
 						</div>
-					</div>
-					<div className="mt-4 flex-auto">
-						{props.description}
 					</div>
 					<div className="mt-4">
 						<LinkButton

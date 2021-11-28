@@ -44,7 +44,7 @@ export const comment: Generator<Comment> = (data = {}) => {
 	return {
 		id: '1',
 		createdAt: new Date('2021-11-24T22:09:46.000Z'),
-		likes: [],
+		likes: collection(5, user, 'address'),
 		author: user(),
 		content: 'Hello. Well, Marty, I\'m almost eighteen-years-old, it\'s not like I\'ve never parked before.\n\nWhoa, this is heavy. My equipment, that reminds me, Marty, you better not hook up to the amplifier. There\'s\n\t\t\t\t\t\t\ta slight possibility for overload. Cause, George, she wants to go to the dance with you, she just doesn\'t\n\t\t\t\t\t\t\tknow it yet. That\'s why we got to show her that you, George McFly, are a fighter. You\'re somebody who\'s\n\t\t\t\t\t\t\tgonna stand up for yourself, someone who\'s gonna protect her.',
 		...data,
@@ -61,10 +61,10 @@ Share the word to your friends so they can listen to the hard work I've been mak
 
 Oh, and also for the Tier 2 subscribers and higher, hang on for a while because I will send extra merch to this haven. **More reasons** to get the higher tiers!`,
 		title: 'I am releasing a new album this month',
-		works: [],
+		works: collection(2, work, 'id'),
 		tags: ['album', 'release'],
 		comments: collection(12, comment, 'id'),
-		likes: [],
+		likes: collection(5, user, 'address'),
 		tier: 'Tier 1',
 		haven: haven(),
 		...data,
@@ -75,7 +75,9 @@ export const work: Generator<Work> = (data = {}) => {
 	return {
 		id: 'work',
 		title: 'Rebirth',
-		description: 'My first album',
+		description: `Share the word to your friends so they can listen to the hard work I've been making for these past few months.
+
+Oh, and also for the Tier 2 subscribers and higher, hang on for a while because I will send extra merch to this haven. **More reasons** to get the higher tiers!`,
 		imageUrl: imageUrl(),
 		haven: haven(),
 		tier: 'Tier 1',

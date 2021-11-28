@@ -24,7 +24,6 @@ export const HavenMarketplaceTemplate: Component<HavenMarketplaceTemplateProps> 
 				activeSubsection={HavenSubsectionId.WORKS}
 			>
 				<div className="px-4 lg:px-6 py-4 md:py-8">
-
 					<Show
 						when={Array.isArray(props.works)}
 					>

@@ -9,6 +9,8 @@ import {Wallet} from '@haven/solid-moralis'
 import {TimeAgo} from 'components/molecules/TimeAgo'
 import {Button, ButtonSize, ButtonVariant, MultilineInput} from '@haven/web-components-solid'
 import { Link } from 'solid-app-router'
+import {HavenWorkPreview} from '../../organisms/HavenWorkPreview'
+import {CommentContent} from '../../organisms/CommentContent'
 
 type HavenSinglePostTemplateProps = {
 	post?: Post,
@@ -53,13 +55,42 @@ export const HavenSinglePostTemplate: Component<HavenSinglePostTemplateProps> = 
 												likes={props.post!.likes}
 												tier={props.post!.tier}
 											/>
+											<Show
+												when={Array.isArray(props.post!.works) && props.post!.works.length > 0}
+											>
+												<div
+													id="works"
+													className="mt-8 grid grid-cols-3 gap-4"
+												>
+													<For
+														each={props.post!.works}
+													>
+														{(work) => (
+															<Link
+																href={`/havens/${props.haven?.address}/works/${work.id}`}
+															>
+																<Card>
+																	<article className="w-full pb-full relative">
+																		<HavenWorkPreview
+																			title={work.title}
+																			imageUrl={work.imageUrl}
+																		/>
+																	</article>
+																</Card>
+															</Link>
+														)}
+													</For>
+												</div>
+											</Show>
 											<hr
 												className="h-0.25 border-0 my-8 p-0 bg-current opacity-25"
 											/>
 											<Show
 												when={Array.isArray(props.post!.comments)}
 											>
-												<div>
+												<div
+													id="comments"
+												>
 													<div className="mb-8">
 														<h3 className="m-0">
 															Comments
@@ -87,30 +118,7 @@ export const HavenSinglePostTemplate: Component<HavenSinglePostTemplateProps> = 
 													>
 														{(c) => (
 															<div className="my-8">
-																<div className="flex h-8 items-center space-x-4">
-																	<Link
-																		href={`/users/${c.author.address}`}
-																		className="no-underline font-bold"
-																	>
-																		<img src={c.author.imageUrl} alt={c.author.nickname} className="h-8 w-8 object-cover object-center rounded-full block" />
-																	</Link>
-																	<div className="leading-none">
-																		<div>
-																			<Link
-																				href={`/users/${c.author.address}`}
-																				className="no-underline font-bold"
-																			>
-																				{c.author.nickname}
-																			</Link>
-																		</div>
-																		<div>
-																			<small>
-																				<TimeAgo dateTime={c.createdAt} />
-																			</small>
-																		</div>
-																	</div>
-																</div>
-																<div className="mt-4" innerHTML={c.content} />
+																<CommentContent id={c.id} author={c.author} content={c.content} createdAt={c.createdAt} likes={c.likes} />
 															</div>
 														)}
 													</For>
