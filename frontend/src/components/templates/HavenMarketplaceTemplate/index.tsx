@@ -40,7 +40,7 @@ export const HavenMarketplaceTemplate: Component<HavenMarketplaceTemplateProps> 
 										<Card>
 											<article className="w-full pb-full relative">
 												<HavenWorkPreview
-													title={work.name}
+													title={work.title}
 													imageUrl={work.imageUrl}
 												/>
 											</article>
