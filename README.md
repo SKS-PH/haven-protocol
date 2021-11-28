@@ -2,28 +2,47 @@
 
 ## Setup
 
-1.  First install dependencies by running:
-    ```shell
-    npm install
-    ```
-
-2.  Compile smart contracts with:
-    ```shell
-    npm run compile
-    ```
-
-3.  Run tests with:
-    ```shell
-    npm test
-    ```
-
-## Running a local node
-
-To run a local hardhat dev node, open a new terminal and run:
+To install all dependencies of onchain, offchain and frontend, run:
 
 ```shell
-npm run dev
+npm run deps
 ```
+
+## Running local onchain
+
+To run onchain locally, open a new terminal and run:
+
+```shell
+npm run onchain
+```
+This command shows contract addresses for local deployments of the HavenToken and HavenProtocol along with test accounts.
+## Running local offchain
+To run offchain locally, open a new terminal and run:
+```shell
+npm run offchain
+```
+## Running local frontend
+To run frontend locally, open a new terminal and run:
+```shell
+npm run frontend
+```
+
+## Seeding onchain and offchain
+To seed local onchain and offchain with test data make sure offchain and onchain is started then run:
+```shell
+npm run seed
+```
+## Moralis contract event indexing configuration
+1. Create a local dev server on the moralis dashboard.
+2. Make sure local onchain is running and run the following command with the values from the instance you created:
+```shell
+moralis-admin-cli add-contract --moralisApiKey FAM6pYzBKjcM 
+--moralisApiSecret 7thQGNKKqX8s --abiPath "./deployments/localhost/HavenProtocol.json"
+```
+3. Select all events and enter the contract address HavenProtocol is deployed at locally when prompted.
+4. Follow the instructions on the moralis server instance detail page to configure and run the devchain proxy server.
+
+# Metamask configuration
 
 ## Adding local node to Metamask
 
@@ -44,6 +63,10 @@ Create a local hardhat network in metamask by doing the following:
 5.  Repeat for as many test accounts as you want.
 
 > **Reminder:** Don't send real ETH to these accounts.
+
+## Adding the Haven token to metamask
+Running `npm run seed` pre-funds account #1 and #2 with 100 Haven tokens. Find the haven token contract address from the output of 
+`npm run onchain` and Import token on Metamask.
 
 # Brain dump
 ## What do we want _Haven_ to do?

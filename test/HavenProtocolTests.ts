@@ -11,7 +11,6 @@ describe('HavenProtocol', () => {
 	let havenProtocolAsSigner1: HavenProtocol
 	let havenToken: HavenToken
 	let havenTokenAsSigner1: HavenToken
-	let havenToSubscribeTo: Haven
 
 	beforeEach(async () => {
 		const [deployer , signer1] = await ethers.getSigners()
@@ -27,9 +26,6 @@ describe('HavenProtocol', () => {
 
 		const createHavenTx = await havenProtocol.createHaven(parseEther('10'))
 		await createHavenTx.wait()
-
-		const havenToSubscribeToAddr = await havenProtocol.ownerToHavens(deployer.address, 0)
-		havenToSubscribeTo = Haven.attach(havenToSubscribeToAddr)
 	})
 	it('Should prevent receiving of haven tokens outside of subscribe()', async () => {
 		await expect(havenTokenAsSigner1.send(havenProtocol.address, parseEther('10'), [])).to.be.revertedWith('Please don\'t send your haven tokens here')
@@ -48,36 +44,35 @@ describe('HavenProtocol', () => {
 				.to.emit(havenProtocol, 'HavenCreated')
 				.withArgs(signer0.address, newHavenAddr)
 
-			const newHaven = Haven.attach(newHavenAddr)
-			expect(await newHaven.owner()).to.equal(signer0.address)
+			expect( (await havenProtocol.havens(0)).owner).to.equal(signer0.address)
 		})
 	})
 	describe('#subscribe()', async () => {
 		it('Should subscribe user and emit a subscribe event', async () => {
 			const [, signer1] = await ethers.getSigners()
 			await havenTokenAsSigner1.authorizeOperator(havenProtocol.address)
-			const subscribeTx = await havenProtocolAsSigner1.subscribe(havenToSubscribeTo.address)
+			const subscribeTx = await havenProtocolAsSigner1.subscribe(0)
 			await subscribeTx.wait()
 
 			await expect(subscribeTx)
 				.to.emit(havenProtocol, 'UserSubscribed')
-				.withArgs(havenToSubscribeTo.address, signer1.address, parseEther('10'))
+				.withArgs(0, signer1.address, parseEther('10'))
 
-			const id = await havenProtocol.havenToSubscriptionId(havenToSubscribeTo.address, signer1.address)
+			const id = await havenProtocol.havenToSubscriptionId(0, signer1.address)
 			expect(id).to.be.equal(0)
 			const [,haven, subscriber] = await havenProtocol.subscriptions(0)
 			expect(subscriber).to.be.equal(signer1.address)
-			expect(haven).to.be.equal(havenToSubscribeTo.address)
-			expect(await havenProtocol.havenToSubscriptionStatus(havenToSubscribeTo.address, signer1.address)).to.be.true
+			expect(haven).to.be.equal(0)
+			expect(await havenProtocol.havenToSubscriptionStatus(0, signer1.address)).to.be.true
 
 		})
 		it('Should revert when user is already subscribed', async () => {
 			await havenTokenAsSigner1.authorizeOperator(havenProtocol.address)
-			const subscribeTx = await havenProtocolAsSigner1.subscribe(havenToSubscribeTo.address)
+			const subscribeTx = await havenProtocolAsSigner1.subscribe(0)
 
 			await subscribeTx.wait()
 
-			await expect(havenProtocolAsSigner1.subscribe(havenToSubscribeTo.address)).to.be.revertedWith('You are already subscribed!')
+			await expect(havenProtocolAsSigner1.subscribe(0)).to.be.revertedWith('You are already subscribed!')
 		})
 		it('Should revert when user\'s haven balance is not enough otherwise ok', async () => {
 			const [, , signer2, signer3] = await ethers.getSigners()
@@ -87,9 +82,9 @@ describe('HavenProtocol', () => {
 			await havenToken.connect(signer2).authorizeOperator(havenProtocol.address)
 			await havenToken.connect(signer3).authorizeOperator(havenProtocol.address)
 
-			await expect(havenProtocol.connect(signer2).subscribe(havenToSubscribeTo.address)).to.be.revertedWith('Insufficient haven token balance!')
-			expect(havenProtocolAsSigner1.subscribe(havenToSubscribeTo.address)).to.be.ok
-			expect(havenProtocol.connect(signer3).subscribe(havenToSubscribeTo.address)).to.be.ok
+			await expect(havenProtocol.connect(signer2).subscribe(0)).to.be.revertedWith('Insufficient haven token balance!')
+			expect(havenProtocolAsSigner1.subscribe(0)).to.be.ok
+			expect(havenProtocol.connect(signer3).subscribe(0)).to.be.ok
 		})
 		it('Should revert when address isn\'t a haven address otherwise ok', async () => {
 			const [, , someNonHavenAddress] = await ethers.getSigners()
@@ -97,22 +92,22 @@ describe('HavenProtocol', () => {
 			await havenTokenAsSigner1.authorizeOperator(havenProtocol.address)
 
 			await expect(havenProtocolAsSigner1.subscribe( someNonHavenAddress.address)).to.be.revertedWith('Invalid haven address!')
-			// expect(havenProtocolAsSigner1.subscribe(havenToSubscribeTo.address)).to.be.ok
+			expect(havenProtocolAsSigner1.subscribe(0)).to.be.ok
 		})
 		it('Should transfer protocol commission to protocol address, remaining sub fee to haven owner address', async () => {
 			const [havenOwner] = await ethers.getSigners()
 
-			const subFee = await havenToSubscribeTo.subscriptionFee()
+			const subFee = await (await (havenProtocol.havens(0))).subscriptionFee
 			await havenTokenAsSigner1.authorizeOperator(havenProtocol.address)
 			const protocolFee = subFee.mul(await havenProtocol.protocolFeeBasisPoints()).div(10000) // 4.5% of subFee
 			const expectedProtocolBalance = protocolFee // protocol fee + user balance after sub fee
 			const expectedHavenOwnerBalance = subFee.sub(protocolFee) // haven owner gets rest of sub fee
-			await expect(() => havenProtocolAsSigner1.subscribe(havenToSubscribeTo.address))
+			await expect(() => havenProtocolAsSigner1.subscribe(0))
 				.to.changeTokenBalances(havenToken, [havenProtocol, havenOwner], [expectedProtocolBalance, expectedHavenOwnerBalance])
 			
 		})
 		it('Should revert if haven protocol isnt an erc777 operator of user', async () => {
-			await expect(havenProtocolAsSigner1.subscribe(havenToSubscribeTo.address))
+			await expect(havenProtocolAsSigner1.subscribe(0))
 				.to.be.revertedWith('Haven Protocol is not an authorized operator!')
 		})
 	})
@@ -120,14 +115,14 @@ describe('HavenProtocol', () => {
 		it('Should unsubscribe user and emit unsubscribe event', async () => {
 			const [, signer1] = await ethers.getSigners()
 			await havenTokenAsSigner1.authorizeOperator(havenProtocol.address)
-			const subTx = await havenProtocolAsSigner1.subscribe(havenToSubscribeTo.address)
+			const subTx = await havenProtocolAsSigner1.subscribe(0)
 			await subTx.wait()
 
-			await expect(havenProtocolAsSigner1.unsubscribe(havenToSubscribeTo.address))
+			await expect(havenProtocolAsSigner1.unsubscribe(0))
 				.to.emit(havenProtocol, 'UserUnsubscribed')
-				.withArgs(havenToSubscribeTo.address, signer1.address)
+				.withArgs(0, signer1.address)
 
-			expect(await havenProtocol.havenToSubscriptionStatus(havenToSubscribeTo.address, signer1.address)).to.be.false
+			expect(await havenProtocol.havenToSubscriptionStatus(0, signer1.address)).to.be.false
 		})
 	})
 	describe('#checkUpkeep()', async () => {
@@ -139,13 +134,13 @@ describe('HavenProtocol', () => {
 			await havenToken.connect(signer3).authorizeOperator(havenProtocol.address)
 			await havenToken.transfer(signer2.address, parseEther('100'))
 			await havenToken.transfer(signer3.address, parseEther('100'))
-			await havenProtocolAsSigner1.subscribe(havenToSubscribeTo.address)
-			await havenProtocol.connect(signer2).subscribe(havenToSubscribeTo.address)
+			await havenProtocolAsSigner1.subscribe(0)
+			await havenProtocol.connect(signer2).subscribe(0)
 			// advance block time by only 15 days
 			await network.provider.send('evm_increaseTime', [subDuration / 2])
 			await network.provider.send('evm_mine')
 
-			await havenProtocol.connect(signer3).subscribe(havenToSubscribeTo.address)
+			await havenProtocol.connect(signer3).subscribe(0)
 
 			// expect upkeep not needed and empty array
 			let checkUpkeepResponse = await havenProtocol.checkUpkeep([])
@@ -173,8 +168,8 @@ describe('HavenProtocol', () => {
 			await havenTokenAsSigner1.authorizeOperator(havenProtocol.address)
 			await havenToken.connect(signer2).authorizeOperator(havenProtocol.address)
 			await havenToken.transfer(signer2.address, parseEther('19')) // unbillable user
-			await havenProtocolAsSigner1.subscribe(havenToSubscribeTo.address)
-			await havenProtocol.connect(signer2).subscribe(havenToSubscribeTo.address)
+			await havenProtocolAsSigner1.subscribe(0)
+			await havenProtocol.connect(signer2).subscribe(0)
 			await network.provider.send('evm_increaseTime', [30 * 86400])
 			await network.provider.send('evm_mine')
 
@@ -184,11 +179,11 @@ describe('HavenProtocol', () => {
 				.to.changeTokenBalances(havenToken, [signer1, signer2], [parseEther('-10'), 0])
 			
 			const signer1Sub = await havenProtocol.subscriptions(0)
-			const signer1IsSubscribed = await havenProtocol.havenToSubscriptionStatus(havenToSubscribeTo.address,signer1.address)
+			const signer1IsSubscribed = await havenProtocol.havenToSubscriptionStatus(0,signer1.address)
 			expect(signer1IsSubscribed).to.be.true
 			expect(signer1Sub.lastRenewalTimestamp.gt(signer1Sub.initialSubTimestamp))
 			const signer2Sub = await havenProtocol.subscriptions(1)
-			const signer2IsSubscribed = await havenProtocol.havenToSubscriptionStatus(havenToSubscribeTo.address, signer2.address)
+			const signer2IsSubscribed = await havenProtocol.havenToSubscriptionStatus(0, signer2.address)
 			expect(signer2IsSubscribed).to.be.false
 			expect(signer2Sub.lastRenewalTimestamp.eq(signer2Sub.lastRenewalTimestamp))
 		})
@@ -198,11 +193,36 @@ describe('HavenProtocol', () => {
 			await havenTokenAsSigner1.authorizeOperator(havenProtocol.address)
 			await havenToken.connect(signer2).authorizeOperator(havenProtocol.address)
 			await havenToken.transfer(signer2.address, parseEther('19')) // unbillable user
-			await havenProtocolAsSigner1.subscribe(havenToSubscribeTo.address)
-			await havenProtocol.connect(signer2).subscribe(havenToSubscribeTo.address)
+			await havenProtocolAsSigner1.subscribe(0)
+			await havenProtocol.connect(signer2).subscribe(0)
 
 			const performData = abiCoder.encode(['uint256[]'], [[BigNumber.from(0), BigNumber.from(1)]])
 			await expect(havenProtocol.performUpkeep(performData)).to.be.revertedWith('Subscription not yet expired!')
+		})
+	})
+
+	describe('#post()', async () => {
+		it('Should emit created post', async () => {
+			const postUri = 'some://posturi'
+			const postTx = await havenProtocol.post(0, postUri)
+			const receipt = await postTx.wait()
+			const currentBlock = await waffle.provider.getBlock(receipt.blockNumber)
+		
+			await expect(postTx)
+				.to.emit(havenProtocol, 'PostCreated')
+				.withArgs(0, postUri, currentBlock.timestamp)
+
+			expect((await havenProtocol.posts(0, 0)).post_uri).to.equal(postUri)
+		})
+		it('Should allow only haven owner otherwise revert', async () => {
+			const [ _, signer1 ] = await ethers.getSigners()
+			const postUri = 'some://posturi'
+			const postTx = await havenProtocol.post(0, postUri)
+			await postTx.wait()
+
+			expect((await havenProtocol.posts(0, 0)).post_uri).to.equal(postUri)
+
+			await expect(havenProtocol.connect(signer1).post(0, postUri)).to.be.reverted
 		})
 	})
 })

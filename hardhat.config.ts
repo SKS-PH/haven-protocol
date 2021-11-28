@@ -9,6 +9,7 @@ import 'hardhat-gas-reporter'
 import 'hardhat-deploy'
 import 'solidity-coverage'
 import './plugins/hardhat-erc1820'
+import './tasks/seed'
 
 dotenv.config()
 

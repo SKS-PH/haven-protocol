@@ -5,9 +5,13 @@
 		"node": ">=16.6.1"
 	},
 	"scripts": {
+		"deps": "./scripts/install-deps.sh",
 		"compile": "hardhat compile",
 		"test": "hardhat test",
-		"dev": "hardhat node --show-accounts"
+		"onchain": "hardhat compile && hardhat node --show-accounts",
+		"offchain": "cd backend && npm run build && npm run start",
+		"frontend": "cd frontend && npm run start",
+		"seed": "hardhat seed --network localhost"
 	},
 	"devDependencies": {
 		"@nomiclabs/hardhat-ethers": "^2.0.2",
@@ -45,6 +49,7 @@
 	},
 	"dependencies": {
 		"@chainlink/contracts": "^0.2.2",
-		"@openzeppelin/contracts": "^4.3.3"
+		"@openzeppelin/contracts": "^4.3.3",
+		"node-fetch": "^2.6.6"
 	}
 }
