@@ -24,7 +24,7 @@ export const HavenWorkContent: Component<HavenWorkContentProps> = (props) => {
 							Unlocked at {props.tier}
 						</Tag>
 					</div>
-					<div className="flex items-center lg:items-start lg:flex-col">
+					<div className="flex items-center lg:items-start lg:flex-col flex-auto">
 						<div>
 							<Link
 								href={`/havens/${props.haven?.address}`}
@@ -74,9 +74,6 @@ export const HavenWorkContent: Component<HavenWorkContentProps> = (props) => {
 								</div>
 							</div>
 						</div>
-					</div>
-					<div className="mt-4 flex-auto">
-						{props.description}
 					</div>
 					<div className="mt-4">
 						<LinkButton

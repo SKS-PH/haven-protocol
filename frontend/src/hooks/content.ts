@@ -177,9 +177,21 @@ export const useHavenSingleWork = (params: UseSingleWorkParams) => {
 
 	createEffect(() => {
 		setTimeout(async () => {
-			setWork(gen.work({
+			const theWork = gen.work({
 				id: params.id,
-			}))
+			})
+
+			const postVfile = await unified()
+				.use(remarkParse)
+				.use(remarkGfm)
+				.use(remarkRehype)
+				.use(rehypeStringify)
+				.process(theWork.description)
+
+			setWork({
+				...theWork,
+				description: postVfile.toString(),
+			})
 		}, 1000)
 	})
 

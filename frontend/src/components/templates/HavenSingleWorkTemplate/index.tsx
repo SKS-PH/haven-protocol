@@ -28,30 +28,42 @@ export const HavenSingleWorkTemplate: Component<HavenSingleWorkTemplateProps> = 
 						<Show
 							when={Boolean(props.work)}
 						>
-							<div className="my-4 md:my-8">
-								<Card>
-									<Show
-										when={props.work!.tier === 'Tier 1'}
-										fallback={
-											<article className="p-8 box-border">
-												<LockedPostContent tier={props.work!.tier} title={props.work!.title} />
+							<>
+								<div
+									className="my-4 md:my-8"
+								>
+									<Card>
+										<Show
+											when={props.work!.tier === 'Tier 1'}
+											fallback={
+												<article className="p-8 box-border">
+													<LockedPostContent tier={props.work!.tier} title={props.work!.title} />
+												</article>
+											}
+										>
+											<article>
+												<HavenWorkContent
+													haven={props.work!.haven}
+													id={props.work!.id}
+													title={props.work!.title}
+													tier={props.work!.tier}
+													imageUrl={props.work!.imageUrl}
+													url={props.work!.url}
+													description={props.work!.description}
+												/>
 											</article>
-										}
-									>
-										<article>
-											<HavenWorkContent
-												haven={props.work!.haven}
-												id={props.work!.id}
-												title={props.work!.title}
-												tier={props.work!.tier}
-												imageUrl={props.work!.imageUrl}
-												url={props.work!.url}
-												description={props.work!.description}
-											/>
-										</article>
-									</Show>
-								</Card>
-							</div>
+										</Show>
+									</Card>
+								</div>
+								<Show
+									when={Boolean(props.work!.description)}
+								>
+									<div
+										className="my-4 md:my-8 text-center lg:w-1/2 lg:mx-auto leading-normal"
+										innerHTML={props.work!.description}
+									/>
+								</Show>
+							</>
 						</Show>
 					</div>
 				</div>

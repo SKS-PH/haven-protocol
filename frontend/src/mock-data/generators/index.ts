@@ -75,7 +75,9 @@ export const work: Generator<Work> = (data = {}) => {
 	return {
 		id: 'work',
 		title: 'Rebirth',
-		description: 'My first album',
+		description: `Share the word to your friends so they can listen to the hard work I've been making for these past few months.
+
+Oh, and also for the Tier 2 subscribers and higher, hang on for a while because I will send extra merch to this haven. **More reasons** to get the higher tiers!`,
 		imageUrl: imageUrl(),
 		haven: haven(),
 		tier: 'Tier 1',
